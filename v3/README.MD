@@ -27,3 +27,7 @@
 9. **Gradient Overlay** - Professional dark gradient
 10. **Smooth Animations** - Entrance animations for content
 
+## 📸 Preview
+
+![Banner Example 1](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v1/img/Screenshot_45.png?raw=true)  
+

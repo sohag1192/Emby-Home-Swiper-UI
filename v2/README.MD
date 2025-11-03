@@ -28,4 +28,9 @@
 3. **Check if on home page** - the script only runs on `#!/home`
 4. **Test manually** by running in console: `HomeSwiper.init()`
 
+## 📸 Preview
+
+![Banner Example 1](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v1/img/Screenshot_46.png?raw=true)  
+
+
 This version is much simpler and should work reliably with Emby Web 4.9.1.80.

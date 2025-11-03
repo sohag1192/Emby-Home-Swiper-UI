@@ -2,10 +2,12 @@ class HomeSwiper {
     static init() {
         console.log('HomeSwiper Premium initializing...');
         
+        // Check if we're on home page
         if (!window.location.hash.includes('#!/home')) {
             return;
         }
 
+        // Wait for Emby to be ready
         if (!window.ApiClient) {
             setTimeout(() => HomeSwiper.init(), 100);
             return;
@@ -24,8 +26,8 @@ class HomeSwiper {
             max-height: 85vh;
             min-height: 500px;
             overflow: hidden;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            margin-bottom: 40px;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            margin-bottom: 30px;
             border-radius: 0 0 24px 24px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.6);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -45,8 +47,7 @@ class HomeSwiper {
             height: 100%;
             opacity: 0;
             transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform: scale(1.05);
-            will-change: transform, opacity;
+            transform: scale(1.02);
         }
         
         .misty-banner-slide.active {
@@ -352,26 +353,6 @@ class HomeSwiper {
             animation: shimmer 2s infinite;
         }
         
-        /* Logo styling */
-        .misty-banner-logo {
-            position: absolute;
-            top: 45px;
-            right: 45px;
-            max-height: 85px;
-            max-width: 320px;
-            object-fit: contain;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
-            z-index: 2;
-            opacity: 0;
-            transform: translateX(60px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
-        }
-        
-        .misty-banner-slide.active .misty-banner-logo {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
         /* Enhanced backdrop overlay */
         .misty-banner-pattern {
             position: absolute;
@@ -471,13 +452,6 @@ class HomeSwiper {
                 left: 25px;
                 bottom: 35px;
             }
-            
-            .misty-banner-logo {
-                top: 25px;
-                right: 25px;
-                max-height: 55px;
-                max-width: 220px;
-            }
         }
         
         @media (max-width: 480px) {
@@ -519,27 +493,6 @@ class HomeSwiper {
                 transform: translateY(0);
             }
         }
-        
-        /* Loading states */
-        .misty-loading-shimmer {
-            background: linear-gradient(
-                90deg,
-                rgba(255,255,255,0.1) 0%,
-                rgba(255,255,255,0.2) 50%,
-                rgba(255,255,255,0.1) 100%
-            );
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite linear;
-        }
-        
-        /* Focus states for accessibility */
-        .misty-btn-play:focus-visible,
-        .misty-btn-more:focus-visible,
-        .misty-banner-nav:focus-visible,
-        .misty-banner-indicator:focus-visible {
-            outline: 3px solid #667eea;
-            outline-offset: 2px;
-        }
         `;
 
         const styleSheet = document.createElement('style');
@@ -549,14 +502,19 @@ class HomeSwiper {
 
     static async setupBanner() {
         try {
+            // Wait for home sections to load
             await this.waitForElement('.homeSectionsContainer');
             
             const sectionsContainer = document.querySelector('.homeSectionsContainer');
             if (!sectionsContainer) return;
 
+            // Remove existing banner if present
             const existingBanner = document.querySelector('.misty-home-banner');
-            if (existingBanner) existingBanner.remove();
+            if (existingBanner) {
+                existingBanner.remove();
+            }
 
+            // Create banner
             const banner = await this.createBanner();
             if (banner) {
                 sectionsContainer.insertBefore(banner, sectionsContainer.firstChild);
@@ -570,7 +528,10 @@ class HomeSwiper {
     static async createBanner() {
         try {
             const items = await this.getBannerItems();
-            if (!items || items.length === 0) return null;
+            if (!items || items.length === 0) {
+                console.log('No items found for banner');
+                return null;
+            }
 
             const banner = document.createElement('div');
             banner.className = 'misty-home-banner';
@@ -609,10 +570,9 @@ class HomeSwiper {
 
     static createPremiumSlide(item, isActive = false) {
         const backdropUrl = this.getImageUrl(item, { type: 'Backdrop', maxWidth: 1920 });
-        const logoUrl = item.ImageTags?.Logo ? this.getImageUrl(item, { type: 'Logo', maxWidth: 300 }) : null;
         const title = item.Name || 'Untitled';
         const description = item.Overview || 'No description available.';
-        const year = item.ProductionYear || new Date(item.PremiereDate).getFullYear() || '';
+        const year = item.ProductionYear || '';
         const rating = item.CommunityRating ? item.CommunityRating.toFixed(1) : null;
         
         return `
@@ -622,7 +582,6 @@ class HomeSwiper {
                  aria-hidden="${!isActive}">
                 <img class="misty-banner-image" src="${backdropUrl}" alt="${title}" loading="lazy">
                 <div class="misty-banner-gradient"></div>
-                ${logoUrl ? `<img class="misty-banner-logo" src="${logoUrl}" alt="${title} Logo">` : ''}
                 <div class="misty-banner-content">
                     <div class="misty-banner-badge">
                         <span>🎬</span>
@@ -637,7 +596,6 @@ class HomeSwiper {
                                 <span>${rating}/10</span>
                             </div>
                         ` : ''}
-                        ${item.RunTime ? `<span>${this.formatRuntime(item.RunTime)}</span>` : ''}
                         ${item.OfficialRating ? `<span>${this.escapeHtml(item.OfficialRating)}</span>` : ''}
                     </div>
                     <p class="misty-banner-description">${this.escapeHtml(description)}</p>
@@ -659,12 +617,12 @@ class HomeSwiper {
         try {
             const userId = ApiClient.getCurrentUserId();
             const query = {
-                ImageTypes: 'Backdrop,Logo',
+                ImageTypes: 'Backdrop',
                 IncludeItemTypes: 'Movie,Series',
                 SortBy: 'Random',
                 Recursive: true,
-                Limit: 8,
-                Fields: 'Overview,BackdropImageTags,ProductionYear,CommunityRating,RunTime,PremiereDate,ImageTags,OfficialRating',
+                Limit: 6,
+                Fields: 'Overview,ProductionYear,CommunityRating,OfficialRating,BackdropImageTags',
                 EnableUserData: false,
                 HasBackdropImage: true
             };
@@ -684,34 +642,24 @@ class HomeSwiper {
         }
     }
 
-    static playItem(itemId) {
+    static getImageUrl(item, options) {
+        if (!ApiClient.getImageUrl) return '';
+        
         try {
-            const playbackManager = window.playbackManager;
-            if (playbackManager && playbackManager.play) {
-                playbackManager.play({ ids: [itemId] });
-            } else {
-                Emby.Page.showItem(itemId);
-                setTimeout(() => {
-                    const playBtn = document.querySelector('.btnPlay');
-                    if (playBtn) playBtn.click();
-                }, 1000);
+            if (options.type === 'Backdrop' && item.BackdropImageTags && item.BackdropImageTags.length > 0) {
+                return ApiClient.getImageUrl(item.Id, {
+                    type: 'Backdrop',
+                    maxWidth: options.maxWidth || 1920,
+                    tag: item.BackdropImageTags[0],
+                    quality: 90
+                });
             }
         } catch (error) {
-            console.error('Failed to play item:', error);
-            Emby.Page.showItem(itemId);
+            console.error('Failed to get image URL:', error);
         }
-    }
-
-    static formatRuntime(runtimeTicks) {
-        if (!runtimeTicks) return '';
-        const minutes = Math.floor(runtimeTicks / 600000000);
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
         
-        if (hours > 0) {
-            return `${hours}h ${remainingMinutes}m`;
-        }
-        return `${minutes}m`;
+        // Fallback to a placeholder
+        return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiIGZpbGw9IiMxMTExMTEiLz48dGV4dCB4PSI5NjAiIHk9IjU0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNTU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
     }
 
     static startPremiumCarousel() {
@@ -878,31 +826,19 @@ class HomeSwiper {
         startProgress();
     }
 
-    static getImageUrl(item, options) {
-        if (!ApiClient.getImageUrl) return '';
-        
+    static playItem(itemId) {
         try {
-            if (options.type === 'Backdrop' && item.BackdropImageTags && item.BackdropImageTags.length > 0) {
-                return ApiClient.getImageUrl(item.Id, {
-                    type: 'Backdrop',
-                    maxWidth: options.maxWidth || 1920,
-                    tag: item.BackdropImageTags[0],
-                    quality: 90
-                });
-            }
-            if (options.type === 'Logo' && item.ImageTags?.Logo) {
-                return ApiClient.getImageUrl(item.Id, {
-                    type: 'Logo',
-                    maxWidth: options.maxWidth || 300,
-                    tag: item.ImageTags.Logo,
-                    quality: 90
-                });
+            // Try to use Emby's playback manager
+            if (window.playbackManager && window.playbackManager.play) {
+                window.playbackManager.play({ ids: [itemId] });
+            } else {
+                // Fallback: navigate to item page
+                Emby.Page.showItem(itemId);
             }
         } catch (error) {
-            console.error('Failed to get image URL:', error);
+            console.error('Failed to play item:', error);
+            Emby.Page.showItem(itemId);
         }
-        
-        return '';
     }
 
     static waitForElement(selector, timeout = 15000) {
@@ -928,19 +864,20 @@ class HomeSwiper {
 
             setTimeout(() => {
                 observer.disconnect();
-                reject(new Error(`Element ${selector} not found`));
+                reject(new Error(`Element ${selector} not found within ${timeout}ms`));
             }, timeout);
         });
     }
 
     static escapeHtml(text) {
+        if (!text) return '';
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 }
 
-// Initialize with enhanced loading
+// Enhanced initialization
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => HomeSwiper.init(), 300);

@@ -15,8 +15,8 @@ class HomeSwiper {
 		this.coverOptions = { type: "Primary", maxWidth: 1000, adjustForPixelRatio: false };
 		this.itemQuery.Limit = 9;
 		this.showItemNum = 9;
-		this.loadFlag = false;//æ˜¯å¦å·²ç»åŠ è½½
-		this.flag_cssjs = true;//æ˜¯å¦æ˜¯cssjsæ’ä»¶åŠ è½½ï¼Œä¿®å¤cssjsæ’ä»¶åŠ è½½é¦–æ¬¡å¯èƒ½ä¸è¿è¡Œçš„é—®é¢˜
+		this.loadFlag = false; // Whether it has been loaded
+		this.flag_cssjs = true; // Whether the CSS/JS plugin is loaded, fixing the issue where the CSS/JS plugin might not run on the first load.
 		this.SwiperCss = `
 		/**
 		 * Swiper 11.1.14
@@ -58,7 +58,11 @@ class HomeSwiper {
 		function renderMediaFolders(page, user, mediaFolders) {
 
 			var html =
-				'<div class="checkboxListLabel"><label><h3 style="margin: 0 10px 0 0;">åª’ä½“åº“å…¨é€‰</h3><input type="checkbox" is="emby-checkbox" class="chkAllFolder"><span style="font-size: .7em;"><h3 style="margin:0;"></h3></span></label></div><div class="checkboxLists">';
+				'<div class="checkboxListLabel"><label><h3 style="margin: 0 10px 0 0;">Select all media libraries</h3>
+				<input type="checkbox" is="emby-checkbox" class="chkAllFolder">
+				<span style="font-size: .7em;"> <h3 style="margin:0;"></h3>
+				</span></label></div><div class="checkboxLists">';
+			
 			for (var i = 0, length = mediaFolders.length; i < length; i++) {
 				var folder = mediaFolders[i],
 					folderId = folder.Guid || folder.Id,
@@ -126,7 +130,7 @@ class HomeSwiper {
 					this.swiper2 = e.target.querySelector('.mySwiper-main').swiper;
 					this.swiper2?.enable();
 					this.swiper2?.slides[this.swiper2.activeIndex]?.childNodes[1].swiper?.autoplay.start();
-					this.swiper & setTimeout(() => Emby.Page.setTitle("RoarZone"), 1000);
+					this.swiper & setTimeout(() => Emby.Page.setTitle("YOUR EMBY SERVER NAME"), 1000);
 				}
 
 			} else {
@@ -142,28 +146,29 @@ class HomeSwiper {
 						let selectHomePhotoCarouselHtml = `
 						<div class="verticalSection">
 
-                        <div class="folderAccessContainer">
-                            <h2>è½®æ’­å›¾è®¿é—®</h2>
-                            <label class="checkboxContainer">
-                                <input type="checkbox" is="emby-checkbox" class="chkEnableAllFolders" />
-                                <span>å…è®¸è®¿é—®æ‰€æœ‰åª’ä½“åº“</span>
-                            </label>
-                            <div class="folderAccessListContainer">
-								<h3 class="checkboxListLabel hide">åª’ä½“åº“</h3>
-                                <div class="folderAccess">
-                                </div>
-                            </div>
-                            <div class="fieldDescription">é€‰æ‹©è¦ä¸Žè½®æ’­å›¾å…±äº«çš„åª’ä½“åº“ã€‚</div>
-                        </div>
-                        
-                        <br />
-                        <div>
-                            <button is="emby-button" type="submit" class="userLibraryAccessForm raised button-submit block">
-                                <span>ä¿å­˜</span>
-                            </button>
-                        </div>
-						<br />
-						</div>`;
+<div class="folderAccessContainer">
+    <h2>Carousel Access</h2>
+    <label class="checkboxContainer">
+        <input type="checkbox" is="emby-checkbox" class="chkEnableAllFolders" />
+        <span>Allow access to all libraries</span>
+    </label>
+    <div class="folderAccessListContainer">
+        <h3 class="checkboxListLabel hide">Media Libraries</h3>
+        <div class="folderAccess">
+        </div>
+    </div>
+    <div class="fieldDescription">Select the media libraries to share with the carousel.</div>
+</div>
+
+<br />
+<div>
+    <button is="emby-button" type="submit" class="userLibraryAccessForm raised button-submit block">
+        <span>Save</span>
+    </button>
+</div>
+<br />
+</div>
+    `;
 						var view = e.target;
 						view.children[0].children[0].insertAdjacentHTML('afterbegin', selectHomePhotoCarouselHtml);
 						await ApiClient.getUserViews({}, ApiClient.getCurrentUserId()).then(function (mediaFolders) {

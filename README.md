@@ -143,6 +143,17 @@ After saving your changes, restart Emby or refresh the browser. The banner shoul
 
 The uninitialized functions (`saveUser`, `renderMediaFolders`) suggest there is a separate settings component where users can manage their library visibility for the carousel. This code relies on global objects like **`ApiClient`** and **`require(["toast"])`**, common in the Emby/Jellyfin environment, to handle saving user preferences.
 
+------
+
+🧪 Tested On
+- ✅ Emby Web v4.9.1.90
+- ✅ Chrome, Firefox, Edge
+- ✅ Mobile and desktop views
+- 
+## 📸 Banner Previews
+
+![Screenshot 45](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_45.png)  
+![Screenshot 47](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_47.png)
 -----
 
 ## 🙋 Contributing

@@ -17,21 +17,19 @@
    <script src="/path/to/home.js"></script>
    ```
 
----
-
 ## 🎯 Key Features
 
-| Feature               | Description                                                                 |
-|-----------------------|-----------------------------------------------------------------------------|
-| ✅ Lightweight         | No external libraries required                                              |
-| ✅ Native API Support  | Built for Emby 4.9.1.80 using `ApiClient`                                   |
-| ✅ Auto-Sliding Banner | Rotates every 8 seconds                                                     |
-| ✅ Navigation Controls | Includes previous/next buttons                                              |
-| ✅ Indicator Dots      | Clickable dots for direct navigation                                        |
-| ✅ Responsive Design   | Mobile and desktop friendly                                                 |
-| ✅ Hover Pause         | Stops rotation when hovered                                                 |
-| ✅ Error Handling      | Graceful fallback if images or API fail                                    |
-| ✅ Lazy Loading        | Loads images only when needed for better performance                        |
+| Feature              | Description                                           |
+|----------------------|-------------------------------------------------------|
+| ✅ Lightweight        | No external libraries required                        |
+| ✅ Native API Support | Built for Emby 4.9.1.80-90 using `ApiClient`             |
+| ✅ Auto-Sliding Banner| Rotates every 8 seconds                               |
+| ✅ Navigation Controls| Includes previous/next buttons                        |
+| ✅ Indicator Dots     | Clickable dots for direct navigation                  |
+| ✅ Responsive Design  | Mobile and desktop friendly                           |
+| ✅ Hover Pause        | Stops rotation when hovered                           |
+| ✅ Error Handling     | Graceful fallback if images or API fail               |
+| ✅ Lazy Loading       | Loads images only when needed for better performance |
 
 ---
 
@@ -55,8 +53,8 @@
 
 ## 📸 Preview
 
-![Banner Example 1](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v1/img/Screenshot_45.png?raw=true)  
-![Banner Example 2](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v1/img/Screenshot_47.png?raw=true)
+![Banner Example 1](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v1/img/Screenshot_52.png?raw=true)  
+![Banner Example 2](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v1/img/Screenshot_53.png?raw=true)
 
 ---
 

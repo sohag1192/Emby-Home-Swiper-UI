@@ -30,7 +30,7 @@
 
 ## 📸 Preview
 
-![Banner Example 1](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v1/img/Screenshot_46.png?raw=true)  
+![Banner Example 1](https://github.com/sohag1192/Emby-banner-content-display-/blob/main/v2/img/Screenshot_46.png?raw=true)  
 
 
 This version is much simpler and should work reliably with Emby Web 4.9.1.80.

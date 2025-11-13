@@ -2,8 +2,8 @@
 
 ---
 
-## 🛠️ Installation Steps (Simplified)
-
+## 🛠️ Installation Steps (Simplified) ![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI%2Ftree%2Fmain%2Fv1&label=&icon=github&color=%23198754&message=&style=for-the-badge&tz=UTC)
+ 
 1. **Download & Save**  
    Save your script as `home.js`.
 

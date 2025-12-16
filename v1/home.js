@@ -9,14 +9,31 @@ class CommonUtils {
 }
 class HomeSwiper {
 	static start() {
-		this.itemQuery = { ImageTypes: "Primary,Backdrop", EnableImageTypes: "Primary,Backdrop,Banner,Logo", IncludeItemTypes: "Movie,Series,Photo", SortBy: "ProductionYear, PremiereDate, SortName", Recursive: true, ImageTypeLimit: 1, Limit: 10, Fields: "Taglines,Overview,ParentId", SortOrder: "Descending", EnableUserData: true, EnableTotalRecordCount: false };
+		// UPDATED QUERY:
+		// 1. IncludeItemTypes: Set to "Movie,Series" to show only those types.
+		// 2. SortBy: Set to "DateCreated" to show the most recently added items first.
+		this.itemQuery = { 
+			ImageTypes: "Primary,Backdrop", 
+			EnableImageTypes: "Primary,Backdrop,Banner,Logo", 
+			IncludeItemTypes: "Movie,Series", 
+			SortBy: "DateCreated", 
+			Recursive: true, 
+			ImageTypeLimit: 1, 
+			Limit: 10, 
+			Fields: "Taglines,Overview,ParentId", 
+			SortOrder: "Descending", 
+			EnableUserData: true, 
+			EnableTotalRecordCount: false 
+		};
+
 		this.backdropOptions = { type: "Backdrop", maxWidth: 3000, adjustForPixelRatio: false };
 		this.logoOptions = { type: "Logo", maxWidth: 500, adjustForPixelRatio: false };
 		this.coverOptions = { type: "Primary", maxWidth: 1000, adjustForPixelRatio: false };
 		this.itemQuery.Limit = 9;
 		this.showItemNum = 9;
-		this.loadFlag = false; // Whether it has already been loaded
-		this.flag_cssjs = true; // Indicates if it's loaded via the cssjs plugin; fixes issue where plugin might not run on first load
+		this.loadFlag = false; 
+		this.flag_cssjs = true; 
+
 
 // Swiper Css  //
 this.SwiperCss=` @font-face {

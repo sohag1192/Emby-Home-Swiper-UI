@@ -17,11 +17,11 @@ class HomeSwiper {
         const styles = `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-        /* --- BANNER LAYOUT --- */
+        /* --- MAIN BANNER --- */
         .misty-home-banner {
             position: relative;
             width: 100%;
-            height: 85vh; /* Increased height to fit library slider */
+            height: 85vh;
             max-height: 1000px;
             min-height: 650px;
             overflow: hidden;
@@ -57,7 +57,7 @@ class HomeSwiper {
         }
         
         .misty-banner-content {
-            position: absolute; bottom: 22%; /* Moved up for library slider */
+            position: absolute; bottom: 25%; /* Adjusted for slider */
             left: 6%; width: 45%; z-index: 3; color: white;
             display: flex; flex-direction: column; gap: 20px;
         }
@@ -105,7 +105,6 @@ class HomeSwiper {
         
         .misty-banner-actions { display: flex; gap: 15px; margin-top: 15px; }
         
-        /* --- BUTTONS --- */
         .misty-btn {
             border: none; padding: 10px 24px; border-radius: 6px;
             font-size: 1rem; font-weight: 700; cursor: pointer;
@@ -126,59 +125,83 @@ class HomeSwiper {
         
         .misty-btn-more:hover { background: rgba(109, 109, 110, 0.9); transform: scale(1.05); }
 
-        /* --- LIBRARY SLIDER (NEW) --- */
+        /* --- LIBRARY SLIDER WITH IMAGES --- */
         .misty-library-slider {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 100px;
+            height: 140px; /* Taller for images */
             z-index: 10;
             display: flex;
             align-items: center;
             padding: 0 6%;
             gap: 15px;
             overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
             mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
         }
         
         .misty-library-slider::-webkit-scrollbar { display: none; }
 
         .misty-library-card {
             flex: 0 0 auto;
-            min-width: 140px;
-            height: 60px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.15);
+            width: 180px;
+            height: 90px;
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: white;
-            text-decoration: none;
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 0 20px;
-            font-weight: 600;
-            font-size: 0.95rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .misty-library-card:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-5px);
-            border-color: rgba(255,255,255,0.5);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform: translateY(-5px) scale(1.05);
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .misty-lib-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .misty-library-card:hover .misty-lib-img {
+            transform: scale(1.1);
+        }
+
+        .misty-lib-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4); /* Darkens the image so text pops */
+            transition: background 0.3s;
         }
         
-        .misty-library-icon {
-            width: 24px;
-            height: 24px;
-            opacity: 0.9;
+        .misty-library-card:hover .misty-lib-overlay {
+            background: rgba(0,0,0,0.2); /* Lightens on hover */
+        }
+
+        .misty-lib-name {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            z-index: 2;
+            text-align: center;
+            padding: 5px;
         }
 
         /* --- NAV & INDICATORS --- */
@@ -189,14 +212,13 @@ class HomeSwiper {
             transition: opacity 0.3s ease; display: flex;
             align-items: center; justify-content: center;
         }
-
         .misty-home-banner:hover .misty-banner-nav { opacity: 1; }
         .misty-banner-nav:hover { background: rgba(0,0,0,0.2); }
         .misty-banner-prev { left: 0; }
         .misty-banner-next { right: 0; }
         
         .misty-banner-indicators {
-            position: absolute; bottom: 120px; /* Moved above library slider */
+            position: absolute; bottom: 150px; /* Moved above library slider */
             right: 6%; display: flex; gap: 12px; z-index: 10;
         }
         
@@ -204,48 +226,44 @@ class HomeSwiper {
             width: 40px; height: 4px; background: rgba(255,255,255,0.3);
             cursor: pointer; transition: all 0.3s; border-radius: 2px;
         }
-        
-        .misty-banner-indicator.active {
-            background: white; width: 60px; box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
+        .misty-banner-indicator.active { background: white; width: 60px; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
 
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
             .misty-home-banner { height: 75vh; min-height: 600px; }
-            .misty-banner-content { width: 70%; left: 40px; bottom: 140px; }
-            .misty-logo-container { max-width: 450px; max-height: 200px; }
-            .misty-banner-title-text { font-size: 3rem; }
-            .misty-library-slider { padding: 0 40px; }
+            .misty-banner-content { width: 70%; left: 40px; bottom: 180px; }
+            .misty-library-slider { height: 120px; padding: 0 40px; }
+            .misty-library-card { width: 150px; height: 80px; }
         }
 
         @media (max-width: 768px) {
             .misty-home-banner { height: 70vh; min-height: 500px; }
-            .misty-banner-content { width: 85%; left: 30px; bottom: 120px; }
+            .misty-banner-content { width: 85%; left: 30px; bottom: 150px; }
             .misty-logo-container { max-width: 350px; max-height: 160px; }
             .misty-banner-title-text { font-size: 2.5rem; }
             .misty-banner-description { font-size: 1rem; -webkit-line-clamp: 2; }
             .misty-banner-nav { display: none; }
-            .misty-banner-indicators { right: 30px; bottom: 110px; }
-            .misty-library-slider { height: 90px; padding: 0 20px; mask-image: none; }
-            .misty-library-card { min-width: 110px; height: 50px; font-size: 0.9rem; padding: 0 15px; }
+            .misty-banner-indicators { right: 30px; bottom: 130px; }
+            .misty-library-slider { height: 110px; padding: 0 20px; mask-image: none; }
+            .misty-library-card { width: 130px; height: 70px; }
+            .misty-lib-name { font-size: 0.9rem; }
         }
 
         @media (max-width: 480px) {
-            .misty-home-banner { height: 90vh; min-height: 450px; }
-            .misty-banner-content { width: 90%; left: 5%; bottom: 100px; align-items: center; text-align: center; }
-            .misty-logo-container { max-width: 280px; max-height: 140px; justify-content: center; align-items: flex-end; margin-bottom: 5px; }
+            .misty-home-banner { height: 90vh; min-height: 500px; }
+            .misty-banner-content { width: 90%; left: 5%; bottom: 130px; align-items: center; text-align: center; }
+            .misty-logo-container { max-width: 250px; max-height: 120px; justify-content: center; align-items: flex-end; margin-bottom: 5px; }
             .misty-banner-logo { object-position: bottom center; }
             .misty-banner-title-text { font-size: 2rem; }
             .misty-banner-meta { justify-content: center; font-size: 0.9em; gap: 10px; }
             .misty-banner-description { display: none; } 
             .misty-banner-actions { width: 100%; gap: 10px; flex-direction: row; }
             .misty-btn { flex: 1; padding: 12px 10px; font-size: 0.95rem; }
-            .misty-banner-indicators { left: 50%; transform: translateX(-50%); right: auto; bottom: 90px; gap: 6px; }
-            .misty-banner-indicator { width: 6px; height: 6px; border-radius: 50%; }
-            .misty-banner-indicator.active { width: 8px; height: 8px; }
-            .misty-library-slider { height: 80px; }
+            .misty-banner-indicators { left: 50%; transform: translateX(-50%); right: auto; bottom: 110px; gap: 6px; }
+            .misty-library-slider { height: 100px; }
+            .misty-library-card { width: 120px; height: 60px; }
         }
         `;
 
@@ -276,7 +294,7 @@ class HomeSwiper {
     static async createBanner() {
         try {
             const items = await this.getBannerItems();
-            const libraries = await this.getLibraries(); // Fetch libraries
+            const libraries = await this.getLibraries();
             
             if (!items || items.length === 0) return null;
 
@@ -291,12 +309,17 @@ class HomeSwiper {
                 <div class="misty-banner-indicator ${index === 0 ? 'active' : ''}" data-index="${index}"></div>
             `).join('');
 
-            // Generate Library Pills
-            const libraryHTML = libraries.map(lib => `
-                <a class="misty-library-card" onclick="Emby.Page.showItem('${lib.Id}')">
-                    <span>${this.escapeHtml(lib.Name)}</span>
-                </a>
-            `).join('');
+            // Generate Library Cards with Images
+            const libraryHTML = libraries.map(lib => {
+                const imgUrl = this.getLibraryImageUrl(lib);
+                return `
+                <div class="misty-library-card" onclick="Emby.Page.showItem('${lib.Id}')">
+                    <img class="misty-lib-img" src="${imgUrl}" loading="lazy" alt="${lib.Name}" />
+                    <div class="misty-lib-overlay"></div>
+                    <span class="misty-lib-name">${this.escapeHtml(lib.Name)}</span>
+                </div>
+                `;
+            }).join('');
 
             banner.innerHTML = `
                 <div class="misty-banner-slides">${slidesHTML}</div>
@@ -380,6 +403,19 @@ class HomeSwiper {
             console.error('Failed to fetch libraries:', error);
             return [];
         }
+    }
+
+    static getLibraryImageUrl(item) {
+        if (!ApiClient.getImageUrl) return '';
+        // Try Primary image (standard for libraries)
+        if (item.ImageTags && item.ImageTags.Primary) {
+            return ApiClient.getImageUrl(item.Id, {
+                type: 'Primary',
+                maxWidth: 400,
+                tag: item.ImageTags.Primary
+            });
+        }
+        return ''; // Fallback if no image
     }
 
     static async getBannerItems() {

@@ -2,12 +2,8 @@ class HomeSwiper {
     static init() {
         console.log('HomeSwiper Cinematic initializing...');
         
-        // Check if we're on home page
-        if (!window.location.hash.includes('#!/home')) {
-            return;
-        }
+        if (!window.location.hash.includes('#!/home')) return;
 
-        // Wait for Emby to be ready
         if (!window.ApiClient) {
             setTimeout(() => HomeSwiper.init(), 100);
             return;
@@ -52,10 +48,7 @@ class HomeSwiper {
             z-index: 1;
         }
         
-        .misty-banner-slide.active {
-            opacity: 1;
-            z-index: 2;
-        }
+        .misty-banner-slide.active { opacity: 1; z-index: 2; }
         
         .misty-banner-image {
             width: 100%;
@@ -71,7 +64,6 @@ class HomeSwiper {
             transition: transform 12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
-        /* Cinematic Gradient - Darker at bottom for text readability */
         .misty-banner-gradient {
             position: absolute;
             inset: 0;
@@ -98,7 +90,6 @@ class HomeSwiper {
             transform: translateY(30px);
         }
         
-        /* Logo Styles */
         .misty-logo-container {
             max-width: 600px;
             width: 100%;
@@ -164,21 +155,24 @@ class HomeSwiper {
         
         .misty-banner-actions {
             display: flex;
-            gap: 20px;
+            gap: 15px; /* Reduced gap slightly */
             margin-top: 15px;
         }
         
+        /* --- SMALLER BUTTONS --- */
         .misty-btn {
             border: none;
-            padding: 16px 36px;
-            border-radius: 8px;
-            font-size: 1.1em;
+            /* Smaller padding */
+            padding: 10px 24px; 
+            border-radius: 6px;
+            /* Smaller font */
+            font-size: 1rem; 
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 8px; /* Reduced gap between icon and text */
             transition: all 0.2s ease;
             white-space: nowrap;
         }
@@ -191,7 +185,7 @@ class HomeSwiper {
         
         .misty-btn-play:hover {
             background: rgba(255,255,255,0.9);
-            transform: scale(1.02);
+            transform: scale(1.05);
         }
         
         .misty-btn-more {
@@ -203,10 +197,9 @@ class HomeSwiper {
         
         .misty-btn-more:hover {
             background: rgba(109, 109, 110, 0.9);
-            transform: scale(1.02);
+            transform: scale(1.05);
         }
 
-        /* Nav Arrows */
         .misty-banner-nav {
             position: absolute;
             top: 0;
@@ -230,7 +223,6 @@ class HomeSwiper {
         .misty-banner-prev { left: 0; }
         .misty-banner-next { right: 0; }
         
-        /* Indicators (Dots) */
         .misty-banner-indicators {
             position: absolute;
             bottom: 40px;
@@ -259,9 +251,8 @@ class HomeSwiper {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- RESPONSIVE BREAKPOINTS (GOOD UI) --- */
+        /* --- RESPONSIVE BREAKPOINTS --- */
 
-        /* Tablet (1024px and below) */
         @media (max-width: 1024px) {
             .misty-home-banner { height: 70vh; min-height: 500px; }
             .misty-banner-content { width: 70%; left: 40px; bottom: 80px; }
@@ -269,75 +260,27 @@ class HomeSwiper {
             .misty-banner-title-text { font-size: 3rem; }
         }
 
-        /* Mobile Landscape (768px and below) */
         @media (max-width: 768px) {
             .misty-home-banner { height: 60vh; min-height: 450px; }
             .misty-banner-content { width: 85%; left: 30px; bottom: 60px; }
             .misty-logo-container { max-width: 350px; max-height: 160px; }
             .misty-banner-title-text { font-size: 2.5rem; }
             .misty-banner-description { font-size: 1rem; -webkit-line-clamp: 2; }
-            .misty-banner-nav { display: none; } /* Hide arrows, use swipe */
+            .misty-banner-nav { display: none; }
             .misty-banner-indicators { right: 30px; bottom: 30px; }
         }
 
-        /* Mobile Portrait (480px and below) */
         @media (max-width: 480px) {
-            .misty-home-banner { 
-                height: 85vh; /* Taller on mobile to show more image */
-                min-height: 400px; 
-            }
-            
-            .misty-banner-content { 
-                width: 90%; 
-                left: 5%; 
-                bottom: 40px; 
-                align-items: center; /* Center align for mobile */
-                text-align: center;
-            }
-            
-            /* Center the logo on mobile */
-            .misty-logo-container { 
-                max-width: 280px; 
-                max-height: 140px; 
-                justify-content: center; 
-                align-items: flex-end;
-                margin-bottom: 5px;
-            }
-            
+            .misty-home-banner { height: 85vh; min-height: 400px; }
+            .misty-banner-content { width: 90%; left: 5%; bottom: 40px; align-items: center; text-align: center; }
+            .misty-logo-container { max-width: 280px; max-height: 140px; justify-content: center; align-items: flex-end; margin-bottom: 5px; }
             .misty-banner-logo { object-position: bottom center; }
-            
             .misty-banner-title-text { font-size: 2rem; }
-            
-            .misty-banner-meta { 
-                justify-content: center; 
-                font-size: 0.9em; 
-                gap: 10px;
-            }
-            
-            /* Hide description on phone to reduce clutter */
+            .misty-banner-meta { justify-content: center; font-size: 0.9em; gap: 10px; }
             .misty-banner-description { display: none; } 
-            
-            /* Stack buttons and make full width */
-            .misty-banner-actions { 
-                width: 100%; 
-                gap: 10px; 
-                flex-direction: row; /* Keep row but squeeze them */
-            }
-            
-            .misty-btn { 
-                flex: 1; 
-                padding: 14px 10px; 
-                font-size: 1rem; 
-            }
-            
-            /* Center indicators */
-            .misty-banner-indicators {
-                left: 50%;
-                transform: translateX(-50%);
-                right: auto;
-                bottom: 10px;
-                gap: 6px;
-            }
+            .misty-banner-actions { width: 100%; gap: 10px; flex-direction: row; }
+            .misty-btn { flex: 1; padding: 12px 10px; font-size: 0.95rem; }
+            .misty-banner-indicators { left: 50%; transform: translateX(-50%); right: auto; bottom: 10px; gap: 6px; }
             .misty-banner-indicator { width: 6px; height: 6px; border-radius: 50%; }
             .misty-banner-indicator.active { width: 8px; height: 8px; }
         }
@@ -406,7 +349,6 @@ class HomeSwiper {
         const rating = item.CommunityRating ? item.CommunityRating.toFixed(1) : null;
         const officialRating = item.OfficialRating || '';
         
-        // Delays for staggering animations
         const d1 = '0.1s', d2 = '0.2s', d3 = '0.3s';
         
         let titleBlock = '';
@@ -440,11 +382,11 @@ class HomeSwiper {
                     
                     <div class="misty-banner-actions misty-animate-in" style="animation-delay: 0.4s">
                         <button class="misty-btn misty-btn-play" onclick="HomeSwiper.playItem('${item.Id}')">
-                            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                             Play
                         </button>
                         <button class="misty-btn misty-btn-more" onclick="Emby.Page.showItem('${item.Id}')">
-                            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M11 7h2v2h-2zm0 4h2v6h-2z"/></svg>
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11 7h2v2h-2zm0 4h2v6h-2z"/></svg>
                             More Info
                         </button>
                     </div>
@@ -481,8 +423,8 @@ class HomeSwiper {
             if (type === 'Backdrop' && item.BackdropImageTags && item.BackdropImageTags.length > 0) {
                 return ApiClient.getImageUrl(item.Id, {
                     type: 'Backdrop',
-                    maxWidth: 1920,
-                    maxHeight: 1080,
+                    maxWidth: 3840,
+                    maxHeight: 2160,
                     tag: item.BackdropImageTags[0],
                     quality: 90
                 });
@@ -525,34 +467,23 @@ class HomeSwiper {
             interval = setInterval(nextSlide, 10000);
         };
 
-        // --- BUTTON EVENTS ---
         document.querySelector('.misty-banner-next')?.addEventListener('click', () => { nextSlide(); startInterval(); });
         document.querySelector('.misty-banner-prev')?.addEventListener('click', () => { prevSlide(); startInterval(); });
         indicators.forEach((ind, i) => {
             ind.addEventListener('click', () => { showSlide(i); startInterval(); });
         });
 
-        // --- TOUCH SWIPE EVENTS (RESPONSIVE) ---
         let touchStartX = 0;
         let touchEndX = 0;
-
         if (banner) {
-            banner.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-
+            banner.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
             banner.addEventListener('touchend', (e) => {
                 touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
+                if (touchEndX < touchStartX - 50) nextSlide();
+                if (touchEndX > touchStartX + 50) prevSlide();
                 startInterval();
             }, { passive: true });
         }
-
-        const handleSwipe = () => {
-            const SWIPE_THRESHOLD = 50;
-            if (touchEndX < touchStartX - SWIPE_THRESHOLD) nextSlide(); // Swipe Left (Next)
-            if (touchEndX > touchStartX + SWIPE_THRESHOLD) prevSlide(); // Swipe Right (Prev)
-        };
 
         startInterval();
     }

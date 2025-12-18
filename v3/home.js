@@ -17,6 +17,19 @@ class HomeSwiper {
         const styles = `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
+        /* --- CLEANUP DEFAULT UI (The Fix) --- */
+        /* Remove the top padding from Emby's main container so there is no gap */
+        .padded-top-page { 
+            padding-top: 0 !important; 
+        }
+        
+        /* Hide the default "My Media" row since we added our own slider */
+        /* This targets the first section which is usually My Media */
+        .homeSectionsContainer > .verticalSection:first-child,
+        .section0 {
+            display: none !important;
+        }
+
         /* --- MAIN BANNER --- */
         .misty-home-banner {
             position: relative;
@@ -26,7 +39,7 @@ class HomeSwiper {
             min-height: 650px;
             overflow: hidden;
             background: #000;
-            margin-bottom: 40px;
+            margin-bottom: 20px; /* Reduced margin since we removed padding */
             box-shadow: 0 40px 80px -20px rgba(0,0,0,0.8);
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
@@ -57,7 +70,7 @@ class HomeSwiper {
         }
         
         .misty-banner-content {
-            position: absolute; bottom: 25%; /* Adjusted for slider */
+            position: absolute; bottom: 25%;
             left: 6%; width: 45%; z-index: 3; color: white;
             display: flex; flex-direction: column; gap: 20px;
         }
@@ -125,21 +138,11 @@ class HomeSwiper {
         
         .misty-btn-more:hover { background: rgba(109, 109, 110, 0.9); transform: scale(1.05); }
 
-        /* --- LIBRARY SLIDER WITH IMAGES --- */
+        /* --- LIBRARY SLIDER --- */
         .misty-library-slider {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 140px; /* Taller for images */
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            padding: 0 6%;
-            gap: 15px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 140px;
+            z-index: 10; display: flex; align-items: center; padding: 0 6%;
+            gap: 15px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
             background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
             mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
         }
@@ -147,13 +150,8 @@ class HomeSwiper {
         .misty-library-slider::-webkit-scrollbar { display: none; }
 
         .misty-library-card {
-            flex: 0 0 auto;
-            width: 180px;
-            height: 90px;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
+            flex: 0 0 auto; width: 180px; height: 90px; border-radius: 12px;
+            position: relative; overflow: hidden; cursor: pointer;
             border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
@@ -166,42 +164,23 @@ class HomeSwiper {
         }
 
         .misty-lib-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;
         }
 
-        .misty-library-card:hover .misty-lib-img {
-            transform: scale(1.1);
-        }
+        .misty-library-card:hover .misty-lib-img { transform: scale(1.1); }
 
         .misty-lib-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.4); /* Darkens the image so text pops */
-            transition: background 0.3s;
+            position: absolute; inset: 0; background: rgba(0,0,0,0.4); transition: background 0.3s;
         }
         
-        .misty-library-card:hover .misty-lib-overlay {
-            background: rgba(0,0,0,0.2); /* Lightens on hover */
-        }
+        .misty-library-card:hover .misty-lib-overlay { background: rgba(0,0,0,0.2); }
 
         .misty-lib-name {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
-            z-index: 2;
-            text-align: center;
-            padding: 5px;
+            position: absolute; inset: 0; display: flex; align-items: center;
+            justify-content: center; color: white; font-weight: 700;
+            font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9); z-index: 2;
+            text-align: center; padding: 5px;
         }
 
         /* --- NAV & INDICATORS --- */
@@ -218,8 +197,7 @@ class HomeSwiper {
         .misty-banner-next { right: 0; }
         
         .misty-banner-indicators {
-            position: absolute; bottom: 150px; /* Moved above library slider */
-            right: 6%; display: flex; gap: 12px; z-index: 10;
+            position: absolute; bottom: 150px; right: 6%; display: flex; gap: 12px; z-index: 10;
         }
         
         .misty-banner-indicator {

@@ -21,11 +21,12 @@ class HomeSwiper {
         const styles = `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
+        /* --- DESKTOP / DEFAULT LAYOUT --- */
         .misty-home-banner {
             position: relative;
             width: 100%;
-            height: 75vh; /* Taller for cinematic feel */
-            max-height: 900px;
+            height: 80vh; 
+            max-height: 1000px;
             min-height: 600px;
             overflow: hidden;
             background: #000;
@@ -47,7 +48,7 @@ class HomeSwiper {
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
             z-index: 1;
         }
         
@@ -56,7 +57,6 @@ class HomeSwiper {
             z-index: 2;
         }
         
-        /* The Ken Burns Effect */
         .misty-banner-image {
             width: 100%;
             height: 100%;
@@ -67,22 +67,22 @@ class HomeSwiper {
         }
         
         .misty-banner-slide.active .misty-banner-image {
-            transform: scale(1.1); /* Slow zoom effect */
+            transform: scale(1.1);
             transition: transform 12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
-        /* Advanced Gradients for Text Readability */
+        /* Cinematic Gradient - Darker at bottom for text readability */
         .misty-banner-gradient {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, #101010 0%, rgba(16,16,16,0.8) 15%, transparent 60%),
-                        linear-gradient(to right, #101010 0%, rgba(16,16,16,0.6) 30%, transparent 70%);
+            background: linear-gradient(to top, #101010 0%, rgba(16,16,16,0.9) 10%, rgba(16,16,16,0.4) 50%, transparent 100%),
+                        linear-gradient(to right, #101010 0%, rgba(16,16,16,0.7) 30%, transparent 70%);
             z-index: 2;
         }
         
         .misty-banner-content {
             position: absolute;
-            bottom: 12%;
+            bottom: 15%;
             left: 6%;
             width: 45%;
             z-index: 3;
@@ -92,31 +92,36 @@ class HomeSwiper {
             gap: 20px;
         }
 
-        /* Staggered Entrance Animations */
         .misty-banner-slide.active .misty-animate-in {
             animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             opacity: 0;
             transform: translateY(30px);
         }
         
+        /* Logo Styles */
         .misty-logo-container {
-            max-width: 500px;
+            max-width: 600px;
+            width: 100%;
             height: auto;
-            max-height: 200px;
+            max-height: 250px;
             margin-bottom: 10px;
             transform-origin: left bottom;
+            display: flex;
+            align-items: flex-end;
         }
 
         .misty-banner-logo {
-            width: 100%;
-            height: 100%;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             object-position: left bottom;
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
         }
         
         .misty-banner-title-text {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
             line-height: 1.1;
             text-shadow: 0 4px 20px rgba(0,0,0,0.8);
@@ -130,8 +135,9 @@ class HomeSwiper {
             gap: 15px;
             font-size: 1.1em;
             font-weight: 600;
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.95);
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            flex-wrap: wrap;
         }
 
         .misty-meta-tag {
@@ -140,10 +146,9 @@ class HomeSwiper {
             border-radius: 4px;
             font-size: 0.8em;
             background: rgba(0,0,0,0.3);
+            white-space: nowrap;
         }
 
-        .misty-rating-star { color: #E50914; } /* Netflix Red Accent */
-        
         .misty-banner-description {
             font-size: 1.25em;
             line-height: 1.6;
@@ -163,7 +168,6 @@ class HomeSwiper {
             margin-top: 15px;
         }
         
-        /* Modern Glassmorphism Buttons */
         .misty-btn {
             border: none;
             padding: 16px 36px;
@@ -173,8 +177,10 @@ class HomeSwiper {
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
         
         .misty-btn-play {
@@ -189,24 +195,23 @@ class HomeSwiper {
         }
         
         .misty-btn-more {
-            background: rgba(100, 100, 100, 0.4);
+            background: rgba(109, 109, 110, 0.7);
             color: white;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .misty-btn-more:hover {
-            background: rgba(100, 100, 100, 0.6);
+            background: rgba(109, 109, 110, 0.9);
             transform: scale(1.02);
         }
 
-        /* Nav & Indicators */
+        /* Nav Arrows */
         .misty-banner-nav {
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 100px;
+            width: 80px;
             background: transparent;
             border: none;
             color: white;
@@ -220,18 +225,12 @@ class HomeSwiper {
             justify-content: center;
         }
 
-        .misty-banner-nav:hover { opacity: 1; }
-        .misty-banner-nav:hover::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, transparent 70%);
-            z-index: -1;
-        }
-
+        .misty-home-banner:hover .misty-banner-nav { opacity: 1; }
+        .misty-banner-nav:hover { background: rgba(0,0,0,0.2); }
         .misty-banner-prev { left: 0; }
         .misty-banner-next { right: 0; }
         
+        /* Indicators (Dots) */
         .misty-banner-indicators {
             position: absolute;
             bottom: 40px;
@@ -257,27 +256,90 @@ class HomeSwiper {
         }
 
         @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Mobile */
-        @media (max-width: 900px) {
-            .misty-home-banner { height: 85vh; min-height: unset; }
-            .misty-banner-content { 
-                left: 20px; 
-                right: 20px; 
-                bottom: 80px; 
-                width: auto; 
-                align-items: flex-start;
-            }
-            .misty-logo-container { max-width: 70%; max-height: 150px; }
+
+        /* --- RESPONSIVE BREAKPOINTS (GOOD UI) --- */
+
+        /* Tablet (1024px and below) */
+        @media (max-width: 1024px) {
+            .misty-home-banner { height: 70vh; min-height: 500px; }
+            .misty-banner-content { width: 70%; left: 40px; bottom: 80px; }
+            .misty-logo-container { max-width: 450px; max-height: 200px; }
+            .misty-banner-title-text { font-size: 3rem; }
+        }
+
+        /* Mobile Landscape (768px and below) */
+        @media (max-width: 768px) {
+            .misty-home-banner { height: 60vh; min-height: 450px; }
+            .misty-banner-content { width: 85%; left: 30px; bottom: 60px; }
+            .misty-logo-container { max-width: 350px; max-height: 160px; }
             .misty-banner-title-text { font-size: 2.5rem; }
-            .misty-banner-description { font-size: 1rem; -webkit-line-clamp: 3; }
-            .misty-banner-indicators { bottom: 20px; right: auto; left: 20px; }
-            .misty-banner-nav { display: none; }
+            .misty-banner-description { font-size: 1rem; -webkit-line-clamp: 2; }
+            .misty-banner-nav { display: none; } /* Hide arrows, use swipe */
+            .misty-banner-indicators { right: 30px; bottom: 30px; }
+        }
+
+        /* Mobile Portrait (480px and below) */
+        @media (max-width: 480px) {
+            .misty-home-banner { 
+                height: 85vh; /* Taller on mobile to show more image */
+                min-height: 400px; 
+            }
+            
+            .misty-banner-content { 
+                width: 90%; 
+                left: 5%; 
+                bottom: 40px; 
+                align-items: center; /* Center align for mobile */
+                text-align: center;
+            }
+            
+            /* Center the logo on mobile */
+            .misty-logo-container { 
+                max-width: 280px; 
+                max-height: 140px; 
+                justify-content: center; 
+                align-items: flex-end;
+                margin-bottom: 5px;
+            }
+            
+            .misty-banner-logo { object-position: bottom center; }
+            
+            .misty-banner-title-text { font-size: 2rem; }
+            
+            .misty-banner-meta { 
+                justify-content: center; 
+                font-size: 0.9em; 
+                gap: 10px;
+            }
+            
+            /* Hide description on phone to reduce clutter */
+            .misty-banner-description { display: none; } 
+            
+            /* Stack buttons and make full width */
+            .misty-banner-actions { 
+                width: 100%; 
+                gap: 10px; 
+                flex-direction: row; /* Keep row but squeeze them */
+            }
+            
+            .misty-btn { 
+                flex: 1; 
+                padding: 14px 10px; 
+                font-size: 1rem; 
+            }
+            
+            /* Center indicators */
+            .misty-banner-indicators {
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+                bottom: 10px;
+                gap: 6px;
+            }
+            .misty-banner-indicator { width: 6px; height: 6px; border-radius: 50%; }
+            .misty-banner-indicator.active { width: 8px; height: 8px; }
         }
         `;
 
@@ -347,7 +409,6 @@ class HomeSwiper {
         // Delays for staggering animations
         const d1 = '0.1s', d2 = '0.2s', d3 = '0.3s';
         
-        // Build Title Block: Image Logo if available, Text if not
         let titleBlock = '';
         if (logoUrl) {
             titleBlock = `
@@ -401,16 +462,12 @@ class HomeSwiper {
                 SortBy: 'Random',
                 Recursive: true,
                 Limit: 5,
-                // Crucial: Request ImageTags and ParentLogoImageTag to find logos
                 Fields: 'Overview,ProductionYear,CommunityRating,OfficialRating,BackdropImageTags,ImageTags,ParentLogoImageTag,Width',
                 EnableUserData: false,
                 HasBackdropImage: true
             };
-
             const url = ApiClient.getUrl(`Users/${userId}/Items`, query);
             const response = await ApiClient.getJSON(url);
-            
-            // Return items
             return (response.Items || []).slice(0, 5);
         } catch (error) {
             console.error('Failed to fetch items:', error);
@@ -420,57 +477,41 @@ class HomeSwiper {
 
     static getImageUrl(item, type) {
         if (!ApiClient.getImageUrl) return '';
-        
         try {
             if (type === 'Backdrop' && item.BackdropImageTags && item.BackdropImageTags.length > 0) {
                 return ApiClient.getImageUrl(item.Id, {
                     type: 'Backdrop',
-                    // UPDATED SIZES HERE
                     maxWidth: 1920,
                     maxHeight: 1080,
                     tag: item.BackdropImageTags[0],
                     quality: 90
                 });
             }
-            
             if (type === 'Logo') {
-                // Try item logo first
                 if (item.ImageTags && item.ImageTags.Logo) {
-                    return ApiClient.getImageUrl(item.Id, {
-                        type: 'Logo',
-                        maxWidth: 800,
-                        tag: item.ImageTags.Logo
-                    });
+                    return ApiClient.getImageUrl(item.Id, { type: 'Logo', maxWidth: 800, tag: item.ImageTags.Logo });
                 }
-                // Try parent logo (useful for TV episodes/seasons)
                 if (item.ParentLogoImageTag) {
-                    return ApiClient.getImageUrl(item.ParentLogoItemId, {
-                        type: 'Logo',
-                        maxWidth: 800,
-                        tag: item.ParentLogoImageTag
-                    });
+                    return ApiClient.getImageUrl(item.ParentLogoItemId, { type: 'Logo', maxWidth: 800, tag: item.ParentLogoImageTag });
                 }
             }
-        } catch (error) {
-            console.error('Image Error:', error);
-        }
+        } catch (error) { console.error('Image Error:', error); }
         return '';
     }
 
     static startPremiumCarousel() {
         const slides = document.querySelectorAll('.misty-banner-slide');
         const indicators = document.querySelectorAll('.misty-banner-indicator');
+        const banner = document.querySelector('.misty-home-banner');
+        
         let currentSlide = 0;
         let interval;
 
         const showSlide = (index) => {
             slides.forEach(s => s.classList.remove('active'));
             indicators.forEach(i => i.classList.remove('active'));
-            
-            // Wrap around
             if (index >= slides.length) index = 0;
             if (index < 0) index = slides.length - 1;
-            
             currentSlide = index;
             slides[currentSlide].classList.add('active');
             indicators[currentSlide].classList.add('active');
@@ -479,29 +520,39 @@ class HomeSwiper {
         const nextSlide = () => showSlide(currentSlide + 1);
         const prevSlide = () => showSlide(currentSlide - 1);
 
-        // Auto Advance
         const startInterval = () => {
             clearInterval(interval);
-            interval = setInterval(nextSlide, 10000); // 10 seconds per slide
+            interval = setInterval(nextSlide, 10000);
         };
 
-        // Event Listeners
-        document.querySelector('.misty-banner-next')?.addEventListener('click', () => {
-            nextSlide();
-            startInterval();
-        });
-        
-        document.querySelector('.misty-banner-prev')?.addEventListener('click', () => {
-            prevSlide();
-            startInterval();
+        // --- BUTTON EVENTS ---
+        document.querySelector('.misty-banner-next')?.addEventListener('click', () => { nextSlide(); startInterval(); });
+        document.querySelector('.misty-banner-prev')?.addEventListener('click', () => { prevSlide(); startInterval(); });
+        indicators.forEach((ind, i) => {
+            ind.addEventListener('click', () => { showSlide(i); startInterval(); });
         });
 
-        indicators.forEach((ind, i) => {
-            ind.addEventListener('click', () => {
-                showSlide(i);
+        // --- TOUCH SWIPE EVENTS (RESPONSIVE) ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        if (banner) {
+            banner.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            banner.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
                 startInterval();
-            });
-        });
+            }, { passive: true });
+        }
+
+        const handleSwipe = () => {
+            const SWIPE_THRESHOLD = 50;
+            if (touchEndX < touchStartX - SWIPE_THRESHOLD) nextSlide(); // Swipe Left (Next)
+            if (touchEndX > touchStartX + SWIPE_THRESHOLD) prevSlide(); // Swipe Right (Prev)
+        };
 
         startInterval();
     }

@@ -4,15 +4,13 @@ class HomeSwiper {
     static bannerId = 'misty-banner-root';
 
     static init() {
-        console.log('%c[HomeSwiper] 🎬 Initializing Cinema Fill Mode...', 'color: #e50914; font-weight: bold;');
+        console.log('%c[HomeSwiper] 🔟 Initializing (Top 10 Latest)...', 'color: #ff4444; font-weight: bold;');
 
-        // Wait for Emby core
         if (!window.ApiClient) {
             setTimeout(() => HomeSwiper.init(), 500);
             return;
         }
 
-        // Only run on Home
         const isHome = window.location.hash.includes('home') || document.body.classList.contains('home');
         if (!isHome && !window.location.hash.includes('!/home')) return;
 
@@ -22,7 +20,6 @@ class HomeSwiper {
     static async startUp() {
         this.injectStyles();
         
-        // Find the main scroll container
         let container = document.querySelector('.scrollSlider.verticalSections') ||
                         document.querySelector('.homeSectionsContainer') || 
                         document.querySelector('.mainAnimatedPages');
@@ -32,7 +29,6 @@ class HomeSwiper {
             return;
         }
 
-        // Prevent duplicates
         if (document.getElementById(this.bannerId)) return;
 
         const items = await this.fetchItems();
@@ -40,7 +36,6 @@ class HomeSwiper {
 
         const banner = this.createBannerHtml(items);
         
-        // Inject at the very top
         if (container.firstChild) {
             container.insertBefore(banner, container.firstChild);
         } else {
@@ -67,11 +62,12 @@ class HomeSwiper {
             const userId = ApiClient.getCurrentUserId();
             const result = await ApiClient.getItems(userId, {
                 IncludeItemTypes: "Movie,Series",
-                SortBy: "Random",
+                SortBy: "DateCreated", 
+                SortOrder: "Descending",
                 Recursive: true,
-                Fields: "Overview,BackdropImageTags,ImageTags,UserData,OfficialRating",
+                Fields: "Overview,BackdropImageTags,ImageTags,UserData,OfficialRating,CommunityRating",
                 ImageTypes: "Backdrop",
-                Limit: 5
+                Limit: 10
             });
             return result.Items.filter(i => i.BackdropImageTags && i.BackdropImageTags.length > 0);
         } catch (e) { return []; }
@@ -82,16 +78,17 @@ class HomeSwiper {
         wrapper.id = this.bannerId;
         wrapper.className = 'misty-banner-wrapper';
 
+        // --- DEFINED HERE TO REUSE ---
+        const hitCounterHtml = `
+            <img class="misty-hit-badge" 
+                 src="https://hitscounter.dev/api/hit?url=http%3A%2F%2F100.100.100.6%3A8096%2F&label=Hits&icon=github&color=%23198754&message=&style=flat&tz=UTC" 
+                 alt="Hits">`;
+
         const slides = items.map((item, i) => {
-            // Force High Quality
             const backdrop = ApiClient.getImageUrl(item.Id, { 
-                type: 'Backdrop', 
-                maxWidth: 3840, 
-                quality: 90,
-                tag: item.BackdropImageTags[0]
+                type: 'Backdrop', maxWidth: 3840, quality: 90, tag: item.BackdropImageTags[0]
             });
             
-            // Logo or Text
             let titleHtml;
             if (item.ImageTags && item.ImageTags.Logo) {
                 const logoUrl = ApiClient.getImageUrl(item.Id, { type: 'Logo', maxWidth: 800 });
@@ -100,9 +97,28 @@ class HomeSwiper {
                 titleHtml = `<h1 class="misty-title-text">${item.Name}</h1>`;
             }
 
-            // Rating / Views
+            const officialRating = item.OfficialRating 
+                ? `<span class="misty-tag misty-content-rating">${item.OfficialRating}</span>` 
+                : '';
+
+            let starRating = '';
+            if (item.CommunityRating) {
+                starRating = `
+                    <span class="misty-tag misty-star-rating">
+                        <span class="misty-star-icon">★</span> ${item.CommunityRating.toFixed(1)}
+                    </span>`;
+            }
+
             const playCount = item.UserData && item.UserData.PlayCount ? item.UserData.PlayCount : 0;
-            const rating = item.OfficialRating ? `<span class="misty-rating">${item.OfficialRating}</span>` : '';
+            
+            // --- UPDATED: Removed eye icon ---
+            const viewCount = `
+                <span class="misty-tag misty-views">
+                    ${playCount} Plays
+                </span>`;
+
+            // Badge only for the absolute newest (item 0)
+            const newBadge = i === 0 ? `<span class="misty-tag misty-new-badge">NEW</span>` : '';
 
             return `
                 <div class="misty-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
@@ -110,11 +126,16 @@ class HomeSwiper {
                     <div class="misty-overlay"></div>
                     <div class="misty-content">
                         ${titleHtml}
-                        <div class="misty-meta">
-                            ${rating}
-                            <span class="misty-views">👁 ${playCount} Views</span>
-                        </div>
+                        
+                        <div class="misty-meta-row">
+                            ${newBadge}
+                            ${officialRating}
+                            ${starRating}
+                            ${viewCount}
+                            ${hitCounterHtml} </div>
+
                         <p class="misty-desc">${item.Overview || ''}</p>
+                        
                         <div class="misty-actions">
                             <button class="misty-btn-play" onclick="HomeSwiper.play('${item.Id}')">▶ Play</button>
                             <button class="misty-btn-info" onclick="Emby.Page.showItem('${item.Id}')">More Info</button>
@@ -185,103 +206,64 @@ class HomeSwiper {
     static injectStyles() {
         if (document.getElementById('misty-css')) return;
         const css = `
-            /* MAIN WRAPPER */
-            .misty-banner-wrapper { 
-                width: 100%; 
-                margin-bottom: 20px; 
-                position: relative; 
-                z-index: 0;
-            }
-            
-            /* HEIGHT FIX: Force 70% Screen Height */
+            .misty-banner-wrapper { width: 100%; margin-bottom: 20px; position: relative; z-index: 0; }
             .misty-ratio-box { 
-                position: relative; 
-                width: 100%; 
-                height: 70vh;  /* FIXED HEIGHT - Forces it open */
-                min-height: 600px; /* Minimum height for small screens */
-                background: #000; 
-                overflow: hidden; 
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+                position: relative; width: 100%; height: 70vh; min-height: 600px;
+                background: #000; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             }
-
-            /* SLIDES */
             .misty-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; z-index: 1; }
             .misty-slide.active { opacity: 1; z-index: 2; }
-            
-            /* IMAGE */
             .misty-bg { 
-                width: 100%; 
-                height: 100%; 
-                object-fit: cover; 
-                object-position: center top; /* Focus on faces/top */
-                transform: scale(1); 
-                transition: transform 10s ease;
+                width: 100%; height: 100%; object-fit: cover; object-position: center top; 
+                transform: scale(1); transition: transform 10s ease;
             }
             .misty-slide.active .misty-bg { transform: scale(1.05); }
-            
-            /* GRADIENT */
             .misty-overlay { 
-                position: absolute; 
-                inset: 0; 
+                position: absolute; inset: 0; 
                 background: linear-gradient(to top, #141414 5%, rgba(20,20,20,0.8) 30%, transparent 100%);
             }
-            
-            /* CONTENT LAYOUT */
             .misty-content { 
-                position: absolute; bottom: 0; left: 0; 
-                width: 100%; padding: 40px 5%; 
-                z-index: 10; 
-                display: flex; flex-direction: column; align-items: flex-start;
+                position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 5%; 
+                z-index: 10; display: flex; flex-direction: column; align-items: flex-start;
             }
-
-            /* LOGO */
             .misty-logo { 
                 max-width: 450px; width: 80%; height: auto; max-height: 200px; 
-                margin-bottom: 15px; 
-                object-fit: contain; object-position: left bottom;
-                filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
-                opacity: 0; transform: translateY(20px); transition: all 0.6s 0.1s;
+                margin-bottom: 15px; object-fit: contain; object-position: left bottom;
+                filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8)); opacity: 0; transform: translateY(20px); transition: all 0.6s 0.1s;
             }
             .misty-title-text { font-size: 3rem; color: #fff; margin-bottom: 10px; font-weight: 800; }
-
-            /* META INFO */
-            .misty-meta { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; color: #ddd; font-weight: 600; font-size: 0.9rem; opacity: 0; transform: translateY(20px); transition: all 0.6s 0.2s; }
-            .misty-rating { border: 1px solid #fff; padding: 2px 6px; border-radius: 4px; }
-            
-            /* DESCRIPTION */
+            .misty-meta-row { 
+                display: flex; align-items: center; gap: 12px; margin-bottom: 20px; 
+                opacity: 0; transform: translateY(20px); transition: all 0.6s 0.2s; 
+                flex-wrap: wrap;
+            }
+            .misty-tag {
+                display: flex; align-items: center; justify-content: center;
+                height: 28px; padding: 0 10px; border-radius: 4px;
+                font-weight: 700; font-size: 0.9rem; letter-spacing: 0.5px;
+            }
+            .misty-hit-badge { height: 20px; border-radius: 3px; }
+            .misty-new-badge { background: #e50914; color: white; border: none; }
+            .misty-content-rating { border: 2px solid rgba(255,255,255,0.7); color: #fff; background: rgba(0,0,0,0.3); }
+            .misty-star-rating { color: #ffd700; background: rgba(0,0,0,0.6); border: 1px solid rgba(255, 215, 0, 0.3); gap: 5px; }
+            .misty-star-icon { font-size: 1.1rem; }
+            .misty-views { color: #ddd; font-size: 0.85rem; font-weight: 600; background: transparent; padding-left: 0; gap: 6px; }
             .misty-desc { 
-                color: #ccc; font-size: 1.1rem; line-height: 1.5; 
-                margin-bottom: 25px; max-width: 700px; 
-                display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+                color: #ccc; font-size: 1.1rem; line-height: 1.5; margin-bottom: 25px; 
+                max-width: 700px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
                 opacity: 0; transform: translateY(20px); transition: all 0.6s 0.3s;
             }
-            .misty-slide.active .misty-logo, .misty-slide.active .misty-meta, .misty-slide.active .misty-desc { opacity: 1; transform: translateY(0); }
-
-            /* BUTTONS */
+            .misty-slide.active .misty-logo, .misty-slide.active .misty-meta-row, .misty-slide.active .misty-desc { opacity: 1; transform: translateY(0); }
             .misty-actions { display: flex; gap: 15px; opacity: 0; transform: translateY(20px); transition: all 0.6s 0.4s; }
             .misty-slide.active .misty-actions { opacity: 1; transform: translateY(0); }
-            
-            .misty-btn-play { 
-                background: #fff; color: #000; border: none; 
-                padding: 12px 32px; font-weight: bold; font-size: 1rem; 
-                border-radius: 6px; cursor: pointer; transition: transform 0.2s; 
-            }
+            .misty-btn-play { background: #fff; color: #000; border: none; padding: 12px 32px; font-weight: bold; font-size: 1rem; border-radius: 6px; cursor: pointer; transition: transform 0.2s; }
             .misty-btn-play:hover { transform: scale(1.05); }
-            
-            .misty-btn-info { 
-                background: rgba(100,100,100,0.5); color: #fff; 
-                border: none; padding: 12px 32px; font-weight: bold; font-size: 1rem; 
-                border-radius: 6px; backdrop-filter: blur(10px); cursor: pointer; 
-                transition: background 0.2s; 
-            }
+            .misty-btn-info { background: rgba(100,100,100,0.5); color: #fff; border: none; padding: 12px 32px; font-weight: bold; font-size: 1rem; border-radius: 6px; backdrop-filter: blur(10px); cursor: pointer; transition: background 0.2s; }
             .misty-btn-info:hover { background: rgba(100,100,100,0.7); }
-            
-            /* DOTS */
-            .misty-indicators { position: absolute; bottom: 40px; right: 40px; display: flex; gap: 10px; z-index: 20; }
-            .misty-dot { width: 10px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer; }
+            .misty-indicators { position: absolute; bottom: 40px; right: 40px; display: flex; gap: 8px; z-index: 20; max-width: 400px; flex-wrap: wrap; }
+            .misty-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer; }
             .misty-dot.active { background: #fff; transform: scale(1.3); }
 
-            /* MOBILE ADJUSTMENTS */
             @media (max-width: 768px) {
                 .misty-ratio-box { height: 80vh; min-height: 500px; }
                 .misty-content { padding: 20px; bottom: 20px; }

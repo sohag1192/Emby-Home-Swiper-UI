@@ -1,434 +1,397 @@
 class HomeSwiper {
+    static interval = null;
+    static touchStartX = 0;
+    static touchEndX = 0;
+    static currentSlide = 0;
+
     static init() {
-        console.log('HomeSwiper initializing...');
+        console.log('%c[HomeSwiper] Initializing UI...', 'color: #00a4dc; font-weight: bold;');
         
-        // Check if we're on home page
-        if (!window.location.hash.includes('#!/home')) {
-            return;
-        }
-
-        // Wait for Emby to be ready
+        // 1. Basic Safety Checks
+        if (!window.location.href.includes('home')) return;
+        
+        // 2. Wait for Emby's ApiClient
         if (!window.ApiClient) {
-            setTimeout(() => HomeSwiper.init(), 100);
+            setTimeout(() => HomeSwiper.init(), 200);
             return;
         }
 
-        this.setupStyles();
-        this.setupBanner();
+        this.cleanup();
+        this.injectStyles();
+        this.mount();
     }
 
-    static setupStyles() {
-        const styles = `
-        .misty-home-banner {
-            position: relative;
-            width: 100%;
-            height: 56vw;
-            max-height: 70vh;
-            min-height: 400px;
-            overflow: hidden;
-            background: #000;
-            margin-bottom: 20px;
-        }
-        
-        .misty-banner-slides {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        
-        .misty-banner-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-        
-        .misty-banner-slide.active {
-            opacity: 1;
-        }
-        
-        .misty-banner-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-        
-        .misty-banner-content {
-            position: absolute;
-            bottom: 100px;
-            left: 50px;
-            max-width: 600px;
-            color: white;
-            z-index: 2;
-        }
-        
-        .misty-banner-title {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        }
-        
-        .misty-banner-description {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .misty-banner-button {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid #fff;
-            color: #fff;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .misty-banner-button:hover {
-            background: #fff;
-            color: #000;
-        }
-        
-        .misty-banner-indicators {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 2;
-        }
-        
-        .misty-banner-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .misty-banner-indicator.active {
-            background: #fff;
-            transform: scale(1.2);
-        }
-        
-        .misty-banner-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .misty-banner-prev {
-            left: 20px;
-        }
-        
-        .misty-banner-next {
-            right: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .misty-home-banner {
-                height: 60vh;
-                min-height: 300px;
+    static cleanup() {
+        if (this.interval) clearInterval(this.interval);
+        document.querySelectorAll('.misty-banner-wrapper').forEach(e => e.remove());
+        const oldStyle = document.getElementById('misty-banner-css');
+        if (oldStyle) oldStyle.remove();
+    }
+
+    static injectStyles() {
+        const css = `
+            /* CONTAINER */
+            .misty-banner-wrapper {
+                width: 100%;
+                margin-bottom: 40px;
+                position: relative;
+                z-index: 0;
+                opacity: 0;
+                animation: mistyFadeIn 0.8s forwards;
             }
             
-            .misty-banner-content {
-                left: 20px;
-                bottom: 80px;
-                max-width: 90%;
+            /* ASPECT RATIO BOX (16:9) */
+            .misty-banner-ratio {
+                position: relative;
+                width: 100%;
+                padding-top: 56.25%; /* 16:9 Aspect Ratio */
+                background: #050505;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             }
             
-            .misty-banner-title {
-                font-size: 2em;
+            @media (min-height: 1000px) {
+                .misty-banner-ratio {
+                    padding-top: 45%; /* Slightly shorter on huge screens */
+                }
+            }
+
+            @media (max-width: 700px) {
+                .misty-banner-ratio {
+                    padding-top: 120%; /* Portrait for mobile */
+                    border-radius: 0;
+                }
+            }
+
+            /* SLIDES */
+            .misty-slide {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
+                z-index: 1;
             }
             
-            .misty-banner-description {
-                font-size: 1em;
+            .misty-slide.active {
+                opacity: 1;
+                z-index: 2;
+            }
+
+            /* KEN BURNS EFFECT (Slow Zoom) */
+            .misty-slide-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: scale(1);
+                transition: transform 10s ease-out;
             }
             
-            .misty-banner-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
+            .misty-slide.active .misty-slide-img {
+                transform: scale(1.1); /* Zoom in while active */
             }
-        }
+
+            /* GRADIENT OVERLAY */
+            .misty-overlay {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    to top,
+                    rgba(0,0,0, 0.95) 0%,
+                    rgba(0,0,0, 0.6) 40%,
+                    rgba(0,0,0, 0.2) 70%,
+                    transparent 100%
+                );
+                z-index: 2;
+            }
+
+            /* CONTENT TEXT */
+            .misty-content {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                padding: 4% 5%;
+                z-index: 3;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                text-align: left;
+            }
+
+            .misty-title {
+                font-family: inherit;
+                font-size: clamp(1.5rem, 4vw, 3.5rem);
+                font-weight: 800;
+                line-height: 1.1;
+                color: #fff;
+                margin: 0 0 10px 0;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.6s ease 0.3s;
+            }
+            
+            .misty-slide.active .misty-title {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .misty-desc {
+                font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+                color: #e0e0e0;
+                max-width: 700px;
+                line-height: 1.5;
+                margin-bottom: 25px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.6s ease 0.4s;
+            }
+
+            .misty-slide.active .misty-desc {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* BUTTONS */
+            .misty-btn-group {
+                display: flex;
+                gap: 15px;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.6s ease 0.5s;
+            }
+
+            .misty-slide.active .misty-btn-group {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .misty-play-btn {
+                background: #fff;
+                color: #000;
+                border: none;
+                padding: 12px 32px;
+                border-radius: 4px;
+                font-weight: 700;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: transform 0.2s, background 0.2s;
+            }
+
+            .misty-play-btn:hover {
+                background: #e6e6e6;
+                transform: scale(1.05);
+            }
+
+            /* INDICATORS */
+            .misty-indicators {
+                position: absolute;
+                bottom: 30px;
+                right: 30px;
+                display: flex;
+                gap: 8px;
+                z-index: 10;
+            }
+            
+            .misty-dot {
+                width: 8px;
+                height: 8px;
+                background: rgba(255,255,255,0.3);
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            
+            .misty-dot.active {
+                background: #fff;
+                transform: scale(1.3);
+                box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            }
+
+            @keyframes mistyFadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            @media (max-width: 700px) {
+                .misty-content { padding: 20px; bottom: 40px; }
+                .misty-title { -webkit-line-clamp: 2; overflow: hidden; }
+                .misty-desc { -webkit-line-clamp: 2; margin-bottom: 15px; }
+                .misty-indicators { right: 50%; transform: translateX(50%); bottom: 15px; }
+            }
         `;
 
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = styles;
-        document.head.appendChild(styleSheet);
+        const style = document.createElement('style');
+        style.id = 'misty-banner-css';
+        style.textContent = css;
+        document.head.appendChild(style);
     }
 
-    static async setupBanner() {
-        try {
-            // Wait for home sections to load
-            await this.waitForElement('.homeSectionsContainer');
-            
-            const sectionsContainer = document.querySelector('.homeSectionsContainer');
-            if (!sectionsContainer) return;
+    static async mount() {
+        // Find injection point (The most critical step)
+        // We look for multiple common Emby containers
+        const containers = [
+            '.homeSectionsContainer',
+            '.page-content',
+            '.mainAnimatedPages',
+            '.view'
+        ];
 
-            // Remove existing banner if present
-            const existingBanner = document.querySelector('.misty-home-banner');
-            if (existingBanner) {
-                existingBanner.remove();
-            }
-
-            // Create banner
-            const banner = await this.createBanner();
-            if (banner) {
-                sectionsContainer.insertBefore(banner, sectionsContainer.firstChild);
-                this.startCarousel();
-            }
-        } catch (error) {
-            console.error('Failed to setup banner:', error);
+        let container = null;
+        for (const selector of containers) {
+            container = document.querySelector(selector);
+            if (container) break;
         }
-    }
 
-    static async createBanner() {
-        try {
-            const items = await this.getBannerItems();
-            if (!items || items.length === 0) {
-                console.log('No items found for banner');
-                return null;
-            }
+        if (!container) {
+            console.log('[HomeSwiper] Container not found, retrying in 500ms...');
+            setTimeout(() => this.mount(), 500);
+            return;
+        }
 
-            const banner = document.createElement('div');
-            banner.className = 'misty-home-banner';
-            
-            const slidesHTML = items.map((item, index) => 
-                this.createSlide(item, index === 0)
-            ).join('');
-            
-            const indicatorsHTML = items.map((_, index) => `
-                <div class="misty-banner-indicator ${index === 0 ? 'active' : ''}" 
-                     data-index="${index}"></div>
-            `).join('');
+        // Fetch Data
+        const items = await this.fetchItems();
+        if (!items.length) return;
 
-            banner.innerHTML = `
-                <div class="misty-banner-slides">
-                    ${slidesHTML}
-                </div>
-                <button class="misty-banner-nav misty-banner-prev">‹</button>
-                <button class="misty-banner-nav misty-banner-next">›</button>
-                <div class="misty-banner-indicators">
-                    ${indicatorsHTML}
+        // Build HTML
+        const wrapper = document.createElement('div');
+        wrapper.className = 'misty-banner-wrapper';
+        
+        const slidesHtml = items.map((item, i) => {
+            const img = this.getImgUrl(item);
+            return `
+                <div class="misty-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
+                    <img class="misty-slide-img" src="${img}" loading="${i === 0 ? 'eager' : 'lazy'}" />
+                    <div class="misty-overlay"></div>
+                    <div class="misty-content">
+                        <h1 class="misty-title">${item.Name}</h1>
+                        <p class="misty-desc">${item.Overview || ''}</p>
+                        <div class="misty-btn-group">
+                            <button class="misty-play-btn" onclick="Emby.Page.showItem('${item.Id}')">
+                                &#9658; PLAY
+                            </button>
+                        </div>
+                    </div>
                 </div>
             `;
+        }).join('');
 
-            return banner;
-        } catch (error) {
-            console.error('Failed to create banner:', error);
-            return null;
-        }
-    }
+        const dotsHtml = items.map((_, i) => 
+            `<div class="misty-dot ${i === 0 ? 'active' : ''}" onclick="HomeSwiper.goTo(${i})"></div>`
+        ).join('');
 
-    static createSlide(item, isActive = false) {
-        const backdropUrl = this.getImageUrl(item, { type: 'Backdrop', maxWidth: 1920 });
-        const title = item.Name || 'Untitled';
-        const description = item.Overview || 'No description available.';
-        
-        return `
-            <div class="misty-banner-slide ${isActive ? 'active' : ''}" data-item-id="${item.Id}">
-                <img class="misty-banner-image" src="${backdropUrl}" alt="${title}" loading="lazy">
-                <div class="misty-banner-content">
-                    <h1 class="misty-banner-title">${this.escapeHtml(title)}</h1>
-                    <p class="misty-banner-description">${this.escapeHtml(description)}</p>
-                    <button class="misty-banner-button" onclick="Emby.Page.showItem('${item.Id}')">
-                        MORE INFO
-                    </button>
-                </div>
+        wrapper.innerHTML = `
+            <div class="misty-banner-ratio">
+                ${slidesHtml}
+                <div class="misty-indicators">${dotsHtml}</div>
             </div>
         `;
+
+        // Inject safely
+        if (container.firstChild) {
+            container.insertBefore(wrapper, container.firstChild);
+        } else {
+            container.appendChild(wrapper);
+        }
+
+        this.attachEvents(wrapper);
+        this.startTimer();
     }
 
-    static async getBannerItems() {
+    static async fetchItems() {
         try {
             const userId = ApiClient.getCurrentUserId();
-            const query = {
-                ImageTypes: 'Backdrop',
-                IncludeItemTypes: 'Movie,Series',
-                SortBy: 'Random',
+            const res = await ApiClient.getItems(userId, {
+                IncludeItemTypes: "Movie,Series",
+                SortBy: "Random",
                 Recursive: true,
-                Limit: 5,
-                Fields: 'Overview,BackdropImageTags',
-                EnableUserData: false
-            };
-
-            const url = ApiClient.getUrl(`Users/${userId}/Items`, query);
-            const response = await ApiClient.getJSON(url);
-            
-            return response.Items || [];
-        } catch (error) {
-            console.error('Failed to fetch banner items:', error);
+                Fields: "Overview,BackdropImageTags",
+                ImageTypes: "Backdrop",
+                Limit: 5
+            });
+            // Filter only items that actually have a backdrop
+            return res.Items.filter(i => i.BackdropImageTags && i.BackdropImageTags.length > 0);
+        } catch (e) {
+            console.error('[HomeSwiper] Fetch failed:', e);
             return [];
         }
     }
 
-    static getImageUrl(item, options) {
-        if (!ApiClient.getImageUrl) return '';
-        
-        try {
-            if (options.type === 'Backdrop' && item.BackdropImageTags && item.BackdropImageTags.length > 0) {
-                return ApiClient.getImageUrl(item.Id, {
-                    type: 'Backdrop',
-                    maxWidth: options.maxWidth || 1920,
-                    tag: item.BackdropImageTags[0]
-                });
-            }
-        } catch (error) {
-            console.error('Failed to get image URL:', error);
-        }
-        
-        // Fallback to a placeholder or empty string
-        return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiIGZpbGw9IiMxMTExMTEiLz48dGV4dCB4PSI5NjAiIHk9IjU0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmaWxsPSIjNTU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+    static getImgUrl(item) {
+        return ApiClient.getImageUrl(item.Id, {
+            type: 'Backdrop',
+            tag: item.BackdropImageTags[0],
+            maxWidth: 3840, // 4K Request
+            quality: 90
+        });
     }
 
-    static startCarousel() {
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.misty-banner-slide');
-        const indicators = document.querySelectorAll('.misty-banner-indicator');
-        const prevBtn = document.querySelector('.misty-banner-prev');
-        const nextBtn = document.querySelector('.misty-banner-next');
-        
-        if (slides.length <= 1) return;
+    static attachEvents(wrapper) {
+        // Touch Swipe
+        wrapper.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
 
-        function showSlide(index) {
-            // Hide all slides
-            slides.forEach(slide => slide.classList.remove('active'));
-            indicators.forEach(indicator => indicator.classList.remove('active'));
-            
-            // Show current slide
-            slides[index].classList.add('active');
-            indicators[index].classList.add('active');
-            
-            currentSlide = index;
-        }
-
-        function nextSlide() {
-            let nextIndex = currentSlide + 1;
-            if (nextIndex >= slides.length) {
-                nextIndex = 0;
-            }
-            showSlide(nextIndex);
-        }
-
-        function prevSlide() {
-            let prevIndex = currentSlide - 1;
-            if (prevIndex < 0) {
-                prevIndex = slides.length - 1;
-            }
-            showSlide(prevIndex);
-        }
-
-        // Auto-advance
-        const interval = setInterval(nextSlide, 8000);
-
-        // Navigation buttons
-        if (prevBtn) {
-            prevBtn.addEventListener('click', prevSlide);
-        }
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', nextSlide);
-        }
-
-        // Indicator clicks
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                showSlide(index);
-                // Reset auto-advance timer
-                clearInterval(interval);
-                setInterval(nextSlide, 8000);
-            });
-        });
+        wrapper.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            if (this.touchEndX < this.touchStartX - 50) this.next();
+            if (this.touchEndX > this.touchStartX + 50) this.prev();
+            this.startTimer(); // reset timer on interaction
+        }, {passive: true});
 
         // Pause on hover
-        const banner = document.querySelector('.misty-home-banner');
-        if (banner) {
-            banner.addEventListener('mouseenter', () => clearInterval(interval));
-            banner.addEventListener('mouseleave', () => {
-                clearInterval(interval);
-                setInterval(nextSlide, 8000);
-            });
-        }
+        wrapper.addEventListener('mouseenter', () => clearInterval(this.interval));
+        wrapper.addEventListener('mouseleave', () => this.startTimer());
     }
 
-    static waitForElement(selector, timeout = 10000) {
-        return new Promise((resolve, reject) => {
-            const element = document.querySelector(selector);
-            if (element) {
-                resolve(element);
-                return;
-            }
+    static goTo(index) {
+        const slides = document.querySelectorAll('.misty-slide');
+        const dots = document.querySelectorAll('.misty-dot');
+        if (!slides.length) return;
 
-            const observer = new MutationObserver((mutations, obs) => {
-                const element = document.querySelector(selector);
-                if (element) {
-                    obs.disconnect();
-                    resolve(element);
-                }
-            });
+        // Wrap around
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
 
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
+        // Updates classes
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
 
-            setTimeout(() => {
-                observer.disconnect();
-                reject(new Error(`Element ${selector} not found within ${timeout}ms`));
-            }, timeout);
-        });
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+
+        this.currentSlide = index;
     }
 
-    static escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    static next() { this.goTo(this.currentSlide + 1); }
+    static prev() { this.goTo(this.currentSlide - 1); }
+
+    static startTimer() {
+        if (this.interval) clearInterval(this.interval);
+        this.interval = setInterval(() => this.next(), 8000);
     }
 }
 
-// Initialize when page loads
+// --- GLOBAL TRIGGERS ---
+
+// 1. Initial Load
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => HomeSwiper.init());
 } else {
     HomeSwiper.init();
 }
 
-// Also initialize when navigating to home
+// 2. Navigation Watcher (The "Fixer")
 document.addEventListener('viewshow', (e) => {
-    if (e.detail.type === 'home') {
+    // If we land on home, re-init to ensure banner is there
+    if (e.detail.type === 'home' || window.location.hash.indexOf('home') !== -1) {
+        // Small delay to let Emby render its own DOM first
         setTimeout(() => HomeSwiper.init(), 100);
-    }
-});
-
-// Re-initialize when coming back to home
-window.addEventListener('hashchange', () => {
-    if (window.location.hash.includes('#!/home')) {
-        setTimeout(() => HomeSwiper.init(), 500);
     }
 });

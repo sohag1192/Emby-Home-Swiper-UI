@@ -97,19 +97,26 @@ After saving your changes, restart Emby or refresh the browser. The banner shoul
 
 ---
 
-## 🎯 v1 Features
+# 🎯 v1 Features
 
-| ✅ Feature              | 💡 Description                                                  |
-|------------------------|------------------------------------------------------------------|
-| Simple & Lightweight   | No external libraries required                                   |
-| Native API Support     | Uses `ApiClient` from Emby 4.9.1.80-90                              |
-| Auto-sliding Banner    | Rotates every 8 seconds                                          |
-| Navigation Controls    | Includes previous/next buttons                                   |
-| Indicator Dots         | Clickable for direct navigation                                  |
-| Responsive Design      | Works on both desktop and mobile                                 |
-| Hover Pause            | Pauses rotation when hovered                                     |
-| Error Handling         | Graceful fallback if images or API fail                          |
-| Lazy Loading           | Loads images only when needed for better performance             |
+This project provides a **simple, lightweight, and responsive banner component** with native Emby API support.  
+Designed for performance and usability, it includes auto-sliding functionality, navigation controls, and error handling.
+
+---
+
+## ✅ Features
+
+| Feature               | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| **Simple & Lightweight** | No external libraries required, minimal footprint                        |
+| **Native API Support**   | Uses `ApiClient` from Emby 4.9.1.80 → 4.9.3.0 (tested and verified)       |
+| **Auto-sliding Banner**  | Rotates every 8 seconds automatically                                    |
+| **Navigation Controls**  | Includes previous/next buttons for manual navigation                     |
+| **Indicator Dots**       | Clickable dots for direct navigation                                     |
+| **Responsive Design**    | Works seamlessly on both desktop and mobile                              |
+| **Hover Pause**          | Rotation pauses when hovered for better user control                     |
+| **Error Handling**       | Graceful fallback if images or API requests fail                         |
+| **Lazy Loading**         | Loads images only when needed, improving performance                     |
 
 ---
 

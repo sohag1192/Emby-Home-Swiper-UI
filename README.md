@@ -140,8 +140,8 @@ Designed for performance and usability, it includes auto-sliding functionality, 
 
 ## 📸 Banner Previews
 
-![Screenshot 45](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_52.png)  
-![Screenshot 47](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_53.png)
+![Screenshot 45](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_1.png)  
+![Screenshot 47](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_3.png)
 
 ---
 
@@ -153,7 +153,7 @@ The uninitialized functions (`saveUser`, `renderMediaFolders`) suggest there is 
 ------
 
 🧪 Tested On
-- ✅ Emby Web v4.9.1.90
+- ✅ Emby Web Version 4.9.3.0
 - ✅ Chrome, Firefox, Edge
 - ✅ Mobile and desktop views
 

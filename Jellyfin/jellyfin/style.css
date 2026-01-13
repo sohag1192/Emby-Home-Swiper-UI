@@ -36,17 +36,17 @@
         border-color: #ff0000;
     }
 }
-            .misty-loading {
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: #000; z-index: 9999;
-                display: flex; flex-direction: column; align-items: center; justify-content: center;
-            }
+.misty-loading {
+	position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+	background: #000; z-index: 9999;
+	display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
 
-            /* YOUR COLORS */
-            .misty-loading .mdl-spinner__layer-1 { border-color: #ff0000 !important; }
-            .misty-loading .mdl-spinner__layer-2 { border-color: #00ff00 !important; }
-            .misty-loading .mdl-spinner__layer-3 { border-color: #ff0080 !important; }
-            .misty-loading .mdl-spinner__layer-4 { border-color: #ff0000 !important; }
+/* YOUR COLORS */
+.misty-loading .mdl-spinner__layer-1 { border-color: #ff0000 !important; }
+.misty-loading .mdl-spinner__layer-2 { border-color: #00ff00 !important; }
+.misty-loading .mdl-spinner__layer-3 { border-color: #ff0080 !important; }
+.misty-loading .mdl-spinner__layer-4 { border-color: #ff0000 !important; }
 
 /* Loading Logo */
 .misty-loading img {
@@ -140,7 +140,7 @@
     z-index: 10;
     /* Vertical Position: 20% from top */
     top: 20%; 
-    right: 5%; /* Desktop: Right aligned */
+    /*right: 5%; /* Desktop: Right aligned */
     height: 7rem;
     max-width: 25vw;
     object-fit: contain;

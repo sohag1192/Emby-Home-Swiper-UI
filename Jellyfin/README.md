@@ -47,10 +47,10 @@ Both projects pioneered external player integration and UI customization. **Emby
 ## 📷 Screenshots
 *(Add screenshots here showing the carousel in action on Jellyfin.)*
 
-![Screenshot 1](/img/1.png)  
-![Screenshot 2](/img/2.png)
-![Screenshot 3](/img/3.png)  
-![Screenshot 4](/img/4.png)
+![Screenshot 1](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/1.png)  
+![Screenshot 2](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/2.png)
+![Screenshot 3](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/3.png)  
+![Screenshot 4](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/4.png)
 
 ---
 ---

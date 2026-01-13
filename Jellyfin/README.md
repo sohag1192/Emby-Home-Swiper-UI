@@ -1,48 +1,84 @@
+---
 
+# Emby Home Swiper UI for Jellyfin
+
+A lightweight, responsive **Swiper carousel** for Jellyfin’s home screen. This project enhances the default Jellyfin web interface by adding a dynamic banner slider that automatically rotates through your latest or featured media.
 
 ---
 
-## 📌 Project Overview         ![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat&tz=UTC)
-
-**Emby Home Swiper UI** is a lightweight, responsive banner module for Emby Web (tested on version 4.9.1.80). It uses native Emby APIs to display auto-sliding content on the home page (`#!/home`) with minimal setup and no external dependencies.
-
----
-
-🚀 Emby/Jellyfin Home Swiper UI
-A modern, highly customizable, and visually appealing home screen carousel/banner UI plugin designed for Emby and Jellyfin. This project replaces the default home screen library view with an interactive, dynamic Swiper carousel, perfect for showcasing your latest and most popular media.
-
-**Original inspiration:** [Nolovenodie/emby-crx](https://github.com/Nolovenodie/emby-crx)
-
-
-**To manually update your `index.html` for integrating the Emby Home Swiper UI from the GitHub v1 folder and the Cangshui.net guide, follow these steps carefully.**
+## ✨ Features
+- Auto‑sliding banners on the Jellyfin home page (`#!/home`).
+- Responsive design for desktop and mobile.
+- Uses native Jellyfin APIs — no external dependencies.
+- Easy manual integration into `index.html`.
 
 ---
 
+## 📥 Installation
+1. Clone or download this repository.
+2. Copy the contents of the `Jellyfin` folder into your Jellyfin web client directory:
+   ```
+   /path/to/jellyfin/system/dashboard-ui/
+   ```
+3. Edit `index.html` and insert the following before `</head>`:
+   ```html
+   <script src="emby-crx/home.js"></script>
+   ```
+4. Restart Jellyfin to apply changes.
+
 ---
 
-## 📸 Banner Previews
-
-![Screenshot 45](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_1.png)  
-![Screenshot 47](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_3.png)
+## ✅ Tested On
+- Jellyfin Web 10.8+ to 10.11+
+- Chrome, Firefox, Edge browsers
+- Mobile and desktop layouts
 
 ---
 
+## 🙌 Original Inspiration
+This project builds on earlier work:
+- [Nolovenodie/emby-crx](https://github.com/Nolovenodie/emby-crx) — the original Emby CRX extension.  
+- [frostyleave/emby-crx-for-jellyfin](https://github.com/frostyleave/emby-crx-for-jellyfin) — adaptation of Emby CRX for Jellyfin.  
 
+Both projects pioneered external player integration and UI customization. **Emby Home Swiper UI** continues that spirit, focusing on **home page banners and carousel design**.
 
-------
+---
 
-🧪 Tested On
-- ✅ Emby Web Version 4.9.3.0
-- ✅ Chrome, Firefox, Edge
-- ✅ Mobile and desktop views
+## 📷 Screenshots
+*(Add screenshots here showing the carousel in action on Jellyfin.)*
 
------
+![Screenshot 45](/img/Screenshot_1.png)  
+![Screenshot 47](/img/Screenshot_3.png)
 
-## 🙋 Contributing
+---
+---
 
-If you find bugs or want to suggest improvements, please feel free to submit an issue or open a Pull Request on the original GitHub repository\!
+if you want to **manually add the JavaScript and CSS references** into your `index.html` without relying on the shell script to inject them, you can simply place these lines inside the `<head>` section of your HTML file:
 
+```html
+<head>
+    <!-- jellyfin CRX assets -->
+    <link rel="stylesheet" id="theme-css" href="jellyfin-crx/style.css" type="text/css" media="all" />
+    <script src="jellyfin-crx/jquery-3.6.0.min.js"></script>
+    <script src="jellyfin-crx/md5.min.js"></script>
+    <script src="jellyfin-crx/main.js"></script>
+</head>
+```
 
-------
-📬 **Contact via Telegram:** [@sohag1192](https://t.me/sohag1192)
+### 🔑 Explanation
+- **style.css** → applies the jellyfin CRX styles.
+- **jquery-3.6.0.min.js** → loads jQuery for DOM manipulation.
+- **md5.min.js** → provides MD5 hashing functions.
+- **main.js** → your custom logic for jellyfin CRX.
+
+This way, you don’t need the script to insert anything — you just paste these lines directly into your HTML file once, and they’ll always load when the page runs.
+
+---
+
+## 🤝 Contributing
+- Issues and pull requests are welcome.
+- Contact: [@sohag1192 on Telegram](https://t.me/sohag1192).
+
+---
+
 

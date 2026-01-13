@@ -1,5 +1,5 @@
 /* ======================================================= */
-/* MISTY THEME - FULL SUITE (LOADING + BANNER + LIBRARIES) */
+/* MISTY THEME - FULL (COLORFUL LOADING + 60/20 LAYOUT)   */
 /* ======================================================= */
 
 /* --- 1. GLOBAL & SCROLLBARS --- */
@@ -11,39 +11,64 @@
     zoom: .5;
 }
 
-/* --- 2. CUSTOM LOADING SCREEN --- */
-.misty-loading {
-    z-index: 99999999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
+/* --- 2. CUSTOM LOADING SCREEN (RED/GREEN/PINK) --- */
 
-/* Logo inside loading screen */
+/* Define the Color Cycle Animation */
+@keyframes neonCycle {
+    0% { 
+        color: #ff0000; /* RED */
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        border-color: #ff0000;
+    }
+    33% { 
+        color: #00ff00; /* GREEN */
+        text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+        border-color: #00ff00;
+    }
+    66% { 
+        color: #ff0080; /* PINK */
+        text-shadow: 0 0 10px #ff0080, 0 0 20px #ff0080;
+        border-color: #ff0080;
+    }
+    100% { 
+        color: #ff0000; /* Back to RED */
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        border-color: #ff0000;
+    }
+}
+            .misty-loading {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: #000; z-index: 9999;
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+            }
+
+            /* YOUR COLORS */
+            .misty-loading .mdl-spinner__layer-1 { border-color: #ff0000 !important; }
+            .misty-loading .mdl-spinner__layer-2 { border-color: #00ff00 !important; }
+            .misty-loading .mdl-spinner__layer-3 { border-color: #ff0080 !important; }
+            .misty-loading .mdl-spinner__layer-4 { border-color: #ff0000 !important; }
+
+/* Loading Logo */
 .misty-loading img {
     max-width: 200px;
     margin-bottom: 20px;
     display: block;
 }
 
-/* "Welcome to our server" Text */
+/* "Welcome" Text with Animation */
+
 .misty-loading h1 {
     margin: 0; 
     margin-bottom: 3rem; 
     text-transform: uppercase;
-    color: red !important; /* REQUESTED RED COLOR */
     text-align: center;
-    font-weight: bold;
+    font-weight: 900; /* Extra Bold */
     transition: .8s; 
     transform: scale(1.15); 
     opacity: 0;
+    
+    /* APPLY THE COLOR ANIMATION */
+    animation: neonCycle 3s infinite linear;
 }
 
 .misty-loading h1.active { 
@@ -52,7 +77,13 @@
 }
 
 .misty-loading .mdl-spinner { margin: 0; position: initial; }
-.misty-loading .mdl-spinner__layer-1 { border-color: #fff; }
+
+/* Force Spinner to use the animation colors */
+.misty-loading .mdl-spinner__layer-1 { border-color: #ff0000 !important; } /* Red */
+.misty-loading .mdl-spinner__layer-2 { border-color: #00ff00 !important; } /* Green */
+.misty-loading .mdl-spinner__layer-3 { border-color: #ff0080 !important; } /* Pink */
+.misty-loading .mdl-spinner__layer-4 { border-color: #ff0000 !important; } /* Red */
+
 
 /* --- 3. HEADER TRANSPARENCY --- */
 .skinHeader.focuscontainer-x.skinHeader-withBackground,
@@ -103,7 +134,7 @@
 
 .misty-banner-item { min-width: 100%; position: relative; }
 
-/* --- 5. BANNER LOGO (POSITION: 20%) --- */
+/* --- 5. LOGO STYLING (POSITION: 20%) --- */
 .misty-banner-logo {
     position: absolute;
     z-index: 10;
@@ -124,7 +155,7 @@
     transform: translateY(0);
 }
 
-/* --- 6. TEXT INFO (POSITION: 60% | WHITE & BOLD) --- */
+/* --- 6. TEXT INFO STYLING (POSITION: 60% | WHITE & BOLD) --- */
 .misty-banner-info {
     width: 100%;
     margin: 0;

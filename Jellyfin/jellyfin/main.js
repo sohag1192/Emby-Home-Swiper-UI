@@ -1,7 +1,8 @@
 /*
- * Script Name: Jellyfin/Emby Home Banner (Custom Loading)
+ * Script Name: Jellyfin/Emby Home Banner
  * Features: 
- * - Custom Loading Screen with Welcome Message
+ * - Custom Loading Screen
+ * - Red Welcome Text
  * - Auto-scroll (20s)
  * - Play Button Fix
  * - Visitor Counter
@@ -130,11 +131,11 @@ class HomeBanner {
         this.initEvent();
     }
 
-    // --- UPDATED LOADING SCREEN HERE ---
+    // --- LOADING SCREEN ---
     static initLoading() {
         const load = `
 		<div class="misty-loading">
-			<img loading="auto" decoding="lazy" alt="Logo" src="jellyfin/logo.png" style="max-width:200px;">
+			<img loading="auto" decoding="lazy" alt="Logo" src="emby-crx/logo.png" style="max-width:200px;">
 			<h1 style="color: red; text-align: center; margin-top: 20px;"> welcom to our server and enjoy </h1>
 			<div class="mdl-spinner">
 				<div class="mdl-spinner__layer mdl-spinner__layer-1">
@@ -145,6 +146,9 @@ class HomeBanner {
 						<div class="mdl-spinner__circle mdl-spinner__circleRight"></div>
 					</div>
 				</div>
+                <div class="mdl-spinner__layer mdl-spinner__layer-2"></div>
+                <div class="mdl-spinner__layer mdl-spinner__layer-3"></div>
+                <div class="mdl-spinner__layer mdl-spinner__layer-4"></div>
 			</div>
 		</div>
 		`;
@@ -231,7 +235,6 @@ class HomeBanner {
     }
 
     static async initBanner() {
-        // --- TITLE REMOVED FROM HERE ---
         const banner = `
 		<div class="misty-banner">
 			<div class="misty-banner-body"></div>

@@ -1,11 +1,11 @@
 /*
- * Script Name: Jellyfin/Emby Home Banner (Custom Loading)
+ * Script Name: Jellyfin/Emby Home Banner
  * Features: 
- * - Custom Loading Screen with Welcome Message
  * - Auto-scroll (20s)
- * - Play Button Fix
- * - Visitor Counter
- * - Best Rated & Newest Content
+ * - Play Button Fix (Direct Play)
+ * - Visitor Counter (Library Add)
+ * - Truncated Description (200 chars)
+ * - Sorts by: Newest Created (Movies + TV)
  */
 
 class CommonUtils {
@@ -67,6 +67,7 @@ class CommonUtils {
         });
     }
 
+    // --- Helper to shorten description ---
     static truncate(str, n) {
         if (!str) return "";
         return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
@@ -82,16 +83,16 @@ class HomeBanner {
             item: new Map(),
         };
         
-        // --- CONTENT QUERY ---
+        // --- CONFIGURATION ---
         this.itemQuery = {
             ImageTypes: "Backdrop",
             EnableImageTypes: "Logo,Backdrop",
             IncludeItemTypes: "Movie,Series", 
-            SortBy: "CommunityRating, ProductionYear", 
+            SortBy: "DateCreated, ProductionYear", // Newest items first
             Recursive: true,
             ImageTypeLimit: 2,
-            Limit: 20, 
-            Fields: "ProductionYear, Overview, CommunityRating",
+            Limit: 20, // Show 20 items
+            Fields: "ProductionYear, Overview",
             SortOrder: "Descending",
             EnableUserData: false,
             EnableTotalRecordCount: false
@@ -105,7 +106,6 @@ class HomeBanner {
             maxWidth: 3000
         };
         this.initStart = false;
-
         setInterval(() => {
             if (window.location.href.indexOf("/home") != -1) {
                 if ($(".mainAnimatedPages:not(.hide) .misty-banner").length == 0 && $(".misty-loading").length == 0) {
@@ -130,12 +130,10 @@ class HomeBanner {
         this.initEvent();
     }
 
-    // --- UPDATED LOADING SCREEN HERE ---
     static initLoading() {
         const load = `
 		<div class="misty-loading">
 			<img loading="auto" decoding="lazy" alt="Logo" src="jellyfin/logo.png" style="max-width:200px;">
-			<h1 style="color: red; text-align: center; margin-top: 20px;"> welcom to our server and enjoy </h1>
 			<div class="mdl-spinner">
 				<div class="mdl-spinner__layer mdl-spinner__layer-1">
 					<div class="mdl-spinner__circle-clipper mdl-spinner__left">
@@ -194,6 +192,7 @@ class HomeBanner {
         return this.injectCode(script);
     }
 
+    // --- PLAY FUNCTION ---
     static playItem(itemId) {
         const script = `
         const play = (mgr) => {
@@ -231,7 +230,6 @@ class HomeBanner {
     }
 
     static async initBanner() {
-        // --- TITLE REMOVED FROM HERE ---
         const banner = `
 		<div class="misty-banner">
 			<div class="misty-banner-body"></div>
@@ -241,12 +239,7 @@ class HomeBanner {
 		</div>
 		`;
         $(".mainAnimatedPages:not(.hide) .homeSectionsContainer").prepend(banner);
-        
-        // Move Libraries
-        const myMedia = $(".mainAnimatedPages:not(.hide) .section0");
-        if (myMedia.length > 0) {
-            myMedia.detach().appendTo(".mainAnimatedPages:not(.hide) .misty-banner-library");
-        }
+        $(".mainAnimatedPages:not(.hide) .section0").detach().appendTo(".mainAnimatedPages:not(.hide) .misty-banner-library");
 
         const data = await this.getItems(this.itemQuery);
 
@@ -254,6 +247,7 @@ class HomeBanner {
             const detail = await this.getItem(item.Id);
             const img_url = await this.getImageUrl(detail.Id, this.coverOptions);
 
+            // Truncate description to 200 chars
             const cleanDescription = CommonUtils.truncate(detail.Overview, 200);
 
             var itemHtml = `
@@ -310,14 +304,7 @@ class HomeBanner {
 
         await CommonUtils.sleep(200);
         $(".section0 > div").addClass("misty-banner-library-overflow");
-        
-        // Force Show Libraries
-        $(".misty-banner .card").each((i, dom) => {
-            setTimeout(() => {
-                $(dom).addClass("misty-banner-library-show");
-            }, i * delay)
-        });
-        
+        $(".misty-banner .card").each((i, dom) => setTimeout(() => $(dom).addClass("misty-banner-library-show"), i * delay));
         await CommonUtils.sleep(delay * 8 + 1000);
         $(".section0 > div").removeClass("misty-banner-library-overflow");
 
@@ -343,7 +330,7 @@ class HomeBanner {
                 if (window.location.href.indexOf("/home") != -1 && !document.hidden) {
                     switchBanner(this.bannerIndex + 1);
                 }
-            }, 20000); 
+            }, 20000); // 20 Seconds
         };
 
         $(".misty-banner-prev").on("click", () => switchBanner(this.bannerIndex - 1));
@@ -362,6 +349,7 @@ class HomeBanner {
 		`;
         this.injectCode(script);
 
+        // --- PLAY BUTTON CLICK EVENT ---
         $(document).on('click', '.banner-item-play', function(e) {
             e.preventDefault();
             e.stopPropagation(); 

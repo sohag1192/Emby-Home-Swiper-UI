@@ -1,5 +1,5 @@
 /* ======================================================= */
-/* MISTY THEME - TEXT 60% | LOGO 20% | WHITE & BOLD       */
+/* MISTY THEME - FULL SUITE (LOADING + BANNER + LIBRARIES) */
 /* ======================================================= */
 
 /* --- 1. GLOBAL & SCROLLBARS --- */
@@ -11,7 +11,7 @@
     zoom: .5;
 }
 
-/* Loading Screen */
+/* --- 2. CUSTOM LOADING SCREEN --- */
 .misty-loading {
     z-index: 99999999;
     position: fixed;
@@ -26,15 +26,35 @@
     flex-direction: column;
 }
 
-.misty-loading h1 {
-    margin: 0; margin-bottom: 3rem; text-transform: uppercase;
-    transition: .8s; transform: scale(1.15); opacity: 0;
+/* Logo inside loading screen */
+.misty-loading img {
+    max-width: 200px;
+    margin-bottom: 20px;
+    display: block;
 }
-.misty-loading h1.active { transform: scale(1); opacity: 1; }
+
+/* "Welcome to our server" Text */
+.misty-loading h1 {
+    margin: 0; 
+    margin-bottom: 3rem; 
+    text-transform: uppercase;
+    color: red !important; /* REQUESTED RED COLOR */
+    text-align: center;
+    font-weight: bold;
+    transition: .8s; 
+    transform: scale(1.15); 
+    opacity: 0;
+}
+
+.misty-loading h1.active { 
+    transform: scale(1); 
+    opacity: 1; 
+}
+
 .misty-loading .mdl-spinner { margin: 0; position: initial; }
 .misty-loading .mdl-spinner__layer-1 { border-color: #fff; }
 
-/* --- 2. HEADER TRANSPARENCY --- */
+/* --- 3. HEADER TRANSPARENCY --- */
 .skinHeader.focuscontainer-x.skinHeader-withBackground,
 .skinHeader-withBackground {
     justify-content: center;
@@ -58,7 +78,7 @@
     backdrop-filter: blur(10px) !important;
 }
 
-/* --- 3. BANNER SETUP --- */
+/* --- 4. BANNER SETUP --- */
 .misty-banner {
     position: relative;
     overflow: hidden;
@@ -83,13 +103,13 @@
 
 .misty-banner-item { min-width: 100%; position: relative; }
 
-/* --- 4. LOGO STYLING (POSITION: 20%) --- */
+/* --- 5. BANNER LOGO (POSITION: 20%) --- */
 .misty-banner-logo {
     position: absolute;
     z-index: 10;
     /* Vertical Position: 20% from top */
     top: 20%; 
-    /*right: 5%;  Desktop: Right aligned */
+    right: 5%; /* Desktop: Right aligned */
     height: 7rem;
     max-width: 25vw;
     object-fit: contain;
@@ -104,7 +124,7 @@
     transform: translateY(0);
 }
 
-/* --- 5. TEXT INFO STYLING (POSITION: 60% | WHITE & BOLD) --- */
+/* --- 6. TEXT INFO (POSITION: 60% | WHITE & BOLD) --- */
 .misty-banner-info {
     width: 100%;
     margin: 0;
@@ -189,7 +209,7 @@
 .misty-banner-next { right: 1%; }
 
 
-/* --- 6. MOBILE & TABLET OPTIMIZATION --- */
+/* --- 7. MOBILE & TABLET OPTIMIZATION --- */
 
 @media screen and (max-width: 62.5em) {
     .misty-banner-info h1 { font-size: 2.5rem; }
@@ -253,7 +273,32 @@
     .misty-banner-nav { display: none !important; }
 }
 
-/* --- 7. STANDARD LIBRARY CARDS --- */
+/* --- 8. HORIZONTAL LIBRARY SCROLL (REQUESTED ADDITION) --- */
+.misty-banner-library {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-top: 20px;
+    z-index: 10;
+    position: relative;
+}
+.misty-banner-library .section0 {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+/* Force items to be visible */
+.misty-banner-library .card {
+    display: inline-block !important;
+    opacity: 1 !important; 
+    visibility: visible !important;
+    vertical-align: top;
+    margin: 0 5px;
+}
+/* Hide the original header if needed to clean up */
+.section0 .sectionTitle { display: none; }
+
+
+/* --- 9. STANDARD LIBRARY CARDS & FORCE VISIBILITY --- */
 .view:not(.hide) .section0 .cardText {
     position: absolute; top: 0; display: flex; 
     width: 100%; height: 100%; padding: 0;
@@ -271,3 +316,13 @@
 /* Page Spacing */
 .libraryPage:not(.noSecondaryNavPage) { padding-top: 6em!important; }
 .detailPagePrimaryContainer.padded-left.padded-right.detailRibbon { background: transparent; }
+
+/* FORCE VISIBILITY OF LIBRARIES BELOW BANNER */
+.view:not(.hide) .section0 {
+    position: relative !important;
+    z-index: 5 !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin-top: 0 !important;
+}

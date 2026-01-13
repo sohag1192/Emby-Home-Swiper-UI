@@ -47,8 +47,10 @@ Both projects pioneered external player integration and UI customization. **Emby
 ## 📷 Screenshots
 *(Add screenshots here showing the carousel in action on Jellyfin.)*
 
-![Screenshot 45](/img/Screenshot_1.png)  
-![Screenshot 47](/img/Screenshot_3.png)
+![Screenshot 1](/img/1.png)  
+![Screenshot 2](/img/2.png)
+![Screenshot 3](/img/3.png)  
+![Screenshot 4](/img/4.png)
 
 ---
 ---

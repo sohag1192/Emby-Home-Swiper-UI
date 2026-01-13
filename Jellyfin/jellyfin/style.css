@@ -1,0 +1,273 @@
+/* ======================================================= */
+/* MISTY THEME - TEXT 60% | LOGO 20% | WHITE & BOLD       */
+/* ======================================================= */
+
+/* --- 1. GLOBAL & SCROLLBARS --- */
+::-webkit-scrollbar {
+    width: .3em !important;
+}
+
+.mdl-spinner {
+    zoom: .5;
+}
+
+/* Loading Screen */
+.misty-loading {
+    z-index: 99999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.misty-loading h1 {
+    margin: 0; margin-bottom: 3rem; text-transform: uppercase;
+    transition: .8s; transform: scale(1.15); opacity: 0;
+}
+.misty-loading h1.active { transform: scale(1); opacity: 1; }
+.misty-loading .mdl-spinner { margin: 0; position: initial; }
+.misty-loading .mdl-spinner__layer-1 { border-color: #fff; }
+
+/* --- 2. HEADER TRANSPARENCY --- */
+.skinHeader.focuscontainer-x.skinHeader-withBackground,
+.skinHeader-withBackground {
+    justify-content: center;
+    background-image: linear-gradient(rgba(0,0,0,.5), transparent) !important;
+    background-color: transparent !important;
+}
+
+.headerTabs.sectionTabs { display: flex; justify-content: center; }
+
+@media (min-width: 50em) {
+    .headerTabs.sectionTabs { margin-top: -3.8em; margin-bottom: 0.5em; }
+}
+
+/* Tabs */
+.emby-tabs-slider { white-space: nowrap; background: black; border-radius: 50px; }
+.emby-tab-button.emby-button.emby-tab-button-active { color: white; background: grey; border-radius: 50px; }
+.emby-tab-button.emby-button { line-height: 0em; margin: 0.4em; padding: 1.2em; }
+.tabs-viewmenubar-backgroundcontainer:not(.tabs-viewmenubar-backgroundcontainer-tv) {
+    background: 0 0 !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+/* --- 3. BANNER SETUP --- */
+.misty-banner {
+    position: relative;
+    overflow: hidden;
+    margin-top: -100px;
+    width: 100%;
+}
+
+.misty-banner-cover {
+    width: 100%;
+    height: 100vh; 
+    user-select: none;
+    object-fit: cover;
+    object-position: top center;
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%);
+    mask-image: linear-gradient(to top, transparent 0%, black 30%);
+}
+
+.misty-banner-body {
+    display: flex; position: relative; left: 0;
+    transition: all 1.5s cubic-bezier(0.15, 0.07, 0, 1) 0s;
+}
+
+.misty-banner-item { min-width: 100%; position: relative; }
+
+/* --- 4. LOGO STYLING (POSITION: 20%) --- */
+.misty-banner-logo {
+    position: absolute;
+    z-index: 10;
+    /* Vertical Position: 20% from top */
+    top: 20%; 
+    /*right: 5%;  Desktop: Right aligned */
+    height: 7rem;
+    max-width: 25vw;
+    object-fit: contain;
+    opacity: 0;
+    transition: 1s;
+    transition-delay: .8s;
+    transform: translateY(20px);
+}
+
+.misty-banner-logo.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- 5. TEXT INFO STYLING (POSITION: 60% | WHITE & BOLD) --- */
+.misty-banner-info {
+    width: 100%;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 5;
+    
+    /* FLEX ALIGNMENT: Pushed down to 60% */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    padding-top: 60vh; /* STARTS AT 60% HEIGHT */
+    padding-left: 4%;  
+    align-items: flex-start; 
+}
+
+/* Animations */
+.misty-banner-info > * {
+    transition: all 2.5s cubic-bezier(0, 1.41, 0.36, 0.93) .4s;
+    transform: translateY(150%);
+    opacity: 0 !important;
+}
+.misty-banner-item.active .misty-banner-info > * {
+    transform: translateY(0);
+    opacity: 1 !important;
+}
+.misty-banner-info > div:nth-child(2) { transition-delay: .6s; }
+.misty-banner-info > div:nth-child(3) { transition-delay: .8s; }
+
+/* Typography - WHITE & BOLD */
+.misty-banner-info h1 {
+    color: #FFFFFF !important; /* Pure White */
+    font-size: 3.5rem;
+    font-weight: 900 !important; /* Extra Bold */
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 4px 10px rgb(0 0 0 / 80%);
+    max-width: 60%;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.misty-banner-info p {
+    color: #FFFFFF !important; /* Pure White */
+    font-size: 1.2rem;
+    font-weight: bold !important; /* Bold */
+    max-width: 45%;
+    text-shadow: 2px 2px 4px black;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-align: left;
+}
+
+.misty-banner-info button {
+    cursor: pointer;
+    width: 8em; height: 2.5em;
+    border-radius: 50px;
+    color: #fff; background: rgba(0, 0, 0, .5);
+    border: 1px solid rgba(255,255,255,0.8);
+    margin-top: 1.5rem;
+    font-size: 1rem; letter-spacing: 2px;
+    font-weight: bold;
+    transition: .2s;
+    text-align: center;
+}
+.misty-banner-info button:hover { transform: scale(.95); background: white; color: black; }
+
+/* Arrows */
+.misty-banner-nav {
+    position: absolute; top: 50%; z-index: 20;
+    font-size: 1.5em; color: white;
+    width: 40px; height: 40px; line-height: 40px;
+    text-align: center; background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%; cursor: pointer;
+    transition: background 0.3s;
+    transform: translateY(-50%);
+}
+.misty-banner-prev { left: 1%; }
+.misty-banner-next { right: 1%; }
+
+
+/* --- 6. MOBILE & TABLET OPTIMIZATION --- */
+
+@media screen and (max-width: 62.5em) {
+    .misty-banner-info h1 { font-size: 2.5rem; }
+    .misty-banner-logo { height: 5rem; }
+}
+
+/* === PHONE SPECIFIC FIXES === */
+@media screen and (max-width: 40em) {
+    .misty-banner { margin-top: 0; }
+    
+    .misty-banner-cover {
+        height: 80vh; /* Taller on mobile to accommodate lower text */
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 50%);
+        mask-image: linear-gradient(to top, transparent 0%, black 50%);
+    }
+
+    /* 1. Logo: Top 20% & Left Aligned */
+    .misty-banner-logo {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        
+        top: 20% !important; /* REQUESTED POSITION */
+        left: 5% !important;
+        right: auto !important;
+        
+        height: 3rem !important;
+        max-width: 35vw;
+    }
+
+    /* 2. Text: Starts at 60% */
+    .misty-banner-info {
+        padding-top: 60vh !important; /* REQUESTED POSITION */
+        padding-left: 1.2rem;
+        padding-right: 1rem;
+        opacity: 1 !important;
+        text-align: left;
+    }
+
+    .misty-banner-info h1 {
+        font-size: 1.8rem;
+        max-width: 100%;
+        white-space: normal;
+        text-shadow: 2px 2px 4px black;
+    }
+
+    .misty-banner-info p {
+        font-size: 1rem;
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+        color: #FFFFFF !important; /* Force White */
+    }
+
+    .misty-banner-info button {
+        margin-top: 0.5rem;
+        width: auto;
+        padding: 0 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .misty-banner-nav { display: none !important; }
+}
+
+/* --- 7. STANDARD LIBRARY CARDS --- */
+.view:not(.hide) .section0 .cardText {
+    position: absolute; top: 0; display: flex; 
+    width: 100%; height: 100%; padding: 0;
+    background-color: rgba(0, 0, 0, .5);
+    font-weight: bolder; font-size: larger;
+    border-radius: 0.3em; transition: .2s; opacity: 0;
+    align-items: center; justify-content: center;
+}
+.view:not(.hide) .section0 .backdropCard:hover .cardText { opacity: 1; }
+.view:not(.hide) .section0 .backdropCard:hover { transform: scale(1.1) !important; }
+.view:not(.hide) .section0 .cardOverlayContainer { background: none; }
+.view:not(.hide) .section0 .cardOverlayContainer label,
+.view:not(.hide) .section0 .sectionTitleContainer { display: none !important; }
+
+/* Page Spacing */
+.libraryPage:not(.noSecondaryNavPage) { padding-top: 6em!important; }
+.detailPagePrimaryContainer.padded-left.padded-right.detailRibbon { background: transparent; }

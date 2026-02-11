@@ -1470,7 +1470,6 @@ div.dialogContainer {
 					this.swiper2 = e.target.querySelector('.mySwiper-main').swiper;
 					this.swiper2?.enable();
 					this.swiper2?.slides[this.swiper2.activeIndex]?.childNodes[1].swiper?.autoplay.start();
-					this.swiper & setTimeout(() => Emby.Page.setTitle("SN FTP SERVER"), 1000);
 				}
 
 			} else {
@@ -2108,7 +2107,6 @@ const coverHtml = `
 		}
 
 		this.playlistener();
-		Emby.Page.setTitle("SN FTP SERVER");
 	}
 }
 /** Swiper 11.1.14 JS**/

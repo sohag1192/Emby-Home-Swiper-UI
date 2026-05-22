@@ -129,7 +129,7 @@ This code relies on global objects like **`ApiClient`** and **`require(["toast"]
 ---
 
 ## 🧪 Tested On
-- ✅ Emby Web Version 4.9.3.0  
+- ✅ Emby Web Version 4.9.5.0
 - ✅ Chrome, Firefox, Edge  
 - ✅ Mobile and desktop views  
 

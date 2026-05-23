@@ -1,5 +1,5 @@
 <style>
-    /* Static Premium Warning Box (No Animation) */
+    /* Static Premium Warning Box */
     .sn-slider-wrapper {
         width: 100%;
         background: rgba(255, 50, 50, 0.10); /* Soft red tint */
@@ -13,12 +13,24 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     }
 
+    /* New Title Styling */
+    .sn-alert-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #ff8a8a; /* Bright, soft red to stand out */
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(255, 50, 50, 0.2); /* Subtle separator line */
+        display: block;
+    }
+
     .sn-slider-content .item {
         font-size: 15px;
         font-weight: 500;
         color: #ffffff;
-        line-height: 1.5;
-        white-space: normal; /* Allows text to wrap normally instead of staying on one line */
+        line-height: 1.6;
+        white-space: normal;
+        display: block;
     }
 
     .sn-slider-content a {
@@ -39,7 +51,7 @@
     let isEmby = "";
     const sliderWrapperId = "sn-text-slider-wrapper";
 
-    // Selectors mapped exactly from your provided script
+    // Selectors mapped exactly for Emby and Jellyfin
     const selectors = {
         embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
         jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
@@ -56,9 +68,9 @@
         return !!mediaInfoDiv;
     }
 
-    // Function to inject the slider
+    // Function to inject the static alert box
     function initSlider() {
-        // Prevent duplicate sliders
+        // Prevent duplicate alerts
         let existingSlider = document.getElementById(sliderWrapperId);
         if (existingSlider) {
             existingSlider.remove();
@@ -72,12 +84,14 @@
 
         if (!mainDetailButtons) return;
 
-        // The HTML for the scrolling text
+        // The HTML with the Title and dual-language text
         const sliderHtml = `
             <div id="${sliderWrapperId}" class="sn-slider-wrapper">
+                <div class="sn-alert-title">📢 জরুরী বিজ্ঞপ্তি | Important Notice</div>
                 <div class="sn-slider-content">
                     <span class="item">
-                        ⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন।
+                        সম্মানিত গ্রাহক, সার্ভারে অতিরিক্ত চাপের কারণে বাফারিং হতে পারে। নিরবচ্ছিন্ন সেবার জন্য অনুগ্রহ করে <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।<br><br>
+                        Dear User, you may experience buffering due to heavy server load. For uninterrupted streaming, please use the <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>.
                     </span>
                 </div>
             </div>
@@ -87,7 +101,7 @@
         mainDetailButtons.insertAdjacentHTML("afterend", sliderHtml);
     }
 
-    // Monitor DOM changes using the logic from your script
+    // Monitor DOM changes using the advanced engine
     document.addEventListener("viewbeforeshow", function (e) {
         if (isEmby === "") {
             isEmby = !!e.detail.contextPath;

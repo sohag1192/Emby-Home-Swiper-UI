@@ -43,4 +43,22 @@ Choose **one** deployment routine depending on your administrative depth:
    
    ```
    
+   
+   ---
+
+## 🙋 Contributing
+
+- Issues and pull requests are welcome.  
+- If you find bugs or want to suggest improvements, please open an issue or PR.  
+
+📬 **Contact via Mail:** [@sohag1192](sohag1192@gmail.com)
+
+---
+
+## 🌟 Support
+
+If you enjoy this project, please ⭐ it on GitHub — your support motivates future updates!
+
+
+   
 

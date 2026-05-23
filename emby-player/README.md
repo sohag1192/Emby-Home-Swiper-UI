@@ -36,7 +36,9 @@ Choose **one** deployment routine depending on your administrative depth:
 
    </body>
    
+   ```
    
+---
 ## 📸 Banner Previews
 
 ![Screenshot 45](https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/refs/heads/main/emby-player/Screenshot_39.png)  

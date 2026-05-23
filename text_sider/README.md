@@ -190,7 +190,6 @@ Ensure your deployment workspace is structured to load this script next to your 
    </body>
    
    ```
-		---
 
 ## 🙋 Contributing
 

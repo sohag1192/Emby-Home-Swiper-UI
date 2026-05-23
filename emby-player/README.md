@@ -19,6 +19,11 @@ An elegant, high-performance ecosystem for Emby and Jellyfin servers. This repos
 
 ---
 
+## 📸 Banner Previews
+
+![Screenshot 45](https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/refs/heads/main/emby-player/Screenshot_39.png)  
+   
+   ---
 ## 🛠️ Deployment Methods
 
 Choose **one** deployment routine depending on your administrative depth:
@@ -38,9 +43,4 @@ Choose **one** deployment routine depending on your administrative depth:
    
    ```
    
----
-## 📸 Banner Previews
 
-![Screenshot 45](https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/refs/heads/main/emby-player/Screenshot_39.png)  
-   
-   

@@ -1,0 +1,119 @@
+<style>
+    /* Static Premium Warning Box (No Animation) */
+    .sn-slider-wrapper {
+        width: 100%;
+        background: rgba(255, 50, 50, 0.10); /* Soft red tint */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 50, 50, 0.25);
+        border-radius: 8px;
+        padding: 14px 20px;
+        margin: 20px 0 10px 0;
+        display: block;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .sn-slider-content .item {
+        font-size: 15px;
+        font-weight: 500;
+        color: #ffffff;
+        line-height: 1.5;
+        white-space: normal; /* Allows text to wrap normally instead of staying on one line */
+    }
+
+    .sn-slider-content a {
+        color: #ff6b6b;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .sn-slider-content a:hover {
+        color: #ff4747;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+(function () {
+    'use strict';
+    let isEmby = "";
+    const sliderWrapperId = "sn-text-slider-wrapper";
+
+    // Selectors mapped exactly from your provided script
+    const selectors = {
+        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
+        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
+        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
+        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer",
+    };
+
+    // Check if the page has loaded the necessary media info
+    function showFlag() {
+        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
+        if (!isEmby) {
+            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+        }
+        return !!mediaInfoDiv;
+    }
+
+    // Function to inject the slider
+    function initSlider() {
+        // Prevent duplicate sliders
+        let existingSlider = document.getElementById(sliderWrapperId);
+        if (existingSlider) {
+            existingSlider.remove();
+        }
+
+        // Find the main buttons based on Emby or Jellyfin
+        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
+        if (!isEmby) {
+            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
+        }
+
+        if (!mainDetailButtons) return;
+
+        // The HTML for the scrolling text
+        const sliderHtml = `
+            <div id="${sliderWrapperId}" class="sn-slider-wrapper">
+                <div class="sn-slider-content">
+                    <span class="item">
+                        ⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন।
+                    </span>
+                </div>
+            </div>
+        `;
+
+        // Inject immediately after the main play buttons
+        mainDetailButtons.insertAdjacentHTML("afterend", sliderHtml);
+    }
+
+    // Monitor DOM changes using the logic from your script
+    document.addEventListener("viewbeforeshow", function (e) {
+        if (isEmby === "") {
+            isEmby = !!e.detail.contextPath;
+        }
+        
+        let isItemDetailPage;
+        if (isEmby) {
+            isItemDetailPage = e.detail.contextPath.startsWith("/item?id=");
+        } else {
+            isItemDetailPage = e.detail.params && e.detail.params.id;
+        }
+        
+        if (isItemDetailPage) {
+            const mutation = new MutationObserver(function() {
+                if (showFlag()) {
+                    initSlider();
+                    mutation.disconnect(); // Stop observing once injected
+                }
+            })
+            mutation.observe(document.body, {
+                childList: true,
+                characterData: true,
+                subtree: true,
+            })
+        }
+    });
+
+})();
+</script>

@@ -1,0 +1,78 @@
+<style>
+    /* Premium Glassmorphism Warning Box */
+    .sn-server-alert {
+        background: rgba(255, 50, 50, 0.10); /* Very soft red tint */
+        backdrop-filter: blur(12px); /* Frosted glass effect */
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 50, 50, 0.25);
+        border-radius: 8px;
+        padding: 14px 20px;
+        margin: 20px 0 10px 0; /* Spacing below the buttons */
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.5;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .sn-server-alert .alert-icon {
+        font-size: 20px;
+    }
+
+    .sn-server-alert a {
+        color: #ff6b6b; /* Highlighted link color */
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .sn-server-alert a:hover {
+        color: #ff4747;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    document.addEventListener("viewshow", function() {
+        // 1. Ensure we are only running this on an Item Details page
+        if (window.location.hash.indexOf('id=') === -1 && window.location.search.indexOf('id=') === -1) {
+            return; 
+        }
+
+        setTimeout(function() {
+            // 2. Prevent the warning box from duplicating if you navigate back and forth
+            if (document.querySelector('.sn-server-alert')) return;
+
+            // 3. The HTML for your text warning
+            const alertHTML = `
+                <div class="sn-server-alert">
+                    <span class="alert-icon">⚠️</span>
+                    <span>
+                        সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য 
+                        <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> 
+                        সার্ভার ব্যাবহার করুন।
+                    </span>
+                </div>
+            `;
+
+            const template = document.createElement('template');
+            template.innerHTML = alertHTML.trim();
+            const alertElement = template.content.firstChild;
+
+            // 4. Find the main buttons (Play, Trailer, etc.) to inject the warning right below them
+            const detailButtons = document.querySelector('.mainDetailButtons') || document.querySelector('.detailButtons');
+            const mainContainer = document.querySelector('.detailPagePrimaryContainer');
+
+            if (detailButtons && detailButtons.parentNode) {
+                // Inserts the warning immediately after the main buttons
+                detailButtons.parentNode.insertBefore(alertElement, detailButtons.nextSibling);
+            } else if (mainContainer) {
+                // Fallback just in case the buttons haven't loaded
+                mainContainer.appendChild(alertElement);
+            }
+        }, 800); // Slight delay to let Emby render its buttons first
+    });
+</script>

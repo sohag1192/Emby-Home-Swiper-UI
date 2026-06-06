@@ -1203,6 +1203,7 @@ div.mySwiper {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	gap: 0.35em;
 	min-height: 1.7em;
 	padding: 0 0.62em;
 	border-radius: 6px;
@@ -1210,6 +1211,18 @@ div.mySwiper {
 	border: 1px solid rgba(255, 255, 255, 0.18);
 	-webkit-backdrop-filter: blur(0.35em);
 	backdrop-filter: blur(0.35em);
+}
+
+.banner-meta .meta-icon {
+	width: 1em;
+	height: 1em;
+	flex: 0 0 auto;
+	opacity: 0.9;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2.2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
 }
 
 .custom p {
@@ -1926,7 +1939,17 @@ div.dialogContainer {
 				const year = detail.ProductionYear ? this.escapeHtml(detail.ProductionYear) : "";
 				const rating = Number.isFinite(Number(detail.CommunityRating)) ? Number(detail.CommunityRating).toFixed(1) : "";
 				const officialRating = this.escapeHtml(detail.OfficialRating || "");
-				const metaHtml = [year, rating ? `Rating ${rating}` : "", officialRating].filter(Boolean).map(value => `<span>${value}</span>`).join("");
+				const metaIcons = {
+					year: `<svg class="meta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg>`,
+					rating: `<svg class="meta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.9 6.4 7 .7-5.2 4.7 1.5 6.9L12 17.2l-6.2 3.5 1.5-6.9L2.1 9.1l7-.7L12 2Z"/></svg>`,
+					cert: `<svg class="meta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/><path d="M9 12l2 2 4-4"/></svg>`
+				};
+				const metaItems = [
+					year && { icon: metaIcons.year, value: year },
+					rating && { icon: metaIcons.rating, value: rating },
+					officialRating && { icon: metaIcons.cert, value: officialRating }
+				].filter(Boolean);
+				const metaHtml = metaItems.map(meta => `<span>${meta.icon}${meta.value}</span>`).join("");
 				const backdropHtml = `
 <div class="swiper-slide" id="${detail.Id}">
    <img id="${detail.Id}" data-parentid="${datas.Id}" class="banner-cover ${hvclass}" draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" src="${ImageUrl}" alt="${title}" />

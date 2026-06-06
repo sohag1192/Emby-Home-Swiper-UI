@@ -21,6 +21,14 @@
 ✅ **Error Handling** - Graceful fallbacks  
 ✅ **Performance Optimized** - Lazy loading images  
 
+Changes:
+
+Hidden the thumbnail strip you pasted (mySwiper) using hideThumbs.
+Added one clean hit counter link at the bottom-right of the main slider.
+Stopped hidden thumbnail hover/focus logic from moving the main slide.
+Made pagination bullet handling safer so missing bullets won’t crash.
+Main banner slider remains active with the cleaner “best slider” view.
+
 ## If it's still not working, try this troubleshooting:
 
 1. **Check browser console** for errors

@@ -77,10 +77,16 @@ Both projects pioneered external player integration and UI customization.
 ![Screenshot 4](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/4.png)
 
 ---
+---
 
-## 🤝 Contributing
-- Issues and pull requests are welcome.
-- Contact: [@sohag1192 on Telegram](https://t.me/sohag1192).
+## 🙋 Contributing
+
+- Issues and pull requests are welcome.  
+- If you find bugs or want to suggest improvements, please open an issue or PR.  
+
+📬 **Contact via Mail:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
+
+📬 **Contact via Telegram:** [Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
 
 ---
 

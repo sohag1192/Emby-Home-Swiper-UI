@@ -76,11 +76,20 @@ This module uses global objects like `ApiClient` and `require(["toast"])` to int
 
 ---
 
+
 ## 🙋 Contributing
 
-Found a bug or have an idea to improve this project?  
-Feel free to [open an issue](https://github.com/sohag1192/Emby-Home-Swiper-UI/issues) or submit a pull request!
+
+- Issues and pull requests are welcome.  
+- If you find bugs or want to suggest improvements, please open an issue or PR.  
+
+📬 **Contact via Mail:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
+
+📬 **Contact via Telegram:** [Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
 
 ---
 
+## 🌟 Support
+
+If you enjoy this project, please ⭐ it on GitHub — your support motivates future updates!
 

@@ -45,13 +45,16 @@ Choose **one** deployment routine depending on your administrative depth:
    
    
    ---
+---
 
 ## 🙋 Contributing
 
 - Issues and pull requests are welcome.  
 - If you find bugs or want to suggest improvements, please open an issue or PR.  
 
-📬 **Contact via Mail:** [@sohag1192](sohag1192@gmail.com)
+📬 **Contact via Mail:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
+
+📬 **Contact via Telegram:** [Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
 
 ---
 
@@ -59,6 +62,4 @@ Choose **one** deployment routine depending on your administrative depth:
 
 If you enjoy this project, please ⭐ it on GitHub — your support motivates future updates!
 
-
-   
 

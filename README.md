@@ -65,8 +65,9 @@ It uses native Emby APIs to display auto‑sliding content on the home page (`#!
 ## 🛠️ Installation Instructions
 
 1. **Download the script**  
-   Save `home.js` from the [v1 folder](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-sider-v1).
-      Save `home.js` from the [v1 folder](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-swiper-v2).
+
+   - From [home-sider-v1](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-sider-v1)  
+   - From [home-swiper-v2](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-swiper-v2)  
 
 2. **Place in Emby environment**  
    Copy `home.js` into your Emby server’s custom scripts or plugin folder.
@@ -136,7 +137,7 @@ This code relies on global objects like **`ApiClient`** and **`require(["toast"]
 ---
 
 ## 🧪 Tested On
-- ✅ Emby Web Version 4.9.5.0
+- ✅ Emby Web Version 4.9.5.0 
 - ✅ Chrome, Firefox, Edge  
 - ✅ Mobile and desktop views  
 

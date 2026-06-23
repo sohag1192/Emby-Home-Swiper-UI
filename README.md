@@ -36,7 +36,9 @@ It uses native Emby APIs to display auto‑sliding content on the home page (`#!
      ```
 
 2. **Download required files from GitHub:**
-   From [Emby-Home-Swiper-UI v1](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/v1), copy:
+   From [Emby-Home-Swiper-UI home-sider-v1 ](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-sider-v1), copy:
+   From [Emby-Home-Swiper-UI home-swiper-v2 ](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-swiper-v2), copy:
+   
    - `home.js` (main swiper logic)
    - `style.css` (optional styling)
    - Any additional assets referenced in `home.js`
@@ -63,7 +65,8 @@ It uses native Emby APIs to display auto‑sliding content on the home page (`#!
 ## 🛠️ Installation Instructions
 
 1. **Download the script**  
-   Save `home.js` from the [v1 folder](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/v1).
+   Save `home.js` from the [v1 folder](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-sider-v1).
+      Save `home.js` from the [v1 folder](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/home-swiper-v2).
 
 2. **Place in Emby environment**  
    Copy `home.js` into your Emby server’s custom scripts or plugin folder.
@@ -116,8 +119,12 @@ Designed for performance and usability, it includes auto‑sliding functionality
 
 ## 📸 Banner Previews
 
-![Screenshot 45](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_1.png)  
-![Screenshot 47](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_3.png)
+![Screenshot 0](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/home-swiper-v2/img/Screenshot_0.png)  
+![Screenshot 1](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/home-swiper-v2/img/Screenshot_1.png)
+![Screenshot 2](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/home-swiper-v2/img/Screenshot_2.png)  
+![Screenshot 3](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/home-swiper-v2/img/Screenshot_3.png)
+![Screenshot 4](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/home-swiper-v2/img/Screenshot_4.png)  
+
 
 ---
 
@@ -140,7 +147,9 @@ This code relies on global objects like **`ApiClient`** and **`require(["toast"]
 - Issues and pull requests are welcome.  
 - If you find bugs or want to suggest improvements, please open an issue or PR.  
 
-📬 **Contact via Telegram:** [@sohag1192](https://t.me/sohag1192)
+📬 **Contact via Mail:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
+
+📬 **Contact via Telegram:** [Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
 
 ---
 

@@ -1,95 +1,82 @@
+# ⚡ Emby Home Swiper UI — Quick Reference
+
+<div align="center">
+
+![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.9.5.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+**A lightweight, responsive, and visually engaging banner carousel for Emby and Jellyfin home screens.**
+
+</div>
 
 ---
 
-# 🎬 Emby Home Swiper UI
+## 🚀 Quick Highlights
 
-![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat&tz=UTC)
-
-A lightweight, responsive, and visually engaging banner carousel for Emby and Jellyfin home screens. This plugin replaces the default library grid with a dynamic Swiper-based UI — perfect for showcasing featured content, recent additions, or branded visuals.
-
-> ✅ Tested on Emby Web 4.9.1.80  
-> ✅ Inspired by [Nolovenodie/emby-crx](https://github.com/Nolovenodie/emby-crx)
-
----
-
-## 🚀 Features
-
-| Feature               | Description                                                                 |
-|-----------------------|-----------------------------------------------------------------------------|
-| ✅ Lightweight         | No external dependencies required                                           |
-| ✅ Native API Support  | Uses `ApiClient` from Emby/Jellyfin                                         |
-| ✅ Auto-sliding Banner | Rotates every 8 seconds                                                     |
-| ✅ Navigation Controls | Previous/Next buttons for manual control                                   |
-| ✅ Indicator Dots      | Clickable dots for direct navigation                                       |
-| ✅ Responsive Design   | Works seamlessly on desktop and mobile                                     |
-| ✅ Hover Pause         | Pauses rotation when hovered                                               |
-| ✅ Error Handling      | Graceful fallback for missing images or API issues                         |
-| ✅ Lazy Loading        | Loads images only when needed for performance                              |
+| Feature | Description |
+| :--- | :--- |
+| ⚡ **Lightweight** | Pure native JavaScript using internal `ApiClient` |
+| 🎞️ **Auto-Sliding** | Rotates featured media every 6–8 seconds |
+| 🎮 **Navigation Controls** | Interactive Previous / Next buttons & bullet dots |
+| 📱 **Responsive** | Works across Desktop, Tablet, and Mobile |
+| ⏸️ **Hover Pause** | Pauses rotation automatically when hovered |
+| 🛡️ **Error Handling** | Graceful fallback for missing backdrops or logos |
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Quick Installation
 
-1. **Download the script**  
-   Get `home.js` from the [v1 folder](https://github.com/sohag1192/Emby-Home-Swiper-UI/tree/main/v1)
+1. **Download the script:**
+   - **Recommended (V2 with Ratings & Year):** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
+   - **Classic (V1 Lightweight):** [`home-sider-v1/home.js`](home-sider-v1/home.js)
 
-2. **Place in Emby environment**  
-   Copy `home.js` to your Emby server’s custom scripts or plugin folder.
+2. **Place in Emby environment:**  
+   Copy the script into your server's `dashboard-ui/` directory as `home.js`.
 
-3. **Inject into dashboard**  
-   Add this line to your Emby dashboard HTML or use a browser extension like Tampermonkey:
+3. **Inject into `index.html`:**  
+   Add this tag before `</head>` or `</body>` in `dashboard-ui/index.html`:
 
    ```html
-   <script src="/path/to/home.js"></script>
+   <script src="home.js" defer></script>
    ```
 
----
-
-## 🧪 Troubleshooting
-
-- Open browser console (`F12`) and check for errors.
-- Confirm Emby API is available:
-
-  ```js
-  console.log(ApiClient)
-  ```
-
-- Ensure you're on the correct route: `#!/home`
-- Manually initialize the swiper:
-
-  ```js
-  HomeSwiper.init()
-  ```
+4. **Restart & Refresh:**  
+   Restart Emby Server or refresh the web UI (`Ctrl + F5`).
 
 ---
 
 ## 📸 Screenshots
 
-![Screenshot 45](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_45.png)  
-![Screenshot 47](https://github.com/sohag1192/Emby-banner-content-display-/raw/main/v1/img/Screenshot_47.png)
+![Banner Preview 1](home-swiper-v2/img/Screenshot_0.png)  
+![Banner Preview 2](home-swiper-v2/img/Screenshot_1.png)  
 
 ---
 
-## 🧩 Developer Notes
+## 🧪 Troubleshooting
 
-This module uses global objects like `ApiClient` and `require(["toast"])` to interact with Emby’s internal API and UI components. Functions like `saveUser` and `renderMediaFolders` suggest future expansion for user-specific customization and folder visibility controls.
+- **Check Browser Console (`F12`):** Check for errors.
+- **Verify `ApiClient` Availability:**
+  ```javascript
+  console.log(ApiClient);
+  ```
+- **Ensure Correct Route:** Must be on `#!/home`.
+- **Manually Initialize:**
+  ```javascript
+  HomeSwiper.init();
+  ```
 
 ---
 
+## 🤝 Contributing & Contact
 
-## 🙋 Contributing
-
-
-- Issues and pull requests are welcome.  
-- If you find bugs or want to suggest improvements, please open an issue or PR.  
-
-📬 **Contact via Mail:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
-
-📬 **Contact via Telegram:** [Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
+📬 **Email:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)  
+💬 **Telegram:** [@Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
 
 ---
 
 ## 🌟 Support
 
-If you enjoy this project, please ⭐ it on GitHub — your support motivates future updates!
+If you enjoy this project, please ⭐ it on [GitHub](https://github.com/sohag1192/Emby-Home-Swiper-UI) — your support motivates future updates!
+
 

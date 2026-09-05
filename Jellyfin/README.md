@@ -1,110 +1,119 @@
+# 🍇 Jellyfin Home Swiper UI & Theme
 
-# Emby Home Swiper UI for Jellyfin
+<div align="center">
 
-A lightweight, responsive **Swiper carousel** for Jellyfin’s home screen.  
-This project enhances the default Jellyfin web interface by adding a dynamic banner slider that automatically rotates through your latest or featured media.
+![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Jellyfin%20Views&icon=github&color=%23AA5CC3&message=&style=flat-square&tz=UTC)
+![Jellyfin Version](https://img.shields.io/badge/Jellyfin%20Web-10.8.x%20--%2010.11.x+-AA5CC3?style=flat-square&logo=jellyfin&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
----
+**A lightweight, responsive Swiper banner carousel and custom theme for Jellyfin Web.**
 
-## ✨ Features
-- 🎞️ Auto‑sliding banners on the Jellyfin home page (`#!/home`).
-- 📱 Responsive design for desktop and mobile.
-- 🔗 Uses native Jellyfin APIs — no external dependencies.
-- 🛠️ Easy manual integration into `index.html`.
+</div>
 
 ---
 
-## 📥 Installation
+## 📌 Project Overview
 
-1. **Clone or download** this repository.
-2. **Copy** the contents of the `Jellyfin` folder into your Jellyfin web client directory:
-
-   - **Linux (Debian/Ubuntu/Fedora/CentOS):**
-     ```
-     /usr/share/jellyfin/web
-     ```
-   - **Windows (Standard Install):**
-     ```
-     C:\Program Files\Jellyfin\Server\jellyfin-web
-     ```
-
-3. **Edit `index.html`** and insert the following before `</head>`:
-
-   ```html
-   <head>
-       <!-- jellyfin CRX assets -->
-       <link rel="stylesheet" id="theme-css" href="jellyfin-crx/style.css" type="text/css" media="all" />
-       <script src="jellyfin-crx/jquery-3.6.0.min.js"></script>
-       <script src="jellyfin-crx/md5.min.js"></script>
-       <script src="jellyfin-crx/main.js"></script>
-   </head>
-   ```
-
-   > 💡 This manual injection avoids relying on shell scripts to patch the file.
-
-4. **Restart Jellyfin** to apply changes:
-   ```bash
-   sudo systemctl restart jellyfin
-   ```
-   *(or restart your Docker container if applicable)*
+**Jellyfin Home Swiper UI** transforms the standard Jellyfin home screen (`#!/home`) by adding a dynamic auto-sliding banner carousel. It leverages Jellyfin's internal API client to seamlessly query recently added media, render transparent title logos, backdrops, and interactive navigation elements.
 
 ---
 
-## ✅ Tested On
-- Jellyfin Web **10.8+ → 10.11+**
-- Browsers: Chrome, Firefox, Edge
-- Layouts: Mobile + Desktop
+## ✨ Key Features
+
+- 🎞️ **Auto-Sliding Carousel:** Rotates featured movies and shows smoothly.
+- 📱 **Fully Responsive:** Adapts flawlessly across Mobile, Tablet, and Desktop web views.
+- 🎨 **Enhanced Dark Theme:** Includes modern CSS styling (`style.css`) tailored specifically for Jellyfin.
+- 🔗 **Zero Server Modifications:** Injected purely via web client assets (`index.html`).
+- ⚡ **Versioned Script Options:** Comes with `main-v1.js`, `main-v2.js`, and `main-v3.js` inside `jellyfin/Version/` for different UI preferences.
 
 ---
 
-## 🙌 Original Inspiration
-This project builds on earlier work:
-- [Nolovenodie/emby-crx](https://github.com/Nolovenodie/emby-crx) — the original Emby CRX extension.  
-- [frostyleave/emby-crx-for-jellyfin](https://github.com/frostyleave/emby-crx-for-jellyfin) — adaptation of Emby CRX for Jellyfin.  
+## 🛠️ Installation Guide
 
-Both projects pioneered external player integration and UI customization.  
-**Emby Home Swiper UI** continues that spirit, focusing on **home page banners and carousel design**.
+### Step 1: Copy Files to Jellyfin Web Directory
+Copy the `jellyfin-crx` files (or the contents of `Jellyfin/jellyfin/`) into your Jellyfin web root folder:
+
+- **Linux (Debian / Ubuntu / Fedora / Arch):**
+  ```text
+  /usr/share/jellyfin/web/jellyfin-crx/
+  ```
+- **Docker (`jellyfin/jellyfin`):**
+  ```text
+  /jellyfin/jellyfin-web/jellyfin-crx/
+  ```
+- **Windows (Standard Installation):**
+  ```text
+  C:\Program Files\Jellyfin\Server\jellyfin-web\jellyfin-crx\
+  ```
+
+### Step 2: Inject Assets into `index.html`
+Open `index.html` in your Jellyfin web directory and insert the following block before `</head>`:
+
+```html
+<!-- Jellyfin Swiper UI Assets -->
+<link rel="stylesheet" id="theme-css" href="jellyfin-crx/style.css" type="text/css" media="all" />
+<script src="jellyfin-crx/jquery-3.6.0.min.js"></script>
+<script src="jellyfin-crx/md5.min.js"></script>
+<script src="jellyfin-crx/main.js"></script>
+```
+
+### Step 3: Restart Jellyfin
+Apply changes by restarting the Jellyfin service or container:
+
+```bash
+# Linux
+sudo systemctl restart jellyfin
+
+# Docker
+docker restart <jellyfin_container_name>
+```
+
+### Step 4: Clear Browser Cache
+Perform a hard refresh in your browser (`Ctrl + F5`) and navigate to your Jellyfin home page.
 
 ---
 
+## 📸 Screenshots & Previews
 
-## 📷 Screenshots
-*(Add screenshots here showing the carousel in action on Jellyfin.)*
-
-![Screenshot 1](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/1.png)  
-![Screenshot 2](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/2.png)
-![Screenshot 3](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/3.png)  
-![Screenshot 4](https://github.com/sohag1192/Emby-Home-Swiper-UI/blob/6c330e48f03139a6180dac28fd61c7335b5b2b67/Jellyfin/img/4.png)
-
----
----
-
-## 🙋 Contributing
-
-- Issues and pull requests are welcome.  
-- If you find bugs or want to suggest improvements, please open an issue or PR.  
-
-📬 **Contact via Mail:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
-
-📬 **Contact via Telegram:** [Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
+![Jellyfin Preview 1](img/1.png)  
+![Jellyfin Preview 2](img/2.png)  
+![Jellyfin Preview 3](img/3.png)  
+![Jellyfin Preview 4](img/4.png)  
 
 ---
 
-## ⚠️ Notes
-- Jellyfin updates may overwrite `index.html`. Keep a backup of your changes.
-- For long‑term customization, consider forking or rebuilding `jellyfin-web` instead of editing in place.
-- Clear browser cache after restart to ensure new assets load correctly.
+## 🧪 Tested Compatibility
+
+- ✅ Jellyfin Web **10.8.x → 10.11.x+**
+- ✅ Browsers: Chrome, Firefox, Safari, Edge, Brave
+- ✅ Responsive views: Desktop, iPad/Tablet, Mobile
 
 ---
 
-## 📜 License
-This project is released under the **MIT License**.  
-Feel free to use, modify, and distribute with attribution.
+## ⚠️ Notes & Tips
+
+- **Backups:** Server updates may overwrite `index.html`. Keep a backup of your injection snippet.
+- **Cache Invalidation:** Always perform a hard refresh (`Ctrl + Shift + R`) after updating script files.
 
 ---
 
-## 🌟 Support
-If you enjoy this project, please ⭐ it on GitHub — your support motivates future updates!
+## 🙌 Credits & Inspiration
 
+- [Nolovenodie/emby-crx](https://github.com/Nolovenodie/emby-crx)
+- [frostyleave/emby-crx-for-jellyfin](https://github.com/frostyleave/emby-crx-for-jellyfin)
 
+---
 
+## 🤝 Contributing & Contact
+
+- Issues and pull requests are welcome.
+- If you find bugs or have feature ideas, feel free to submit an issue or PR.
+
+📬 **Email:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)  
+💬 **Telegram:** [@Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
+
+---
+
+## 📄 License
+
+Distributed under the [MIT License](../LICENSE). Feel free to use and modify with attribution.

@@ -1,102 +1,113 @@
-# 📝 Emby Text Sider Component (`text_sider`)
+# 📝 Emby & Jellyfin Text Sider Component (`text_sider`)
 
-The `text_sider` module provides a lightweight, minimalist typography overlay engine for the **Emby-Home-Swiper-UI** framework. It extracts core metadata (titles, taglines, community ratings, and overview descriptions) directly from your Emby library assets and animates them synchronously alongside your main image carousel.
+<div align="center">
+
+![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Text%20Sider%20Views&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.9.5.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![Jellyfin Version](https://img.shields.io/badge/Jellyfin%20Web-10.8.x%20--%2010.11.x+-AA5CC3?style=flat-square&logo=jellyfin&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+**A lightweight, elegant typography & alert notification box for Emby and Jellyfin item detail pages (`#!/item?id=...`).**
+
+</div>
 
 ---
 
-## 📸 Visual Preview
+## 📌 Project Overview
 
-Here is a look at the text slider layout seamlessly floating over the interface backdrop:
-
-![Text Sider Preview](https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/refs/heads/main/text_sider/Text%20No%20Slider%20Box.png)
+The `text_sider` component injects clean, hardware-accelerated announcement banners and server load notices directly underneath the primary media action buttons (Play, Trailer, Favorite) on item detail pages. It supports dual-language announcements (e.g. Bengali + English), server CDN redirect links, and animated ticker layouts.
 
 ---
 
-## 🚀 Features
+## 📸 Visual Previews
 
-* **Synchronized Kinetic Sliders:** Locks perfectly with the primary image slider index to keep text descriptions and media cards instantly aligned without lag.
-* **Smart Typography Sizing:** Intelligently limits and truncates long overview summaries (`overview`) across different devices (desktop vs. mobile) to maintain UI structural balance.
-* **Direct API Metadata Extraction:** Leverages raw string parameters straight from Emby's database client without requiring additional backend lookups.
-* **Hardware-Accelerated Transitions:** Uses modern CSS properties (`transform`, `opacity`, `transition`) for clean text fading and sliding motions, ensuring smooth 60fps performance even on low-end client hardware.
+### 📢 Static Alert Box
+![Static Alert Box Preview](Text%20No%20Slider%20Box.png)
+
+### 📢 Animated Slider Box
+![Animated Text Slider Preview](Text%20Slider%20Box.png)
+
+---
+
+## 📂 Available Templates
+
+| File | Type | Description |
+| :--- | :--- | :--- |
+| **`Text No Slider Box.html`** | 🔲 Static Box | Clean, static warning banner with glassmorphism blur and custom notice text. |
+| **`Text Slider Box.html`** | 🎞️ Animated Slider | Kinetic rotating text box to display multiple rotating announcements. |
+| **`Text Warning Box.html`** | ⚠️ Notice Box | High-visibility warning box tailored for server maintenance or load alerts. |
+
+---
+
+## 🚀 Key Features
+
+* **Auto-Detection for Emby & Jellyfin:** Uses intelligent DOM selectors mapped for both platforms.
+* **Non-Intrusive Layout:** Sits cleanly beneath action buttons with responsive padding and clear margin separation.
+* **Glassmorphism Design:** Modern backdrop-filter blur (`12px`) with smooth red/amber accents.
+* **Mobile Optimized:** Automatically scales typography and padding on mobile viewports (`< 768px`).
+* **Mutation Observer Engine:** Detects route transitions and dynamically injects alerts without needing full page reloads.
 
 ---
 
 ## 🛠️ Installation & Integration
 
-To link this descriptive text layout overlay to your existing server home view structure:
+### Step 1: Choose Your Template
+Select either `Text Slider Box.html` or `Text No Slider Box.html` and open it with a text editor.
 
-### 1. File Tree Structure
-Ensure your deployment workspace is structured to load this script next to your primary swiper logic:
-1. Head into your server's system layout path: `../emby-server/system/dashboard-ui/index.html`
-2. Open `index.html`, drop to the very bottom, and insert the player script directly above the closing `</body>` tag:
+### Step 2: Open `index.html`
+Locate your server's `dashboard-ui/index.html`:
+- **Synology:** `/volume1/@appstore/EmbyServer/system/dashboard-ui/index.html`
+- **Docker:** `/system/dashboard-ui/index.html`
+- **Linux:** `/opt/emby-server/system/dashboard-ui/index.html`
+- **Windows:** `C:\Users\<User>\AppData\Roaming\Emby-Server\system\dashboard-ui\index.html`
+
+### Step 3: Inject before `</body>`
+Copy the `<style>` and `<script>` blocks from the HTML file and paste them right before the closing `</body>` tag:
+
 ```html
-
-  <style>
-    /* Static Premium Warning Box (Base Styles) */
+<style>
+    /* Custom Alert Box Styling */
     .sn-slider-wrapper {
         width: 100%;
-        box-sizing: border-box; /* Prevents overflow on mobile screens */
-        background: rgba(255, 50, 50, 0.10); /* Soft red tint */
+        box-sizing: border-box;
+        background: rgba(255, 50, 50, 0.10);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 50, 50, 0.25);
         border-radius: 8px;
-        padding: 16px 22px; /* Slightly more padding for larger text */
+        padding: 16px 22px;
         margin: 20px 0 10px 0;
         display: block;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        clear: both; /* Ensures it drops below the buttons properly */
+        clear: both;
     }
-
-    /* Title Styling */
     .sn-alert-title {
-        font-size: 22px; /* Increased to match the larger text */
+        font-size: 22px;
         font-weight: 700;
         color: #ff8a8a;
         margin-bottom: 10px;
         padding-bottom: 8px;
-        border-bottom: 1px solid rgba(255, 50, 50, 0.2); 
-        display: block;
+        border-bottom: 1px solid rgba(255, 50, 50, 0.2);
     }
-
-    /* Text Styling */
     .sn-slider-content .item {
-        font-size: 20px; /* MAIN TEXT SIZE SET TO 20px */
+        font-size: 20px;
         font-weight: 500;
         color: #ffffff;
         line-height: 1.6;
-        white-space: normal;
-        display: block;
     }
-
     .sn-slider-content a {
         color: #ff6b6b;
         text-decoration: none;
         font-weight: bold;
     }
-
     .sn-slider-content a:hover {
         color: #ff4747;
         text-decoration: underline;
     }
-
-    /* 📱 MOBILE RESPONSIVE FIXES */
     @media (max-width: 768px) {
-        .sn-slider-wrapper {
-            padding: 14px 16px;
-            margin: 15px 0 10px 0;
-            border-radius: 6px;
-        }
-
-        .sn-alert-title {
-            font-size: 18px; /* Scaled down slightly for phones */
-            margin-bottom: 8px;
-        }
-
-        .sn-slider-content .item {
-            font-size: 16px; /* Scaled down to prevent taking up the whole phone screen */
-            line-height: 1.5;
-        }
+        .sn-slider-wrapper { padding: 14px 16px; margin: 15px 0 10px 0; }
+        .sn-alert-title { font-size: 18px; }
+        .sn-slider-content .item { font-size: 16px; }
     }
 </style>
 
@@ -106,7 +117,6 @@ Ensure your deployment workspace is structured to load this script next to your 
     let isEmby = "";
     const sliderWrapperId = "sn-text-slider-wrapper";
 
-    // Selectors mapped exactly for Emby and Jellyfin
     const selectors = {
         embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
         jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
@@ -114,7 +124,6 @@ Ensure your deployment workspace is structured to load this script next to your 
         jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer",
     };
 
-    // Check if the page has loaded the necessary media info
     function showFlag() {
         let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
         if (!isEmby) {
@@ -123,87 +132,58 @@ Ensure your deployment workspace is structured to load this script next to your 
         return !!mediaInfoDiv;
     }
 
-    // Function to inject the static alert box
     function initSlider() {
-        // Prevent duplicate alerts
         let existingSlider = document.getElementById(sliderWrapperId);
-        if (existingSlider) {
-            existingSlider.remove();
-        }
+        if (existingSlider) existingSlider.remove();
 
-        // Find the main buttons based on Emby or Jellyfin
         let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
-        if (!isEmby) {
-            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
-        }
-
+        if (!isEmby) mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
         if (!mainDetailButtons) return;
 
-        // The HTML with the Title and dual-language text
         const sliderHtml = `
             <div id="${sliderWrapperId}" class="sn-slider-wrapper">
-                <div class="sn-alert-title">📢 জরুরী বিজ্ঞপ্তি | Important Notice</div>
+                <div class="sn-alert-title">📢 Notice / Announcement</div>
                 <div class="sn-slider-content">
                     <span class="item">
-                        সম্মানিত গ্রাহক, সার্ভারে অতিরিক্ত চাপের কারণে বাফারিং হতে পারে। নিরবচ্ছিন্ন সেবার জন্য অনুগ্রহ করে <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।<br><br>
-                        Dear User, you may experience buffering due to heavy server load. For uninterrupted streaming, please use the <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>.
+                        Your custom notice message goes here. Add hyperlinks or notices.
                     </span>
                 </div>
             </div>
         `;
-
-        // Inject immediately after the main play buttons
         mainDetailButtons.insertAdjacentHTML("afterend", sliderHtml);
     }
 
-    // Monitor DOM changes using the advanced engine
     document.addEventListener("viewbeforeshow", function (e) {
-        if (isEmby === "") {
-            isEmby = !!e.detail.contextPath;
-        }
-        
-        let isItemDetailPage;
-        if (isEmby) {
-            isItemDetailPage = e.detail.contextPath.startsWith("/item?id=");
-        } else {
-            isItemDetailPage = e.detail.params && e.detail.params.id;
-        }
+        if (isEmby === "") isEmby = !!e.detail.contextPath;
+        let isItemDetailPage = isEmby 
+            ? e.detail.contextPath.startsWith("/item?id=") 
+            : (e.detail.params && e.detail.params.id);
         
         if (isItemDetailPage) {
             const mutation = new MutationObserver(function() {
                 if (showFlag()) {
                     initSlider();
-                    mutation.disconnect(); // Stop observing once injected
+                    mutation.disconnect();
                 }
-            })
-            mutation.observe(document.body, {
-                childList: true,
-                characterData: true,
-                subtree: true,
-            })
+            });
+            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
         }
     });
-
 })();
 </script>
-
-   </body>
-   
-   ```
----
-
-## 🙋 Contributing
-
-- Issues and pull requests are welcome.  
-- If you find bugs or want to suggest improvements, please open an issue or PR.  
-
-📬 **Contact via Mail:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
-
-📬 **Contact via Telegram:** [Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
+```
 
 ---
 
-## 🌟 Support
+## 🤝 Contributing & Contact
 
-If you enjoy this project, please ⭐ it on GitHub — your support motivates future updates!
+📬 **Email:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)  
+💬 **Telegram:** [@Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
+
+---
+
+## 📄 License
+
+Distributed under the [MIT License](../LICENSE). Feel free to use, modify, and distribute with attribution.
+
 

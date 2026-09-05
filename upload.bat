@@ -1,6 +1,6 @@
 @echo off
 REM Change to your project directory
-cd /d "C:\Users\sohag\OneDrive\Desktop\My Project\Emby-Home-Swiper-UI"
+cd /d "D:\My_Project\Emby-Home-Swiper-UI"
 
 REM Initialize Git if not already done
 IF NOT EXIST .git (

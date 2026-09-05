@@ -1,68 +1,222 @@
 <style>
-    /* Static Premium Warning Box (Base Styles) */
-    .sn-slider-wrapper {
+    /* ========================================================
+       📢 Premium Glassmorphism Notice Card (text_sider)
+       Supports Emby & Jellyfin Web | Fully Responsive & Mobile-Ready
+       ======================================================== */
+    .sn-card-wrapper {
         width: 100%;
-        box-sizing: border-box; /* Prevents overflow on mobile screens */
-        background: rgba(255, 50, 50, 0.10); /* Soft red tint */
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 50, 50, 0.25);
-        border-radius: 8px;
-        padding: 16px 22px; /* Slightly more padding for larger text */
-        margin: 20px 0 10px 0;
-        display: block;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        clear: both; /* Ensures it drops below the buttons properly */
+        box-sizing: border-box;
+        background: linear-gradient(135deg, rgba(255, 60, 60, 0.12) 0%, rgba(20, 20, 20, 0.85) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 80, 80, 0.35);
+        border-left: 4px solid #ff4747;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 18px 0 14px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 71, 71, 0.15);
+        position: relative;
+        z-index: 10;
+        clear: both;
+        transition: all 0.3s ease;
     }
 
-    /* Title Styling */
-    .sn-alert-title {
-        font-size: 22px; /* Increased to match the larger text */
+    .sn-card-wrapper:hover {
+        border-color: rgba(255, 90, 90, 0.6);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 71, 71, 0.25);
+    }
+
+    /* Card Header */
+    .sn-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .sn-card-title-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sn-card-icon {
+        font-size: 20px;
+        line-height: 1;
+    }
+
+    .sn-card-title {
+        font-size: clamp(15px, 1.3vw, 19px);
+        font-weight: 800;
+        color: #ff9b9b;
+        letter-spacing: 0.3px;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .sn-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(70, 211, 105, 0.15);
+        border: 1px solid rgba(70, 211, 105, 0.4);
+        color: #46d369;
+        font-size: 11px;
         font-weight: 700;
-        color: #ff8a8a;
-        margin-bottom: 10px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid rgba(255, 50, 50, 0.2); 
-        display: block;
+        padding: 3px 8px;
+        border-radius: 20px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        user-select: none;
     }
 
-    /* Text Styling */
-    .sn-slider-content .item {
-        font-size: 20px; /* MAIN TEXT SIZE SET TO 20px */
-        font-weight: 500;
+    .sn-pulse-green {
+        width: 6px;
+        height: 6px;
+        background-color: #46d369;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #46d369;
+        animation: sn-pulse-anim 1.5s infinite;
+    }
+
+    @keyframes sn-pulse-anim {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.4); opacity: 0.5; }
+    }
+
+    .sn-card-close {
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 16px;
+        cursor: pointer;
+        padding: 4px 6px;
+        line-height: 1;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+
+    .sn-card-close:hover {
         color: #ffffff;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Card Body */
+    .sn-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .sn-lang-block {
+        font-size: clamp(13px, 1.1vw, 15px);
+        font-weight: 500;
+        color: #e5e5e5;
         line-height: 1.6;
-        white-space: normal;
-        display: block;
+        margin: 0;
     }
 
-    .sn-slider-content a {
-        color: #ff6b6b;
+    .sn-lang-block strong {
+        color: #ffffff;
+    }
+
+    .sn-lang-block a {
+        color: #ff7676;
         text-decoration: none;
-        font-weight: bold;
+        font-weight: 700;
+        transition: color 0.2s ease;
     }
 
-    .sn-slider-content a:hover {
-        color: #ff4747;
+    .sn-lang-block a:hover {
+        color: #ffffff;
         text-decoration: underline;
     }
 
-    /* 📱 MOBILE RESPONSIVE FIXES */
-    @media (max-width: 768px) {
-        .sn-slider-wrapper {
-            padding: 14px 16px;
-            margin: 15px 0 10px 0;
-            border-radius: 6px;
+    /* Action Buttons Row */
+    .sn-card-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 4px;
+    }
+
+    .sn-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+        user-select: none;
+    }
+
+    .sn-btn-primary {
+        background: linear-gradient(135deg, #e50914 0%, #b80610 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(229, 9, 20, 0.35);
+    }
+
+    .sn-btn-primary:hover {
+        background: linear-gradient(135deg, #f40612 0%, #cc0813 100%);
+        box-shadow: 0 6px 16px rgba(229, 9, 20, 0.5);
+        transform: translateY(-1px);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .sn-btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sn-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-1px);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    /* 📱 Responsive Mobile View */
+    @media (max-width: 600px) {
+        .sn-card-wrapper {
+            padding: 12px 14px;
+            gap: 10px;
+            margin: 14px 0 10px 0;
+            border-radius: 8px;
         }
 
-        .sn-alert-title {
-            font-size: 18px; /* Scaled down slightly for phones */
-            margin-bottom: 8px;
+        .sn-card-header {
+            padding-bottom: 8px;
         }
 
-        .sn-slider-content .item {
-            font-size: 16px; /* Scaled down to prevent taking up the whole phone screen */
-            line-height: 1.5;
+        .sn-status-pill {
+            font-size: 10px;
+            padding: 2px 6px;
+        }
+
+        .sn-card-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .sn-btn {
+            width: 100%;
+            padding: 9px 12px;
+            font-size: 13px;
         }
     }
 </style>
@@ -71,17 +225,15 @@
 (function () {
     'use strict';
     let isEmby = "";
-    const sliderWrapperId = "sn-text-slider-wrapper";
+    const cardWrapperId = "sn-text-card-wrapper";
 
-    // Selectors mapped exactly for Emby and Jellyfin
     const selectors = {
         embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
         jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
         embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
-        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer",
+        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
     };
 
-    // Check if the page has loaded the necessary media info
     function showFlag() {
         let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
         if (!isEmby) {
@@ -90,15 +242,10 @@
         return !!mediaInfoDiv;
     }
 
-    // Function to inject the static alert box
-    function initSlider() {
-        // Prevent duplicate alerts
-        let existingSlider = document.getElementById(sliderWrapperId);
-        if (existingSlider) {
-            existingSlider.remove();
-        }
+    function initNoticeCard() {
+        let existing = document.getElementById(cardWrapperId);
+        if (existing) existing.remove();
 
-        // Find the main buttons based on Emby or Jellyfin
         let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
         if (!isEmby) {
             mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
@@ -106,50 +253,55 @@
 
         if (!mainDetailButtons) return;
 
-        // The HTML with the Title and dual-language text
-        const sliderHtml = `
-            <div id="${sliderWrapperId}" class="sn-slider-wrapper">
-                <div class="sn-alert-title">📢 জরুরী বিজ্ঞপ্তি | Important Notice</div>
-                <div class="sn-slider-content">
-                    <span class="item">
-                        সম্মানিত গ্রাহক, সার্ভারে অতিরিক্ত চাপের কারণে বাফারিং হতে পারে। নিরবচ্ছিন্ন সেবার জন্য অনুগ্রহ করে <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।<br><br>
-                        Dear User, you may experience buffering due to heavy server load. For uninterrupted streaming, please use the <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>.
-                    </span>
+        const cardHtml = `
+            <div id="${cardWrapperId}" class="sn-card-wrapper" role="alert">
+                <div class="sn-card-header">
+                    <div class="sn-card-title-group">
+                        <span class="sn-card-icon">📢</span>
+                        <h4 class="sn-card-title">জরুরী বিজ্ঞপ্তি | Important Notice</h4>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="sn-status-pill"><span class="sn-pulse-green"></span>CDN ONLINE</span>
+                        <button class="sn-card-close" title="Dismiss" aria-label="Close" onclick="this.closest('.sn-card-wrapper')?.remove();">✕</button>
+                    </div>
+                </div>
+                <div class="sn-card-body">
+                    <p class="sn-lang-block">
+                        🇧🇩 <strong>সম্মানিত গ্রাহক:</strong> সার্ভারে অতিরিক্ত চাপের কারণে বাফারিং হতে পারে। নিরবচ্ছিন্ন ফাস্ট স্ট্রিমিং ও ডিরেক্ট ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।
+                    </p>
+                    <p class="sn-lang-block">
+                        🌐 <strong>Dear User:</strong> If you experience buffering due to high traffic, please use our ultra-fast direct media portal <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>.
+                    </p>
+                </div>
+                <div class="sn-card-actions">
+                    <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">
+                        🚀 Open SN File Server
+                    </a>
+                    <button class="sn-btn sn-btn-secondary" onclick="navigator.clipboard.writeText('http://100.100.100.6/').then(() => alert('Server URL copied to clipboard!'));">
+                        📋 Copy Server URL
+                    </button>
                 </div>
             </div>
         `;
 
-        // Inject immediately after the main play buttons
-        mainDetailButtons.insertAdjacentHTML("afterend", sliderHtml);
+        mainDetailButtons.insertAdjacentHTML("afterend", cardHtml);
     }
 
-    // Monitor DOM changes using the advanced engine
     document.addEventListener("viewbeforeshow", function (e) {
-        if (isEmby === "") {
-            isEmby = !!e.detail.contextPath;
-        }
-        
-        let isItemDetailPage;
-        if (isEmby) {
-            isItemDetailPage = e.detail.contextPath.startsWith("/item?id=");
-        } else {
-            isItemDetailPage = e.detail.params && e.detail.params.id;
-        }
+        if (isEmby === "") isEmby = !!e.detail.contextPath;
+        let isItemDetailPage = isEmby 
+            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id=")) 
+            : (e.detail.params && e.detail.params.id);
         
         if (isItemDetailPage) {
             const mutation = new MutationObserver(function() {
                 if (showFlag()) {
-                    initSlider();
-                    mutation.disconnect(); // Stop observing once injected
+                    initNoticeCard();
+                    mutation.disconnect();
                 }
-            })
-            mutation.observe(document.body, {
-                childList: true,
-                characterData: true,
-                subtree: true,
-            })
+            });
+            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
         }
     });
-
 })();
 </script>

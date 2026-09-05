@@ -1,0 +1,385 @@
+﻿/* =======================================================
+   🍿 Netflix Billboard Theme for Emby & Jellyfin
+   Author: Md. Sohag Rana (sohag1192)
+   Version: 3.0 (Netflix Edition)
+   ======================================================= */
+
+:root {
+  --nflx-red: #e50914;
+  --nflx-red-hover: #f40612;
+  --nflx-black: #141414;
+  --nflx-dark-gray: #181818;
+  --nflx-gray: #2f2f2f;
+  --nflx-light-gray: #6d6d6e;
+  --nflx-green: #46d369;
+  --nflx-white: #ffffff;
+}
+
+/* Hero Section Container */
+.section00.nflx-hero-section {
+  width: 100%;
+  height: clamp(420px, 62vh, 780px);
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--nflx-black);
+}
+
+/* Swiper Base Layout */
+.nflx-hero-swiper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.nflx-hero-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Cinematic Backdrop */
+.nflx-backdrop-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.nflx-backdrop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transform: scale(1);
+  transition: transform 7s cubic-bezier(0.25, 1, 0.5, 1);
+  user-select: none;
+}
+
+.swiper-slide-active .nflx-backdrop-img {
+  transform: scale(1.06);
+}
+
+/* Netflix Vignettes & Gradients */
+.nflx-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  background: 
+    linear-gradient(77deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.6) 38%, rgba(0, 0, 0, 0) 75%),
+    linear-gradient(180deg, rgba(20, 20, 20, 0) 0%, rgba(20, 20, 20, 0.3) 45%, rgba(20, 20, 20, 0.85) 80%, var(--nflx-black) 100%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, transparent 25%);
+}
+
+/* Netflix Content Overlay Box */
+.nflx-content-box {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: clamp(340px, 46vw, 700px);
+  padding: 0 clamp(20px, 4.5vw, 65px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Netflix Series/Film Badge */
+.nflx-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nflx-n-logo {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  color: var(--nflx-red);
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 8px rgba(229, 9, 20, 0.5);
+}
+
+.nflx-media-type {
+  color: #e5e5e5;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Title / Clear Logo */
+.nflx-title-logo-container {
+  min-height: 80px;
+  max-height: 140px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.nflx-title-logo {
+  max-width: min(100%, 400px);
+  max-height: 125px;
+  object-fit: contain;
+  object-position: left bottom;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.85));
+  user-select: none;
+}
+
+.nflx-title-text {
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  font-weight: 900;
+  color: var(--nflx-white);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+  margin: 0;
+}
+
+/* Netflix Top 10 Badge */
+.nflx-top10-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nflx-top10-badge {
+  background: var(--nflx-red);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.65rem;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 2px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.nflx-top10-text {
+  color: var(--nflx-white);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Metadata Row (Match %, Year, Rating, Badges) */
+.nflx-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.nflx-match {
+  color: var(--nflx-green);
+  font-weight: 700;
+}
+
+.nflx-year, .nflx-duration {
+  color: #bcbcbc;
+}
+
+.nflx-cert-pill {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #e5e5e5;
+  padding: 1px 6px;
+  font-size: 0.75rem;
+  border-radius: 2px;
+  line-height: 1.3;
+}
+
+.nflx-quality-pill {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #e5e5e5;
+  padding: 1px 5px;
+  font-size: 0.7rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+/* Synopsis / Tagline */
+.nflx-synopsis {
+  color: #e5e5e5;
+  font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+  line-height: 1.45;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Netflix Action Buttons */
+.nflx-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.nflx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  text-decoration: none;
+}
+
+.nflx-btn-play {
+  background: var(--nflx-white);
+  color: #000000;
+}
+
+.nflx-btn-play:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: scale(1.03);
+}
+
+.nflx-btn-info {
+  background: rgba(109, 109, 110, 0.7);
+  color: var(--nflx-white);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.nflx-btn-info:hover {
+  background: rgba(109, 109, 110, 0.45);
+  transform: scale(1.03);
+}
+
+.nflx-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Right Side Age Rating & Audio Controls */
+.nflx-right-controls {
+  position: absolute;
+  right: 0;
+  bottom: 25%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nflx-age-badge {
+  background: rgba(51, 51, 51, 0.6);
+  border-left: 3px solid #dcdcdc;
+  padding: 6px 14px 6px 10px;
+  color: #dcdcdc;
+  font-size: 0.88rem;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+}
+
+/* Netflix Pagination Bars (Segmented Indicator) */
+.nflx-pagination {
+  position: absolute;
+  top: 15px;
+  right: clamp(20px, 4vw, 50px);
+  z-index: 20;
+  display: flex;
+  gap: 6px;
+}
+
+.nflx-pagination .swiper-pagination-bullet {
+  width: 24px;
+  height: 3px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  opacity: 1;
+  margin: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nflx-pagination .swiper-pagination-bullet-active {
+  background: var(--nflx-red);
+  width: 36px;
+}
+
+/* Navigation Arrows */
+.nflx-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 25;
+  width: 44px;
+  height: 64px;
+  background: rgba(20, 20, 20, 0.4);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  opacity: 0;
+  border-radius: 4px;
+}
+
+.section00:hover .nflx-nav-btn {
+  opacity: 1;
+}
+
+.nflx-nav-btn:hover {
+  background: rgba(20, 20, 20, 0.85);
+}
+
+.nflx-nav-prev { left: 10px; }
+.nflx-nav-next { right: 10px; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section00.nflx-hero-section {
+    height: clamp(380px, 70vh, 520px);
+  }
+  .nflx-content-box {
+    max-width: 90vw;
+    padding: 0 16px;
+    gap: 10px;
+  }
+  .nflx-title-text {
+    font-size: 1.8rem;
+  }
+  .nflx-title-logo {
+    max-height: 80px;
+    max-width: 260px;
+  }
+  .nflx-synopsis {
+    -webkit-line-clamp: 2;
+    font-size: 0.85rem;
+  }
+  .nflx-btn {
+    padding: 8px 18px;
+    font-size: 0.92rem;
+  }
+  .nflx-right-controls {
+    display: none;
+  }
+  .nflx-nav-btn {
+    display: none;
+  }
+}

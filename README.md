@@ -69,7 +69,12 @@ Beyond the home banner carousel, this all-in-one repository also provides:
 
 ```
 Emby-Home-Swiper-UI/
-├── home-swiper-v2/         # 🌟 [RECOMMENDED] Advanced Swiper with Ratings, Year & UI upgrades
+├── home-swiper-v3/         # 🍿 [NEW] Netflix Billboard Edition (Hero Banner, Top 10, Match %)
+│   ├── home.js             # Standalone bundled script (Swiper 11 + CSS + Netflix UI)
+│   ├── home-swiper-netflix.js # Netflix Billboard Swiper implementation
+│   ├── netflix-style.css   # Standalone Netflix Billboard stylesheet
+│   └── README.md           # V3 Dedicated documentation
+├── home-swiper-v2/         # 🌟 Advanced Swiper with Ratings, Year & UI upgrades
 │   ├── home-swiper.js      # Clean Swiper script
 │   ├── home_rating with year.js # Swiper with Community Rating ⭐ & Year 📅 badges
 │   └── img/                # V2 Screenshots
@@ -124,7 +129,7 @@ Find the `dashboard-ui` folder on your server:
   ```
 
 #### Step 2: Download & Copy the Script
-1. Choose either **[home-swiper-v2/home_rating with year.js](home-swiper-v2/home_rating%20with%20year.js)** *(Recommended)* or **[home-sider-v1/home.js](home-sider-v1/home.js)**.
+1. Choose your preferred version: **[home-swiper-v3/home.js](home-swiper-v3/home.js)** *(🍿 Netflix Billboard Edition - New)*, **[home-swiper-v2/home_rating with year.js](home-swiper-v2/home_rating%20with%20year.js)** *(⭐ Ratings & Year Edition)*, or **[home-sider-v1/home.js](home-sider-v1/home.js)** *(Classic)*.
 2. Rename the selected file to `home.js` and copy it directly into your `dashboard-ui/` directory (or inside a subfolder like `dashboard-ui/emby-crx/home.js`).
 
 #### Step 3: Inject the Script in `index.html`

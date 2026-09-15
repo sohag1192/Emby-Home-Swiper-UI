@@ -76,8 +76,40 @@
 
 ---
 
-## 🌟 Support
+## 💖 **Support & Sponsorship**
 
-If you enjoy this project, please ⭐ it on [GitHub](https://github.com/sohag1192/Emby-Home-Swiper-UI) — your support motivates future updates!
+<p align="center">
+  <b>Hello Viewers & Developers! 🌟</b><br/>
+  If you find this project, custom UI components, or media streaming scripts helpful in your own setup, here are several ways you can support continuous development, hosting, and server maintenance costs:
+</p>
+
+<br/>
+
+<div align="center">
+
+| Payment Method | Network / Details | Action |
+| :--- | :--- | :---: |
+| 💎 **Crypto (SOL / USDT / Multi-Chain)** | `9YEThZFaqmqPbPJt8f4jLxPKELMzUmgncsrqvCv44BjE` | <a href="#crypto-wallet"><img src="https://img.shields.io/badge/Crypto-Copy_Address-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Crypto Wallet" /></a> |
+| 📱 **bKash (Personal)** | Send Money (Bangladesh) — Contact on Telegram | <a href="https://t.me/Md_Sohag_Rana" target="_blank"><img src="https://img.shields.io/badge/bKash-Contact_on_Telegram-D12053?style=for-the-badge&logo=telegram&logoColor=white" alt="bKash" /></a> |
+| ⚡ **Nagad (Personal)** | Send Money (Bangladesh) — Contact on Telegram | <a href="https://t.me/Md_Sohag_Rana" target="_blank"><img src="https://img.shields.io/badge/Nagad-Contact_on_Telegram-F7941E?style=for-the-badge&logo=telegram&logoColor=white" alt="Nagad" /></a> |
+| ☕ **Buy Me A Coffee** | Global Creator & Developer Support | <a href="https://rootbd.xyz" target="_blank"><img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" /></a> |
+| ⭐ **Star Repositories** | Free Community Support on GitHub | <a href="https://github.com/sohag1192/Emby-Home-Swiper-UI" target="_blank"><img src="https://img.shields.io/badge/⭐_Star_Projects-20C20E?style=for-the-badge&logo=github&logoColor=white" alt="Star" /></a> |
+
+</div>
+
+<br/>
+
+<a id="crypto-wallet" name="crypto-wallet"></a>
+
+### 💎 **Crypto Wallet Address (SOL / USDT / Multi-Chain):**
+
+```bash
+9YEThZFaqmqPbPJt8f4jLxPKELMzUmgncsrqvCv44BjE
+```
+
+> [!NOTE]
+> 💡 *Hover over or tap the code box above and click the **Copy (📋)** button in the top-right corner to copy the wallet address instantly.*
+
+<br/>
 
 

@@ -11,7 +11,7 @@
 
 **Transform your Emby and Jellyfin home screen into a stunning, modern media showcase with dynamic banners, ratings, external player launching, and animated announcements.**
 
-[✨ Features](#-key-features) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure--modules) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-customization--configuration) • [🧪 Troubleshooting](#-troubleshooting--faq) • [📬 Contact](#-contributing--contact)
+[✨ Features](#-key-features) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure--modules) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-customization--configuration) • [🧪 Troubleshooting](#-troubleshooting--faq) • [📬 Contact](#-contributing--contact) • [💖 Support](#-support--sponsorship)
 
 </div>
 
@@ -324,9 +324,41 @@ If you find a bug or have an idea to improve the UI, feel free to open an [Issue
 
 ---
 
-## 🌟 Support the Project
+## 💖 **Support & Sponsorship**
 
-If you find this project helpful or enjoy using it on your media server, please give it a **⭐ Star** on GitHub! It helps others discover the project and motivates future enhancements.
+<p align="center">
+  <b>Hello Viewers & Developers! 🌟</b><br/>
+  If you find this project, custom UI components, or media streaming scripts helpful in your own setup, here are several ways you can support continuous development, hosting, and server maintenance costs:
+</p>
+
+<br/>
+
+<div align="center">
+
+| Payment Method | Network / Details | Action |
+| :--- | :--- | :---: |
+| 💎 **Crypto (SOL / USDT / Multi-Chain)** | `9YEThZFaqmqPbPJt8f4jLxPKELMzUmgncsrqvCv44BjE` | <a href="#crypto-wallet"><img src="https://img.shields.io/badge/Crypto-Copy_Address-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Crypto Wallet" /></a> |
+| 📱 **bKash (Personal)** | Send Money (Bangladesh) — Contact on Telegram | <a href="https://t.me/Md_Sohag_Rana" target="_blank"><img src="https://img.shields.io/badge/bKash-Contact_on_Telegram-D12053?style=for-the-badge&logo=telegram&logoColor=white" alt="bKash" /></a> |
+| ⚡ **Nagad (Personal)** | Send Money (Bangladesh) — Contact on Telegram | <a href="https://t.me/Md_Sohag_Rana" target="_blank"><img src="https://img.shields.io/badge/Nagad-Contact_on_Telegram-F7941E?style=for-the-badge&logo=telegram&logoColor=white" alt="Nagad" /></a> |
+| ☕ **Buy Me A Coffee** | Global Creator & Developer Support | <a href="https://rootbd.xyz" target="_blank"><img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" /></a> |
+| ⭐ **Star Repositories** | Free Community Support on GitHub | <a href="https://github.com/sohag1192/Emby-Home-Swiper-UI" target="_blank"><img src="https://img.shields.io/badge/⭐_Star_Projects-20C20E?style=for-the-badge&logo=github&logoColor=white" alt="Star" /></a> |
+
+</div>
+
+<br/>
+
+<a id="crypto-wallet" name="crypto-wallet"></a>
+
+### 💎 **Crypto Wallet Address (SOL / USDT / Multi-Chain):**
+
+```bash
+9YEThZFaqmqPbPJt8f4jLxPKELMzUmgncsrqvCv44BjE
+```
+
+> [!NOTE]
+> 💡 *Hover over or tap the code box above and click the **Copy (📋)** button in the top-right corner to copy the wallet address instantly.*
+
+<br/>
 
 ---
 

@@ -3,7 +3,7 @@
 <div align="center">
 
 ![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
-![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.9.5.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.0.40+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 **A lightweight, responsive, and visually engaging banner carousel for Emby and Jellyfin home screens.**
@@ -22,6 +22,7 @@
 | 📱 **Responsive** | Works across Desktop, Tablet, and Mobile |
 | ⏸️ **Hover Pause** | Pauses rotation automatically when hovered |
 | 🛡️ **Error Handling** | Graceful fallback for missing backdrops or logos |
+| 🧪 **Tested Compatibility** | Emby Web 4.9.1.80 – 4.10.0.40+ (Version [4.10.0.40] Tested OK) |
 
 ---
 

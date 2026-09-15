@@ -5,7 +5,7 @@
 ![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
 ![GitHub stars](https://img.shields.io/github/stars/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=gold)
 ![GitHub forks](https://img.shields.io/github/forks/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=blue)
-![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.9.5.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.0.40+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![Jellyfin Version](https://img.shields.io/badge/Jellyfin%20Web-10.8.x%20--%2010.11.x+-AA5CC3?style=flat-square&logo=jellyfin&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
@@ -69,11 +69,6 @@ Beyond the home banner carousel, this all-in-one repository also provides:
 
 ```
 Emby-Home-Swiper-UI/
-├── home-swiper-v3/         # 🍿 [NEW] Netflix Billboard Edition (Hero Banner, Top 10, Match %)
-│   ├── home.js             # Standalone bundled script (Swiper 11 + CSS + Netflix UI)
-│   ├── home-swiper-netflix.js # Netflix Billboard Swiper implementation
-│   ├── netflix-style.css   # Standalone Netflix Billboard stylesheet
-│   └── README.md           # V3 Dedicated documentation
 ├── home-swiper-v2/         # 🌟 Advanced Swiper with Ratings, Year & UI upgrades
 │   ├── home-swiper.js      # Clean Swiper script
 │   ├── home_rating with year.js # Swiper with Community Rating ⭐ & Year 📅 badges
@@ -129,7 +124,7 @@ Find the `dashboard-ui` folder on your server:
   ```
 
 #### Step 2: Download & Copy the Script
-1. Choose your preferred version: **[home-swiper-v3/home.js](home-swiper-v3/home.js)** *(🍿 Netflix Billboard Edition - New)*, **[home-swiper-v2/home_rating with year.js](home-swiper-v2/home_rating%20with%20year.js)** *(⭐ Ratings & Year Edition)*, or **[home-sider-v1/home.js](home-sider-v1/home.js)** *(Classic)*.
+1. Choose your preferred version: **[home-swiper-v2/home_rating with year.js](home-swiper-v2/home_rating%20with%20year.js)** *(⭐ Ratings & Year Edition - Recommended)*, **[home-swiper-v2/home-swiper.js](home-swiper-v2/home-swiper.js)** *(Minimal)*, or **[home-sider-v1/home.js](home-sider-v1/home.js)** *(Classic)*.
 2. Rename the selected file to `home.js` and copy it directly into your `dashboard-ui/` directory (or inside a subfolder like `dashboard-ui/emby-crx/home.js`).
 
 #### Step 3: Inject the Script in `index.html`
@@ -300,13 +295,18 @@ this.showItemNum = 9;                // Number of items to display
 
 | Platform / Browser | Version | Status |
 | :--- | :--- | :---: |
-| **Emby Web Client** | 4.9.1.80 – 4.9.5.0+ | ✅ Supported |
+| **Emby Web Client** | 4.9.1.80 – 4.10.0.40+ | ✅ Supported (Tested OK) |
+| **Emby Server / Web** | Version 4.10.0.40 (`version=4.10.0.40`) | ✅ Tested & Working (OK) |
 | **Jellyfin Web Client** | 10.8.x – 10.11.x+ | ✅ Supported |
 | **Google Chrome / Chromium** | Latest | ✅ Supported |
 | **Mozilla Firefox** | Latest | ✅ Supported |
 | **Microsoft Edge** | Latest | ✅ Supported |
 | **Apple Safari (macOS / iOS)** | Latest | ✅ Supported |
 | **Mobile Browsers (Android / iOS)**| Responsive View | ✅ Supported |
+
+> [!NOTE]
+> **Compatibility Verified:** Tested and confirmed working on Emby Web / Server **Version [4.10.0.40]** (`version=4.10.0.40`).
+
 
 ---
 

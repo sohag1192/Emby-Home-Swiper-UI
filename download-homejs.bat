@@ -21,30 +21,26 @@ if not exist "index.html" (
 )
 
 echo Select version to install:
-echo   [1] Version 3 - Netflix Billboard Edition 🍿 (New & Cinematic)
-echo   [2] Version 2 - With Ratings ⭐ and Release Year 📅 (Popular)
-echo   [3] Version 2 - Clean Minimal Swiper
-echo   [4] Version 1 - Classic Lightweight Slider
+echo   [1] Version 2 - With Ratings ⭐ and Release Year 📅 (Popular - Recommended)
+echo   [2] Version 2 - Clean Minimal Swiper
+echo   [3] Version 1 - Classic Lightweight Slider
 echo.
-set /p "choice=Enter your choice [1-4] (Default: 1): "
+set /p "choice=Enter your choice [1-3] (Default: 1): "
 if "%choice%"=="" set choice=1
 
 if "%choice%"=="1" (
-    set "FILE_URL=https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js"
-    set "VER_NAME=Home Swiper V3 (Netflix Billboard Edition)"
-) else if "%choice%"=="2" (
     set "FILE_URL=https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home_rating%%20with%%20year.js"
     set "VER_NAME=Home Swiper V2 (Ratings + Year)"
-) else if "%choice%"=="3" (
+) else if "%choice%"=="2" (
     set "FILE_URL=https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home-swiper.js"
     set "VER_NAME=Home Swiper V2 (Clean Minimal)"
-) else if "%choice%"=="4" (
+) else if "%choice%"=="3" (
     set "FILE_URL=https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-sider-v1/home.js"
     set "VER_NAME=Home Slider V1 (Classic)"
 ) else (
-    echo [ERROR] Invalid choice. Defaulting to Version 3 Netflix Edition.
-    set "FILE_URL=https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js"
-    set "VER_NAME=Home Swiper V3 (Netflix Billboard Edition)"
+    echo [ERROR] Invalid choice. Defaulting to Version 2 (Ratings + Year).
+    set "FILE_URL=https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home_rating%%20with%%20year.js"
+    set "VER_NAME=Home Swiper V2 (Ratings + Year)"
 )
 
 echo.

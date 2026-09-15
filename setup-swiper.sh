@@ -19,30 +19,26 @@ mkdir -p emby-crx
 
 # Step 2: Version selection
 echo "Select version to install:"
-echo "  [1] Version 3 - Netflix Billboard Edition 🍿 (New & Cinematic - Recommended)"
-echo "  [2] Version 2 - With Ratings ⭐ and Release Year 📅 (Popular)"
-echo "  [3] Version 2 - Clean Minimal Swiper"
-echo "  [4] Version 1 - Classic Lightweight Slider"
+echo "  [1] Version 2 - With Ratings ⭐ and Release Year 📅 (Popular - Recommended)"
+echo "  [2] Version 2 - Clean Minimal Swiper"
+echo "  [3] Version 1 - Classic Lightweight Slider"
 echo ""
-read -p "Enter your choice [1-4] (Default: 1): " choice
+read -p "Enter your choice [1-3] (Default: 1): " choice
 choice=${choice:-1}
 
 if [ "$choice" = "1" ]; then
-    RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js"
-    VER_NAME="Home Swiper V3 (Netflix Billboard Edition)"
-elif [ "$choice" = "2" ]; then
     RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home_rating%20with%20year.js"
     VER_NAME="Home Swiper V2 (Ratings + Year)"
-elif [ "$choice" = "3" ]; then
+elif [ "$choice" = "2" ]; then
     RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home-swiper.js"
     VER_NAME="Home Swiper V2 (Clean Minimal)"
-elif [ "$choice" = "4" ]; then
+elif [ "$choice" = "3" ]; then
     RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-sider-v1/home.js"
     VER_NAME="Home Slider V1 (Classic)"
 else
-    echo "⚠️ Invalid choice. Defaulting to Version 3."
-    RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js"
-    VER_NAME="Home Swiper V3 (Netflix Billboard Edition)"
+    echo "⚠️ Invalid choice. Defaulting to Version 2 (Ratings + Year)."
+    RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home_rating%20with%20year.js"
+    VER_NAME="Home Swiper V2 (Ratings + Year)"
 fi
 
 echo "[2/3] Downloading $VER_NAME..."

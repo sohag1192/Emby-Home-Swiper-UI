@@ -443,7 +443,7 @@
     </div>
     <div class="sn-card-actions">
         <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">🚀 Open SN File Server</a>
-        <button class="sn-btn sn-btn-secondary" onclick="alert('Server URL: http://100.100.100.6/');">📋 Copy Server URL</button>
+        <button class="sn-btn sn-btn-secondary" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">📋 Copy Server URL</button>
     </div>
 </div>`,
 
@@ -570,13 +570,89 @@
             document.getElementById('injectionZone').innerHTML = components[currentComponent];
         }
 
+        function copyToClipboard(btn, text) {
+            function showSuccess() {
+                if (btn) {
+                    const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
+                    btn.setAttribute("data-original-html", originalHtml);
+                    btn.innerHTML = "✅ Copied!";
+                    btn.style.borderColor = "#46d369";
+                    btn.style.color = "#46d369";
+                    setTimeout(function () {
+                        btn.innerHTML = originalHtml;
+                        btn.style.borderColor = "";
+                        btn.style.color = "";
+                    }, 2000);
+                }
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+
+            function fallbackCopy(str) {
+                let successful = false;
+                try {
+                    const ta = document.createElement("textarea");
+                    ta.value = str;
+                    ta.style.position = "fixed";
+                    ta.style.left = "-9999px";
+                    ta.style.top = "-9999px";
+                    ta.style.opacity = "0";
+                    ta.setAttribute("readonly", "");
+                    document.body.appendChild(ta);
+                    ta.focus();
+                    ta.select();
+                    successful = document.execCommand("copy");
+                    document.body.removeChild(ta);
+                } catch (err) {
+                    successful = false;
+                }
+
+                if (successful) {
+                    showSuccess();
+                } else {
+                    window.prompt("Copy Server URL: Ctrl+C, Enter", str);
+                }
+            }
+        }
+
+        window.snCopyUrl = copyToClipboard;
+
         function copyCurrentCode() {
             let code = components[currentComponent];
-            navigator.clipboard.writeText(code).then(() => {
+            function showToast() {
                 const toast = document.getElementById('toast');
                 toast.style.display = 'block';
                 setTimeout(() => { toast.style.display = 'none'; }, 3000);
-            });
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(code).then(showToast).catch(() => fallback(code));
+            } else {
+                fallback(code);
+            }
+
+            function fallback(text) {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.left = '-9999px';
+                    document.body.appendChild(ta);
+                    ta.focus();
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast();
+                } catch(e) {
+                    window.prompt('Copy code:', text);
+                }
+            }
         }
 
         // Initialize with default card component

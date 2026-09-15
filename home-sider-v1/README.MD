@@ -3,7 +3,7 @@
 <div align="center">
 
 ![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=V1%20Views&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
-![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.9.5.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.0.40+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 **A classic, ultra-lightweight, and responsive banner carousel for Emby Web.**
@@ -23,7 +23,7 @@
 | Feature | Description |
 | :--- | :--- |
 | ⚡ **Lightweight & Fast** | Pure native JavaScript, minimal memory footprint |
-| 🔗 **Native API Support** | Built for Emby 4.9.1.80+ using internal `ApiClient` |
+| 🔗 **Native API Support** | Built for Emby 4.9.1.80 – 4.10.0.40+ using internal `ApiClient` |
 | 🔄 **Auto-Sliding Banner** | Automatically rotates slides every 8 seconds |
 | 🔘 **Navigation Controls** | Includes Previous / Next buttons and clickable indicator dots |
 | 📱 **Responsive Design** | Looks great on desktops, tablets, and smartphones |

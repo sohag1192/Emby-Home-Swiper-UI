@@ -242,6 +242,62 @@
         return !!mediaInfoDiv;
     }
 
+    function copyToClipboard(btn, text) {
+        function showSuccess() {
+            if (btn) {
+                const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
+                btn.setAttribute("data-original-html", originalHtml);
+                btn.innerHTML = "✅ Copied!";
+                btn.style.borderColor = "#46d369";
+                btn.style.color = "#46d369";
+                setTimeout(function () {
+                    btn.innerHTML = originalHtml;
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                }, 2000);
+            }
+        }
+
+        // Modern Clipboard API (available in HTTPS / Secure Contexts)
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
+                fallbackCopy(text);
+            });
+        } else {
+            // Fallback for HTTP / non-secure contexts & older browsers
+            fallbackCopy(text);
+        }
+
+        function fallbackCopy(str) {
+            let successful = false;
+            try {
+                const ta = document.createElement("textarea");
+                ta.value = str;
+                ta.style.position = "fixed";
+                ta.style.left = "-9999px";
+                ta.style.top = "-9999px";
+                ta.style.opacity = "0";
+                ta.setAttribute("readonly", "");
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                successful = document.execCommand("copy");
+                document.body.removeChild(ta);
+            } catch (err) {
+                successful = false;
+            }
+
+            if (successful) {
+                showSuccess();
+            } else {
+                window.prompt("Copy Server URL: Ctrl+C, Enter", str);
+            }
+        }
+    }
+
+    // Expose globally so inline onclick handlers can always reach it
+    window.snCopyUrl = copyToClipboard;
+
     function initNoticeCard() {
         let existing = document.getElementById(cardWrapperId);
         if (existing) existing.remove();
@@ -277,7 +333,7 @@
                     <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">
                         🚀 Open SN File Server
                     </a>
-                    <button class="sn-btn sn-btn-secondary" onclick="navigator.clipboard.writeText('http://100.100.100.6/').then(() => alert('Server URL copied to clipboard!'));">
+                    <button class="sn-btn sn-btn-secondary" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">
                         📋 Copy Server URL
                     </button>
                 </div>

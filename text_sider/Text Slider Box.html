@@ -111,6 +111,18 @@
         box-shadow: 0 2px 8px rgba(255, 71, 71, 0.5);
     }
 
+    .sn-slider-content a.sn-link-request {
+        color: #38bdf8;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .sn-slider-content a.sn-link-request:hover {
+        color: #ffffff;
+        background: #0088cc;
+        border-bottom-color: transparent;
+        box-shadow: 0 2px 8px rgba(0, 136, 204, 0.5);
+    }
+
     /* Close / Dismiss Button */
     .sn-slider-close {
         flex-shrink: 0;
@@ -191,7 +203,7 @@
 
         if (!mainDetailButtons) return;
 
-        const noticeText = '⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct High-Speed Download Available!';
+        const noticeText = '⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct High-Speed Download Available! &nbsp; • &nbsp; 💬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Request</a>';
 
         const sliderHtml = `
             <div id="${sliderWrapperId}" class="sn-slider-wrapper" role="alert">

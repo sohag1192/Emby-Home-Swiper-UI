@@ -190,6 +190,20 @@
         text-decoration: none;
     }
 
+    .sn-btn-request {
+        background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 136, 204, 0.35);
+    }
+
+    .sn-btn-request:hover {
+        background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
+        box-shadow: 0 6px 16px rgba(0, 136, 204, 0.5);
+        transform: translateY(-1px);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
     /* 📱 Responsive Mobile View */
     @media (max-width: 600px) {
         .sn-card-wrapper {
@@ -336,6 +350,9 @@
                     <button class="sn-btn sn-btn-secondary" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">
                         📋 Copy Server URL
                     </button>
+                    <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-btn sn-btn-request">
+                        💬 Request
+                    </a>
                 </div>
             </div>
         `;

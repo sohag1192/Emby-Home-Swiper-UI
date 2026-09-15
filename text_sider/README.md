@@ -31,7 +31,8 @@ The `text_sider` component injects clean, hardware-accelerated announcement card
 - 📱 **100% Fluid & Responsive**: Built with CSS `clamp()`, flexbox, and dynamic mobile breakpoints (< 600px, 768px, 1024px, 4K).
 - 🟢 **Live Pulsing Status Beacons**: Animated pulsing status indicators (`🟢 CDN ONLINE`, `🔴 LIVE NOTICE`).
 - ⏸️ **Hover-to-Pause Marquee**: Animated tickers automatically pause on hover/touch so users can easily read and click links.
-- 🚀 **One-Click Action Buttons**: Prominent CDN server launch buttons and instant clipboard copy for server URLs.
+- 🚀 **One-Click Action Buttons**: Prominent CDN server launch buttons, instant clipboard copy for server URLs, and direct Telegram Request links.
+- 💬 **Integrated Media Requests**: Built-in 1-click Telegram Request button & ticker links (`https://t.me/+Z1HSzcUk_OViM2E1`) for seamless movie & series requests.
 - ❌ **Dismissible UI**: Built-in close button for seamless user dismissal without page reloads.
 - ⚡ **Zero External Dependencies**: Pure native CSS and JavaScript — zero bloat or third-party libraries needed.
 - 🔄 **Route-Aware Mutation Engine**: Automatically detects page navigation between items in Emby & Jellyfin single-page apps.
@@ -42,9 +43,9 @@ The `text_sider` component injects clean, hardware-accelerated announcement card
 
 | Template File | Type | Description / বর্ণনা |
 | :--- | :--- | :--- |
-| **[`Text No Slider Box.html`](Text%20No%20Slider%20Box.html)** | 🔲 **Glass Notice Card** | Dual-language (Bangla + English) card with header, live status pill, body text, and quick-action buttons. |
-| **[`Text Slider Box.html`](Text%20Slider%20Box.html)** | 🎞️ **Scrolling Ticker** | Continuous horizontal kinetic marquee ticker with pinned `NOTICE` badge, gradient fade edges, and pause-on-hover. |
-| **[`Text Warning Box.html`](Text%20Warning%20Box.html)** | ⚠️ **Compact Banner** | Sleek, space-efficient warning banner with animated icon, warning text, and direct CTA button. |
+| **[`Text No Slider Box.html`](Text%20No%20Slider%20Box.html)** | 🔲 **Glass Notice Card** | Dual-language (Bangla + English) card with header, live status pill, body text, and quick-action buttons (Server, Copy URL, Telegram Request). |
+| **[`Text Slider Box.html`](Text%20Slider%20Box.html)** | 🎞️ **Scrolling Ticker** | Continuous horizontal kinetic marquee ticker with pinned `NOTICE` badge, gradient fade edges, pause-on-hover, and Telegram Request link. |
+| **[`Text Warning Box.html`](Text%20Warning%20Box.html)** | ⚠️ **Compact Banner** | Sleek, space-efficient warning banner with animated icon, warning text, direct server CTA, and Telegram Request button. |
 | **[`demo.html`](demo.html)** | 🎮 **Live Interactive Demo** | Interactive preview sandbox with device viewports (Desktop, Laptop, Tablet, Mobile) and 1-click code exporter. |
 
 ---
@@ -115,18 +116,59 @@ Inside the `<style>` section, customize the accent colors:
 
 ---
 
+## 💖 **Support & Sponsorship**
+
+<p align="center">
+  <b>Hello Viewers & Developers! 🌟</b><br/>
+  If you find this project, custom UI components, or media streaming scripts helpful in your own setup, here are several ways you can support continuous development, hosting, and server maintenance costs:
+</p>
+
+<br/>
+
+<div align="center">
+
+| Payment Method | Network / Details | Action |
+| :--- | :--- | :---: |
+| 💎 **Crypto (SOL / USDT / Multi-Chain)** | `9YEThZFaqmqPbPJt8f4jLxPKELMzUmgncsrqvCv44BjE` | <a href="#crypto-wallet"><img src="https://img.shields.io/badge/Crypto-Copy_Address-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Crypto Wallet" /></a> |
+| 📱 **bKash (Personal)** | Send Money (Bangladesh) — Contact on Telegram | <a href="https://t.me/Md_Sohag_Rana" target="_blank"><img src="https://img.shields.io/badge/bKash-Contact_on_Telegram-D12053?style=for-the-badge&logo=telegram&logoColor=white" alt="bKash" /></a> |
+| ⚡ **Nagad (Personal)** | Send Money (Bangladesh) — Contact on Telegram | <a href="https://t.me/Md_Sohag_Rana" target="_blank"><img src="https://img.shields.io/badge/Nagad-Contact_on_Telegram-F7941E?style=for-the-badge&logo=telegram&logoColor=white" alt="Nagad" /></a> |
+| ☕ **Buy Me A Coffee** | Global Creator & Developer Support | <a href="https://rootbd.xyz" target="_blank"><img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" /></a> |
+| ⭐ **Star Repositories** | Free Community Support on GitHub | <a href="https://github.com/sohag1192/Emby-Home-Swiper-UI" target="_blank"><img src="https://img.shields.io/badge/⭐_Star_Projects-20C20E?style=for-the-badge&logo=github&logoColor=white" alt="Star" /></a> |
+
+</div>
+
+<br/>
+
+<a id="crypto-wallet" name="crypto-wallet"></a>
+
+### 💎 **Crypto Wallet Address (SOL / USDT / Multi-Chain):**
+
+```bash
+9YEThZFaqmqPbPJt8f4jLxPKELMzUmgncsrqvCv44BjE
+```
+
+> [!NOTE]
+> 💡 *Hover over or tap the code box above and click the **Copy (📋)** button in the top-right corner to copy the wallet address instantly.*
+
+<br/>
+
+---
+
 ## 🤝 Contributing & Support
 
 - **Author:** [Md. Sohag Rana](https://github.com/sohag1192)
 - **Repository:** [Emby-Home-Swiper-UI](https://github.com/sohag1192/Emby-Home-Swiper-UI)
 - **Issues & Feedback:** [GitHub Issues](https://github.com/sohag1192/Emby-Home-Swiper-UI/issues)
-- **Telegram:** [@Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
+- **Telegram (Admin):** [@Md_Sohag_Rana](https://t.me/Md_Sohag_Rana)
+- **Telegram (Request Group):** [Join Request Group](https://t.me/+Z1HSzcUk_OViM2E1)
+- **Email:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)
 
 ---
 
 ## 📄 License
 
 Distributed under the [MIT License](../LICENSE). Free to use, modify, and distribute with attribution.
+
 
 
 

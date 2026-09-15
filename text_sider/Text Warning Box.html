@@ -98,6 +98,26 @@
         text-decoration: none;
     }
 
+    .sn-alert-btn-request {
+        background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 136, 204, 0.35);
+    }
+
+    .sn-alert-btn-request:hover {
+        background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
+        box-shadow: 0 6px 16px rgba(0, 136, 204, 0.5);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .sn-alert-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
     /* 📱 Responsive Mobile View */
     @media (max-width: 600px) {
         .sn-server-alert {
@@ -105,6 +125,11 @@
             gap: 10px;
             margin: 12px 0 8px 0;
             border-radius: 8px;
+        }
+
+        .sn-alert-actions {
+            flex-direction: column;
+            width: 100%;
         }
 
         .sn-alert-btn {
@@ -154,9 +179,14 @@
                         সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যাবহার করুন।
                     </span>
                 </div>
-                <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-alert-btn">
-                    ⚡ Open Server
-                </a>
+                <div class="sn-alert-actions">
+                    <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-alert-btn">
+                        ⚡ Open Server
+                    </a>
+                    <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-alert-btn sn-alert-btn-request">
+                        💬 Request
+                    </a>
+                </div>
             </div>
         `;
 

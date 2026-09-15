@@ -416,6 +416,17 @@
     .sn-btn-primary:hover { background: linear-gradient(135deg, #f40612 0%, #cc0813 100%); transform: translateY(-1px); }
     .sn-btn-secondary { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
     .sn-btn-secondary:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
+    .sn-btn-request {
+        background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 136, 204, 0.35);
+    }
+    .sn-btn-request:hover {
+        background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
+        box-shadow: 0 6px 16px rgba(0, 136, 204, 0.5);
+        transform: translateY(-1px);
+        color: #fff;
+    }
     @media (max-width: 600px) {
         .sn-card-wrapper { padding: 12px 14px; gap: 10px; margin: 14px 0 10px 0; border-radius: 8px; }
         .sn-card-actions { flex-direction: column; width: 100%; }
@@ -444,6 +455,7 @@
     <div class="sn-card-actions">
         <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">🚀 Open SN File Server</a>
         <button class="sn-btn sn-btn-secondary" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">📋 Copy Server URL</button>
+        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-btn sn-btn-request">💬 Request</a>
     </div>
 </div>`,
 
@@ -488,6 +500,8 @@
         background: rgba(255, 255, 255, 0.08); padding: 2px 8px; border-radius: 4px;
     }
     .sn-slider-content a:hover { color: #fff; background: #ff4747; }
+    .sn-slider-content a.sn-link-request { color: #38bdf8; border-bottom: 1px solid rgba(56, 189, 248, 0.4); }
+    .sn-slider-content a.sn-link-request:hover { color: #fff; background: #0088cc; border-bottom-color: transparent; box-shadow: 0 2px 8px rgba(0, 136, 204, 0.5); }
     .sn-slider-close {
         flex-shrink: 0; background: transparent; border: none; color: rgba(255, 255, 255, 0.5);
         font-size: 16px; cursor: pointer; padding: 4px 8px; border-radius: 4px;
@@ -504,8 +518,8 @@
     <div class="sn-slider-badge"><span class="sn-pulse-dot"></span><span>NOTICE</span></div>
     <div class="sn-marquee-container">
         <div class="sn-slider-content">
-            <span class="item">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download!</span>
-            <span class="item" aria-hidden="true">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download!</span>
+            <span class="item">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download! &nbsp; • &nbsp; 💬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Request</a></span>
+            <span class="item" aria-hidden="true">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download! &nbsp; • &nbsp; 💬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Request</a></span>
         </div>
     </div>
     <button class="sn-slider-close" title="Dismiss" onclick="this.closest('.sn-slider-wrapper')?.remove();">✕</button>
@@ -535,8 +549,26 @@
         text-decoration: none; box-shadow: 0 4px 12px rgba(255, 170, 0, 0.35);
     }
     .sn-alert-btn:hover { background: linear-gradient(135deg, #ffbb1a 0%, #e09200 100%); transform: translateY(-1px); }
+    .sn-alert-btn-request {
+        background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 136, 204, 0.35);
+    }
+    .sn-alert-btn-request:hover {
+        background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
+        box-shadow: 0 6px 16px rgba(0, 136, 204, 0.5);
+        transform: translateY(-1px);
+        color: #ffffff;
+    }
+    .sn-alert-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
     @media (max-width: 600px) {
         .sn-server-alert { padding: 10px 12px; gap: 10px; border-radius: 8px; }
+        .sn-alert-actions { flex-direction: column; width: 100%; }
         .sn-alert-btn { width: 100%; padding: 8px 12px; }
     }
 </style>
@@ -547,7 +579,10 @@
             সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যাবহার করুন।
         </span>
     </div>
-    <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-alert-btn">⚡ Open Server</a>
+    <div class="sn-alert-actions">
+        <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-alert-btn">⚡ Open Server</a>
+        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-alert-btn sn-alert-btn-request">💬 Request</a>
+    </div>
 </div>`
         };
 

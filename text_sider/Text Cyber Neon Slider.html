@@ -1,0 +1,288 @@
+<style>
+    /* ========================================================
+       ⚡ Cyberpunk Neon HUD Ticker (text_sider)
+       Supports Emby & Jellyfin Web | 100% Fluid & Mobile-Ready
+       ======================================================== */
+    .sn-cyber-outer {
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 12px;
+        padding: 2px;
+        margin: 16px 0 12px 0;
+        overflow: hidden;
+        z-index: 10;
+        clear: both;
+        box-shadow: 0 8px 30px rgba(0, 240, 255, 0.18), 0 0 20px rgba(255, 0, 127, 0.15);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .sn-cyber-outer:hover {
+        box-shadow: 0 10px 38px rgba(0, 240, 255, 0.35), 0 0 28px rgba(255, 0, 127, 0.3);
+    }
+
+    /* 360-Degree Rotating Neon Border */
+    .sn-cyber-outer::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(from 0deg, #00f0ff 0%, #ff007f 25%, #7928ca 50%, #00f0ff 75%, #ff007f 100%);
+        animation: sn-cyber-spin 4s linear infinite;
+        z-index: 1;
+    }
+
+    @keyframes sn-cyber-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Inner Cyber HUD Container */
+    .sn-cyber-inner {
+        position: relative;
+        z-index: 2;
+        background: rgba(12, 13, 20, 0.95);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-radius: 10px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* Cyber Pinned Badge */
+    .sn-cyber-badge {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(0, 240, 255, 0.12);
+        border: 1px solid rgba(0, 240, 255, 0.5);
+        color: #00f0ff;
+        font-size: clamp(11px, 1vw, 12px);
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        padding: 4px 10px;
+        border-radius: 5px;
+        text-transform: uppercase;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        user-select: none;
+    }
+
+    /* Soundwave Equalizer Animation */
+    .sn-cyber-eq {
+        display: inline-flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 12px;
+    }
+
+    .sn-cyber-eq span {
+        display: block;
+        width: 2.5px;
+        background: #00f0ff;
+        border-radius: 1px;
+        box-shadow: 0 0 6px #00f0ff;
+        animation: sn-eq-bounce 1s infinite ease-in-out;
+    }
+
+    .sn-cyber-eq span:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+    .sn-cyber-eq span:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+    .sn-cyber-eq span:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+    .sn-cyber-eq span:nth-child(4) { height: 80%; animation-delay: 0.4s; }
+
+    @keyframes sn-eq-bounce {
+        0%, 100% { transform: scaleY(0.3); }
+        50% { transform: scaleY(1); }
+    }
+
+    /* Marquee Track */
+    .sn-cyber-track-wrap {
+        flex-grow: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent);
+    }
+
+    .sn-cyber-track {
+        display: inline-block;
+        white-space: nowrap;
+        animation: sn-cyber-scroll 26s linear infinite;
+        will-change: transform;
+    }
+
+    .sn-cyber-outer:hover .sn-cyber-track,
+    .sn-cyber-outer:active .sn-cyber-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes sn-cyber-scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    .sn-cyber-item {
+        display: inline-block;
+        font-size: clamp(13px, 1.1vw, 15px);
+        font-weight: 500;
+        color: #e0e6ed;
+        padding-right: 50px;
+        line-height: 1.4;
+    }
+
+    .sn-cyber-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        margin: 0 4px;
+    }
+
+    .sn-cyber-link-portal {
+        color: #00f0ff;
+        background: rgba(0, 240, 255, 0.12);
+        border: 1px solid rgba(0, 240, 255, 0.4);
+    }
+
+    .sn-cyber-link-portal:hover {
+        background: #00f0ff;
+        color: #000000;
+        box-shadow: 0 0 12px #00f0ff;
+    }
+
+    .sn-cyber-link-req {
+        color: #ff007f;
+        background: rgba(255, 0, 127, 0.12);
+        border: 1px solid rgba(255, 0, 127, 0.4);
+    }
+
+    .sn-cyber-link-req:hover {
+        background: #ff007f;
+        color: #ffffff;
+        box-shadow: 0 0 12px #ff007f;
+    }
+
+    /* Cyber Close */
+    .sn-cyber-close {
+        flex-shrink: 0;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 13px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+
+    .sn-cyber-close:hover {
+        color: #ff007f;
+        border-color: #ff007f;
+        background: rgba(255, 0, 127, 0.15);
+        box-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
+    }
+
+    /* 📱 Responsive Mobile */
+    @media (max-width: 600px) {
+        .sn-cyber-inner {
+            padding: 8px 10px;
+            gap: 8px;
+        }
+
+        .sn-cyber-badge {
+            font-size: 10px;
+            padding: 3px 6px;
+        }
+
+        .sn-cyber-item {
+            font-size: 13px;
+        }
+    }
+</style>
+
+<script>
+(function () {
+    'use strict';
+    let isEmby = "";
+    const tickerOuterId = "sn-cyber-neon-slider";
+
+    const selectors = {
+        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
+        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
+        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
+        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
+    };
+
+    function showFlag() {
+        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
+        if (!isEmby) {
+            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+        }
+        return !!mediaInfoDiv;
+    }
+
+    function initCyberNeonSlider() {
+        let existing = document.getElementById(tickerOuterId);
+        if (existing) existing.remove();
+
+        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
+        if (!isEmby) {
+            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
+        }
+
+        if (!mainDetailButtons) return;
+
+        const noticeText = '⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Request on Telegram</a>';
+
+        const tickerHtml = `
+            <div id="${tickerOuterId}" class="sn-cyber-outer" role="alert">
+                <div class="sn-cyber-inner">
+                    <div class="sn-cyber-badge">
+                        <div class="sn-cyber-eq">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                        <span>CYBER HUD</span>
+                    </div>
+
+                    <div class="sn-cyber-track-wrap">
+                        <div class="sn-cyber-track">
+                            <span class="sn-cyber-item">${noticeText}</span>
+                            <span class="sn-cyber-item" aria-hidden="true">${noticeText}</span>
+                        </div>
+                    </div>
+
+                    <button class="sn-cyber-close" title="Dismiss HUD" aria-label="Close notice" onclick="this.closest('.sn-cyber-outer')?.remove();">✕</button>
+                </div>
+            </div>
+        `;
+
+        mainDetailButtons.insertAdjacentHTML("afterend", tickerHtml);
+    }
+
+    document.addEventListener("viewbeforeshow", function (e) {
+        if (isEmby === "") isEmby = !!e.detail.contextPath;
+        let isItemDetailPage = isEmby 
+            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id="))
+            : (e.detail.params && e.detail.params.id);
+        
+        if (isItemDetailPage) {
+            const mutation = new MutationObserver(function() {
+                if (showFlag()) {
+                    initCyberNeonSlider();
+                    mutation.disconnect();
+                }
+            });
+            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
+        }
+    });
+})();
+</script>

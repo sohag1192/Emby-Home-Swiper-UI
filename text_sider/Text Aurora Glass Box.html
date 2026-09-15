@@ -1,0 +1,444 @@
+<style>
+    /* ========================================================
+       🌌 Aurora VIP Glassmorphism Notice Card (text_sider)
+       Supports Emby & Jellyfin Web | 100% Fluid & Mobile-Ready
+       ======================================================== */
+    .sn-aurora-wrapper {
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        border-radius: 14px;
+        padding: 18px 22px;
+        margin: 18px 0 14px 0;
+        background: linear-gradient(135deg, rgba(229, 9, 20, 0.22) 0%, rgba(120, 40, 200, 0.18) 35%, rgba(0, 180, 255, 0.15) 70%, rgba(18, 18, 24, 0.92) 100%);
+        background-size: 250% 250%;
+        animation: sn-aurora-shift 12s ease infinite alternate;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-left: 4px solid #ff385c;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 0 24px rgba(229, 9, 20, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        z-index: 10;
+        clear: both;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    }
+
+    .sn-aurora-wrapper:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.55), 0 0 32px rgba(255, 56, 92, 0.32);
+        border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    @keyframes sn-aurora-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Ambient Shimmer Light Bar across Top */
+    .sn-aurora-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+        animation: sn-shimmer-pass 6s infinite;
+    }
+
+    @keyframes sn-shimmer-pass {
+        0% { left: -100%; }
+        40%, 100% { left: 100%; }
+    }
+
+    /* Header */
+    .sn-aurora-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sn-aurora-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sn-aurora-icon {
+        font-size: 22px;
+        filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.5));
+        animation: sn-pulse-icon 3s ease-in-out infinite;
+    }
+
+    @keyframes sn-pulse-icon {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.12); }
+    }
+
+    .sn-aurora-title {
+        font-size: clamp(15px, 1.35vw, 19px);
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: 0.3px;
+        background: linear-gradient(90deg, #ffffff 0%, #ffd0d5 50%, #90e0ef 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .sn-aurora-header-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sn-aurora-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(0, 230, 118, 0.15);
+        border: 1px solid rgba(0, 230, 118, 0.45);
+        color: #00e676;
+        font-size: 11px;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 20px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        box-shadow: 0 0 12px rgba(0, 230, 118, 0.2);
+    }
+
+    .sn-aurora-dot {
+        width: 7px;
+        height: 7px;
+        background-color: #00e676;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #00e676;
+        animation: sn-dot-grow 1.6s infinite ease-in-out;
+    }
+
+    @keyframes sn-dot-grow {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .sn-aurora-close {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        cursor: pointer;
+        padding: 4px 8px;
+        line-height: 1;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .sn-aurora-close:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Badges Bar */
+    .sn-aurora-chips {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .sn-chip {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        letter-spacing: 0.4px;
+    }
+
+    .sn-chip-red { background: rgba(255, 56, 92, 0.2); color: #ff859d; border: 1px solid rgba(255, 56, 92, 0.4); }
+    .sn-chip-blue { background: rgba(0, 180, 255, 0.2); color: #72d6ff; border: 1px solid rgba(0, 180, 255, 0.4); }
+    .sn-chip-purple { background: rgba(186, 85, 211, 0.2); color: #e4a5f7; border: 1px solid rgba(186, 85, 211, 0.4); }
+
+    /* Body Text */
+    .sn-aurora-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .sn-aurora-text {
+        font-size: clamp(13px, 1.1vw, 15px);
+        font-weight: 500;
+        color: #e5e5e7;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .sn-aurora-text strong {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .sn-aurora-text a {
+        color: #72d6ff;
+        text-decoration: none;
+        font-weight: 700;
+        border-bottom: 1px dashed rgba(114, 214, 255, 0.5);
+        transition: all 0.2s ease;
+    }
+
+    .sn-aurora-text a:hover {
+        color: #ffffff;
+        border-bottom-color: #ffffff;
+    }
+
+    /* Actions Row */
+    .sn-aurora-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 4px;
+    }
+
+    .sn-aurora-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 8px 16px;
+        border-radius: 7px;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        user-select: none;
+    }
+
+    .sn-btn-portal {
+        background: linear-gradient(135deg, #ff2a54 0%, #c4002f 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(255, 42, 84, 0.4);
+    }
+
+    .sn-btn-portal:hover {
+        background: linear-gradient(135deg, #ff476d 0%, #db0035 100%);
+        box-shadow: 0 6px 20px rgba(255, 42, 84, 0.6);
+        transform: translateY(-2px);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .sn-btn-glass {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(10px);
+    }
+
+    .sn-btn-glass:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .sn-btn-telegram {
+        background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(0, 136, 204, 0.4);
+    }
+
+    .sn-btn-telegram:hover {
+        background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
+        box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+        transform: translateY(-2px);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    /* 📱 Mobile Responsiveness */
+    @media (max-width: 600px) {
+        .sn-aurora-wrapper {
+            padding: 14px 16px;
+            gap: 12px;
+            margin: 14px 0 10px 0;
+            border-radius: 10px;
+        }
+
+        .sn-aurora-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .sn-aurora-btn {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+    }
+</style>
+
+<script>
+(function () {
+    'use strict';
+    let isEmby = "";
+    const cardWrapperId = "sn-aurora-vip-wrapper";
+
+    const selectors = {
+        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
+        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
+        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
+        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
+    };
+
+    function showFlag() {
+        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
+        if (!isEmby) {
+            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+        }
+        return !!mediaInfoDiv;
+    }
+
+    function copyToClipboard(btn, text) {
+        function showSuccess() {
+            if (btn) {
+                const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
+                btn.setAttribute("data-original-html", originalHtml);
+                btn.innerHTML = "✅ Copied!";
+                btn.style.borderColor = "#00e676";
+                btn.style.color = "#00e676";
+                setTimeout(function () {
+                    btn.innerHTML = originalHtml;
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                }, 2000);
+            }
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+
+        function fallbackCopy(str) {
+            let successful = false;
+            try {
+                const ta = document.createElement("textarea");
+                ta.value = str;
+                ta.style.position = "fixed";
+                ta.style.left = "-9999px";
+                ta.style.top = "-9999px";
+                ta.style.opacity = "0";
+                ta.setAttribute("readonly", "");
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                successful = document.execCommand("copy");
+                document.body.removeChild(ta);
+            } catch (err) {
+                successful = false;
+            }
+
+            if (successful) {
+                showSuccess();
+            } else {
+                window.prompt("Copy Server URL: Ctrl+C, Enter", str);
+            }
+        }
+    }
+
+    window.snCopyUrl = copyToClipboard;
+
+    function initAuroraCard() {
+        let existing = document.getElementById(cardWrapperId);
+        if (existing) existing.remove();
+
+        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
+        if (!isEmby) {
+            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
+        }
+
+        if (!mainDetailButtons) return;
+
+        const cardHtml = `
+            <div id="${cardWrapperId}" class="sn-aurora-wrapper" role="alert">
+                <div class="sn-aurora-header">
+                    <div class="sn-aurora-title-wrap">
+                        <span class="sn-aurora-icon">✨</span>
+                        <h4 class="sn-aurora-title">ভিআইপি নোটিশ | VIP Notice</h4>
+                    </div>
+                    <div class="sn-aurora-header-right">
+                        <span class="sn-aurora-status"><span class="sn-aurora-dot"></span>HIGH SPEED CDN</span>
+                        <button class="sn-aurora-close" title="Dismiss" aria-label="Close" onclick="this.closest('.sn-aurora-wrapper')?.remove();">✕</button>
+                    </div>
+                </div>
+
+                <div class="sn-aurora-chips">
+                    <span class="sn-chip sn-chip-red">🎬 4K UHD DIRECT</span>
+                    <span class="sn-chip sn-chip-blue">⚡ ZERO BUFFER</span>
+                    <span class="sn-chip sn-chip-purple">🚀 10G BDIX PORTAL</span>
+                </div>
+
+                <div class="sn-aurora-body">
+                    <p class="sn-aurora-text">
+                        🇧🇩 <strong>সম্মানিত ইউজার:</strong> ট্রাফিকের কারণে বাফারিং এড়াতে বা আল্ট্রা-ফাস্ট ডিরেক্ট ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মুভি/সিরিজ রিকুয়েস্ট করতে টেলিগ্রাম গ্রুপে যুক্ত হন।
+                    </p>
+                    <p class="sn-aurora-text">
+                        🌐 <strong>Notice:</strong> For ultra-fast streaming and direct 4K download speed without server bottleneck, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request your titles directly via Telegram.
+                    </p>
+                </div>
+
+                <div class="sn-aurora-actions">
+                    <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-aurora-btn sn-btn-portal">
+                        🚀 Open SN File Server
+                    </a>
+                    <button class="sn-aurora-btn sn-btn-glass" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">
+                        📋 Copy Server URL
+                    </button>
+                    <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">
+                        💬 Request
+                    </a>
+                </div>
+            </div>
+        `;
+
+        mainDetailButtons.insertAdjacentHTML("afterend", cardHtml);
+    }
+
+    document.addEventListener("viewbeforeshow", function (e) {
+        if (isEmby === "") isEmby = !!e.detail.contextPath;
+        let isItemDetailPage = isEmby 
+            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id=")) 
+            : (e.detail.params && e.detail.params.id);
+        
+        if (isItemDetailPage) {
+            const mutation = new MutationObserver(function() {
+                if (showFlag()) {
+                    initAuroraCard();
+                    mutation.disconnect();
+                }
+            });
+            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
+        }
+    });
+})();
+</script>

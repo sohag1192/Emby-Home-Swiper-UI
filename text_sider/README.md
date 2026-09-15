@@ -43,17 +43,20 @@ The `text_sider` component injects clean, hardware-accelerated announcement card
 
 | Template File | Type | Description / বর্ণনা |
 | :--- | :--- | :--- |
+| **[`Text Aurora Glass Box.html`](Text%20Aurora%20Glass%20Box.html)** | 🌌 **Aurora VIP Card** *(NEW 🔥)* | Apple/Cinema-grade frosted glass with flowing Aurora ambient mesh gradient, live shimmer bar, VIP badges, and quick-action buttons. |
+| **[`Text Cyber Neon Slider.html`](Text%20Cyber%20Neon%20Slider.html)** | ⚡ **Cyber Neon HUD** *(NEW ⚡)* | Futuristic cyberpunk aesthetic with a 360° rotating neon border, animated soundwave equalizer bars, and glowing marquee ticker. |
+| **[`Text Multi-Slide Carousel.html`](Text%20Multi-Slide%20Carousel.html)** | 🎠 **Multi-Slide Carousel** *(NEW 🎠)* | Full interactive 3-slide carousel card (Fast CDN, Direct Download, Telegram Request) with auto-timer progress bar, arrows, and dot navigation. |
 | **[`Text No Slider Box.html`](Text%20No%20Slider%20Box.html)** | 🔲 **Glass Notice Card** | Dual-language (Bangla + English) card with header, live status pill, body text, and quick-action buttons (Server, Copy URL, Telegram Request). |
 | **[`Text Slider Box.html`](Text%20Slider%20Box.html)** | 🎞️ **Scrolling Ticker** | Continuous horizontal kinetic marquee ticker with pinned `NOTICE` badge, gradient fade edges, pause-on-hover, and Telegram Request link. |
 | **[`Text Warning Box.html`](Text%20Warning%20Box.html)** | ⚠️ **Compact Banner** | Sleek, space-efficient warning banner with animated icon, warning text, direct server CTA, and Telegram Request button. |
-| **[`demo.html`](demo.html)** | 🎮 **Live Interactive Demo** | Interactive preview sandbox with device viewports (Desktop, Laptop, Tablet, Mobile) and 1-click code exporter. |
+| **[`demo.html`](demo.html)** | 🎮 **Live Interactive Demo** | Interactive preview sandbox with device viewports (Desktop, Laptop, Tablet, Mobile) and 1-click code exporter for all 6 styles. |
 
 ---
 
 ## 🎮 Interactive Responsive Demo / লাইভ ডেমো
 
 You can open **[`demo.html`](demo.html)** directly in any web browser to test:
-1. **Component Switching**: Toggle between Notice Card, Scrolling Ticker, and Compact Banner.
+1. **Component Switching**: Toggle between all 6 styles: Aurora VIP, Cyber Neon, Multi-Slide Carousel, Notice Card, Scrolling Ticker, and Compact Banner.
 2. **Device Viewports**: Test live responsive layouts for Desktop (100%), Laptop (1024px), Tablet (768px), and Mobile (390px).
 3. **1-Click Copy**: Copy ready-to-use production code with one click.
 
@@ -67,10 +70,13 @@ You can open **[`demo.html`](demo.html)** directly in any web browser to test:
 ## 🛠️ Installation & Integration / ইনস্টলেশন গাইড
 
 ### Step 1: Choose Your Preferred Template
-Select one of the three templates:
-- `Text No Slider Box.html` *(Recommended for dual-language announcements)*
-- `Text Slider Box.html` *(Recommended for long scrolling announcements)*
-- `Text Warning Box.html` *(Recommended for simple server maintenance notices)*
+Select any of the 6 templates based on your style preference:
+- 🌌 `Text Aurora Glass Box.html` *(Ultra-modern Apple/Cinema Aurora glow effect - Highly Recommended!)*
+- ⚡ `Text Cyber Neon Slider.html` *(Futuristic 360° rotating neon border & audio equalizer)*
+- 🎠 `Text Multi-Slide Carousel.html` *(Multi-notice interactive card with timer bar & dot controls)*
+- 🔲 `Text No Slider Box.html` *(Clean dual-language announcement card)*
+- 🎞️ `Text Slider Box.html` *(Horizontal marquee scrolling announcement)*
+- ⚠️ `Text Warning Box.html` *(Minimalist compact server alert banner)*
 
 ### Step 2: Open your Server's `index.html`
 Locate your server's `dashboard-ui/index.html`:

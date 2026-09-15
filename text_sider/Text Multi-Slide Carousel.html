@@ -1,0 +1,540 @@
+<style>
+    /* ========================================================
+       🎠 Interactive Multi-Slide Carousel Card (text_sider)
+       Supports Emby & Jellyfin Web | 100% Fluid & Mobile-Ready
+       ======================================================== */
+    .sn-carousel-card {
+        width: 100%;
+        box-sizing: border-box;
+        background: linear-gradient(135deg, rgba(30, 30, 42, 0.9) 0%, rgba(18, 18, 26, 0.95) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-left: 4px solid #ff4757;
+        border-radius: 14px;
+        padding: 16px 20px 14px 20px;
+        margin: 18px 0 14px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 71, 87, 0.15);
+        position: relative;
+        z-index: 10;
+        clear: both;
+        overflow: hidden;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sn-carousel-card:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55), 0 0 26px rgba(255, 71, 87, 0.25);
+    }
+
+    /* Top Controls Bar */
+    .sn-c-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 10px;
+    }
+
+    .sn-c-badge-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sn-c-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 71, 87, 0.18);
+        border: 1px solid rgba(255, 71, 87, 0.45);
+        color: #ff6b81;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        padding: 3px 8px;
+        border-radius: 6px;
+        text-transform: uppercase;
+        user-select: none;
+    }
+
+    .sn-c-count {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .sn-c-nav-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .sn-c-nav-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        user-select: none;
+    }
+
+    .sn-c-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.22);
+        transform: scale(1.05);
+    }
+
+    .sn-c-close-btn {
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 15px;
+        cursor: pointer;
+        padding: 4px 6px;
+        line-height: 1;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+
+    .sn-c-close-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Carousel Slides Container */
+    .sn-c-viewport {
+        position: relative;
+        min-height: 85px;
+        display: flex;
+        align-items: center;
+    }
+
+    .sn-c-slide {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        opacity: 0;
+        transform: translateX(12px);
+        transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sn-c-slide.active {
+        display: flex;
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .sn-c-slide-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: clamp(14px, 1.25vw, 17px);
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0;
+    }
+
+    .sn-c-slide-desc {
+        font-size: clamp(13px, 1.1vw, 14.5px);
+        font-weight: 500;
+        color: #d1d5db;
+        line-height: 1.55;
+        margin: 0;
+    }
+
+    .sn-c-slide-desc a {
+        color: #ff6b81;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .sn-c-slide-desc a:hover {
+        text-decoration: underline;
+        color: #ffffff;
+    }
+
+    /* Actions inside Slide */
+    .sn-c-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 2px;
+    }
+
+    .sn-c-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: 6px;
+        font-size: 12.5px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+        user-select: none;
+    }
+
+    .sn-c-btn-red {
+        background: linear-gradient(135deg, #ff4757 0%, #c41829 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(255, 71, 87, 0.35);
+    }
+
+    .sn-c-btn-red:hover {
+        background: linear-gradient(135deg, #ff6b81 0%, #dc143c 100%);
+        box-shadow: 0 6px 16px rgba(255, 71, 87, 0.5);
+        transform: translateY(-1px);
+        color: #ffffff;
+    }
+
+    .sn-c-btn-subtle {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sn-c-btn-subtle:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .sn-c-btn-blue {
+        background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 136, 204, 0.35);
+    }
+
+    .sn-c-btn-blue:hover {
+        background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
+        box-shadow: 0 6px 16px rgba(0, 136, 204, 0.5);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    /* Bottom Bar & Progress */
+    .sn-c-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 4px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sn-c-progress-track {
+        flex-grow: 1;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .sn-c-progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #ff4757, #ff6b81, #70a1ff);
+        transition: width 0.1s linear;
+    }
+
+    .sn-c-dots {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .sn-c-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .sn-c-dot.active {
+        width: 20px;
+        background: #ff4757;
+        box-shadow: 0 0 8px rgba(255, 71, 87, 0.6);
+    }
+
+    /* 📱 Responsive Mobile */
+    @media (max-width: 600px) {
+        .sn-carousel-card {
+            padding: 12px 14px 10px 14px;
+            gap: 10px;
+            margin: 12px 0 8px 0;
+            border-radius: 10px;
+        }
+
+        .sn-c-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .sn-c-btn {
+            width: 100%;
+            padding: 8px 12px;
+        }
+    }
+</style>
+
+<script>
+(function () {
+    'use strict';
+    let isEmby = "";
+    const cardId = "sn-multi-carousel-card";
+    let autoInterval = null;
+    let progressTimer = null;
+    let currentSlide = 0;
+    const slideDuration = 5000;
+    const totalSlides = 3;
+
+    const selectors = {
+        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
+        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
+        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
+        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
+    };
+
+    function showFlag() {
+        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
+        if (!isEmby) {
+            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+        }
+        return !!mediaInfoDiv;
+    }
+
+    function copyToClipboard(btn, text) {
+        function showSuccess() {
+            if (btn) {
+                const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
+                btn.setAttribute("data-original-html", originalHtml);
+                btn.innerHTML = "✅ Copied!";
+                btn.style.borderColor = "#46d369";
+                btn.style.color = "#46d369";
+                setTimeout(function () {
+                    btn.innerHTML = originalHtml;
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                }, 2000);
+            }
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+
+        function fallbackCopy(str) {
+            let successful = false;
+            try {
+                const ta = document.createElement("textarea");
+                ta.value = str;
+                ta.style.position = "fixed";
+                ta.style.left = "-9999px";
+                ta.style.top = "-9999px";
+                ta.style.opacity = "0";
+                ta.setAttribute("readonly", "");
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                successful = document.execCommand("copy");
+                document.body.removeChild(ta);
+            } catch (err) {
+                successful = false;
+            }
+
+            if (successful) {
+                showSuccess();
+            } else {
+                window.prompt("Copy Server URL: Ctrl+C, Enter", str);
+            }
+        }
+    }
+
+    window.snCopyUrl = copyToClipboard;
+
+    function goToSlide(index) {
+        const card = document.getElementById(cardId);
+        if (!card) return;
+
+        currentSlide = (index + totalSlides) % totalSlides;
+        
+        const slides = card.querySelectorAll('.sn-c-slide');
+        const dots = card.querySelectorAll('.sn-c-dot');
+        const countSpan = card.querySelector('.sn-c-count');
+
+        slides.forEach((s, idx) => {
+            s.classList.toggle('active', idx === currentSlide);
+        });
+
+        dots.forEach((d, idx) => {
+            d.classList.toggle('active', idx === currentSlide);
+        });
+
+        if (countSpan) {
+            countSpan.innerText = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        resetProgress();
+    }
+
+    window.snCarouselGo = goToSlide;
+
+    function resetProgress() {
+        clearInterval(progressTimer);
+        const bar = document.querySelector(`#${cardId} .sn-c-progress-bar`);
+        if (!bar) return;
+
+        let elapsed = 0;
+        const step = 50;
+        bar.style.width = "0%";
+
+        progressTimer = setInterval(function() {
+            elapsed += step;
+            let percent = Math.min(100, (elapsed / slideDuration) * 100);
+            bar.style.width = percent + "%";
+            if (elapsed >= slideDuration) {
+                clearInterval(progressTimer);
+                goToSlide(currentSlide + 1);
+            }
+        }, step);
+    }
+
+    function initCarouselCard() {
+        let existing = document.getElementById(cardId);
+        if (existing) {
+            clearInterval(progressTimer);
+            existing.remove();
+        }
+
+        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
+        if (!isEmby) {
+            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
+        }
+
+        if (!mainDetailButtons) return;
+
+        const cardHtml = `
+            <div id="${cardId}" class="sn-carousel-card" role="region" aria-label="Notices Carousel"
+                 onmouseenter="clearInterval(window.snProgressTimer);"
+                 onmouseleave="window.snResetProgress ? window.snResetProgress() : null;">
+                
+                <div class="sn-c-topbar">
+                    <div class="sn-c-badge-group">
+                        <span class="sn-c-badge">📢 ANNOUNCEMENTS</span>
+                        <span class="sn-c-count">1 / 3</span>
+                    </div>
+
+                    <div class="sn-c-nav-group">
+                        <button class="sn-c-nav-btn" title="Previous Notice" aria-label="Previous" onclick="window.snCarouselGo(window.snCurrentSlide - 1);">‹</button>
+                        <button class="sn-c-nav-btn" title="Next Notice" aria-label="Next" onclick="window.snCarouselGo(window.snCurrentSlide + 1);">›</button>
+                        <button class="sn-c-close-btn" title="Dismiss" aria-label="Close" onclick="clearInterval(window.snProgressTimer); this.closest('.sn-carousel-card')?.remove();">✕</button>
+                    </div>
+                </div>
+
+                <div class="sn-c-viewport">
+                    <!-- Slide 1: Fast CDN -->
+                    <div class="sn-c-slide active">
+                        <h4 class="sn-c-slide-title">🚀 ফাস্ট সিডিএন পোর্টাল | High-Speed CDN Server</h4>
+                        <p class="sn-c-slide-desc">
+                            সার্ভারে অতিরিক্ত চাপের কারণে ভিডিও বাফারিং হতে পারে। নিরবচ্ছিন্ন 4K প্লেব্যাক ও আল্ট্রা-ফাস্ট ডিরেক্ট স্ট্রিমিংয়ের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।
+                        </p>
+                        <div class="sn-c-actions">
+                            <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">🚀 Open CDN Server</a>
+                            <button class="sn-c-btn sn-c-btn-subtle" onclick="window.snCopyUrl(this, 'http://100.100.100.6/');">📋 Copy URL</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Direct Download -->
+                    <div class="sn-c-slide">
+                        <h4 class="sn-c-slide-title">⚡ আল্ট্রা-স্পিড ডাউনলোড | Direct Download</h4>
+                        <p class="sn-c-slide-desc">
+                            আপনার পছন্দের মিডিয়া সরাসরি আইডিএম বা ডাউনলোড ম্যানেজার দিয়ে ফুল স্পিডে ডাউনলোড করতে আমাদের ফাইল সার্ভার পোর্টাল ওপেন করুন।
+                        </p>
+                        <div class="sn-c-actions">
+                            <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">⚡ Download Portal</a>
+                            <button class="sn-c-btn sn-c-btn-subtle" onclick="window.snCopyUrl(this, 'http://100.100.100.6/');">📋 Copy Server IP</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Telegram Request -->
+                    <div class="sn-c-slide">
+                        <h4 class="sn-c-slide-title">💬 মুভি ও সিরিজ রিকুয়েস্ট | Request on Telegram</h4>
+                        <p class="sn-c-slide-desc">
+                            আপনার পছন্দের কোনো মুভি বা ওয়েব সিরিজ সার্ভারে খুঁজে না পেলে আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে সরাসরি রিকুয়েস্ট জমা দিন।
+                        </p>
+                        <div class="sn-c-actions">
+                            <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Join Request Group</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sn-c-bottom">
+                    <div class="sn-c-progress-track">
+                        <div class="sn-c-progress-bar"></div>
+                    </div>
+                    <div class="sn-c-dots">
+                        <span class="sn-c-dot active" onclick="window.snCarouselGo(0);"></span>
+                        <span class="sn-c-dot" onclick="window.snCarouselGo(1);"></span>
+                        <span class="sn-c-dot" onclick="window.snCarouselGo(2);"></span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        mainDetailButtons.insertAdjacentHTML("afterend", cardHtml);
+
+        // Expose control functions to global for inline handlers
+        window.snCurrentSlide = 0;
+        window.snCarouselGo = function(idx) {
+            goToSlide(idx);
+            window.snCurrentSlide = currentSlide;
+        };
+        window.snResetProgress = resetProgress;
+        
+        resetProgress();
+    }
+
+    document.addEventListener("viewbeforeshow", function (e) {
+        if (isEmby === "") isEmby = !!e.detail.contextPath;
+        let isItemDetailPage = isEmby 
+            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id=")) 
+            : (e.detail.params && e.detail.params.id);
+        
+        if (isItemDetailPage) {
+            const mutation = new MutationObserver(function() {
+                if (showFlag()) {
+                    initCarouselCard();
+                    mutation.disconnect();
+                }
+            });
+            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
+        }
+    });
+})();
+</script>

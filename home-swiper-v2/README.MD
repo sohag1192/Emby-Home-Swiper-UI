@@ -3,7 +3,7 @@
 <div align="center">
 
 ![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=V2%20Views&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
-![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.0.40+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.1.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![Jellyfin Version](https://img.shields.io/badge/Jellyfin%20Web-10.8.x%20--%2010.11.x+-AA5CC3?style=flat-square&logo=jellyfin&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
@@ -17,7 +17,7 @@
 
 ## 🚀 What's New in V2
 
-Emby Home Swiper **V2** is a ground-up refinement of the classic banner module, engineered specifically for modern Emby Web releases (including **4.9.x through 4.10.0.40+**):
+Emby Home Swiper **V2** is a ground-up refinement of the classic banner module, engineered specifically for modern Emby Web releases (including **4.9.x through 4.10.1.0+**):
 
 - ⭐ **Community Ratings & Official Badges:** Automatically queries and renders community ratings (e.g., `⭐ 8.5/10`) alongside official certification badges (`PG-13`, `TV-MA`, `R`).
 - 📅 **Production Year Metadata:** Dynamically displays the release or production year prominently next to ratings.

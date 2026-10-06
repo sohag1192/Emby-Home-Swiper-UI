@@ -3,7 +3,7 @@
 <div align="center">
 
 ![Badge](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=V1%20Views&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
-![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.0.40+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.1.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![Jellyfin Version](https://img.shields.io/badge/Jellyfin%20Web-10.8.x%20--%2010.11.x+-AA5CC3?style=flat-square&logo=jellyfin&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
@@ -28,7 +28,7 @@ If your server or client runs on low-power hardware (such as legacy NAS devices,
 | Feature | Description |
 | :--- | :--- |
 | ⚡ **Featherlight Footprint** | Pure native vanilla JavaScript with zero third-party library overhead. |
-| 🔗 **Native API Client** | Tailored for Emby 4.9.1.80 – 4.10.0.40+ using built-in authentication tokens. |
+| 🔗 **Native API Client** | Tailored for Emby 4.9.1.80 – 4.10.1.0+ using built-in authentication tokens. |
 | 🔄 **Automated Slide Rotation** | Rotates featured media seamlessly every 8 seconds. |
 | 🔘 **Fluid Navigation** | Interactive Previous / Next chevron buttons and clickable pagination indicator dots. |
 | 📱 **Adaptive Responsiveness** | Dynamically scales across 4K displays, ultrawides, laptops, tablets, and phones. |

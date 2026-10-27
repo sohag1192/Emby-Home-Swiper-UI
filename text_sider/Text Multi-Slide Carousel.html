@@ -177,6 +177,7 @@
     }
 
     .sn-c-btn {
+        box-sizing: border-box;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -285,16 +286,31 @@
             gap: 10px;
             margin: 12px 0 8px 0;
             border-radius: 10px;
+            box-sizing: border-box;
         }
 
         .sn-c-actions {
             flex-direction: column;
             width: 100%;
+            gap: 8px;
         }
 
         .sn-c-btn {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 14px;
+            font-size: 13px;
+            box-sizing: border-box;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .sn-c-btn-blue {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
     }
 </style>
@@ -302,27 +318,44 @@
 <script>
 (function () {
     'use strict';
-    let isEmby = "";
     const cardId = "sn-multi-carousel-card";
-    let autoInterval = null;
     let progressTimer = null;
     let currentSlide = 0;
     const slideDuration = 5000;
     const totalSlides = 3;
 
-    const selectors = {
-        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
-        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
-        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
-        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
-    };
+    // Universal selector for Emby & Jellyfin (Desktop & Mobile)
+    function getMainButtonsElement() {
+        return document.querySelector(
+            // Emby Desktop (inside emby-scroller)
+            "div[is='emby-scroller']:not(.hide) .mainDetailButtons:not(.hide), " +
+            // Emby Mobile (emby-scroller is absent or inside .itemDetailPage / .page)
+            "div.itemDetailPage:not(.hide) .mainDetailButtons:not(.hide), " +
+            "div.page:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".detailRibbon:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons, " +
+            // Jellyfin Desktop & Mobile
+            "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer:not(.hide), " +
+            "div.itemDetailPage:not(.hide) .detailPagePrimaryContent:not(.hide), " +
+            ".detailPagePrimaryContainer:not(.hide), " +
+            ".detailPagePrimaryContainer, " +
+            // Custom skins & fallbacks
+            "div.itemDetailPage:not(.hide) .detailRibbon:not(.hide), " +
+            ".detailRibbon"
+        );
+    }
 
-    function showFlag() {
-        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
-        if (!isEmby) {
-            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+    function isItemDetailPage(e) {
+        if (e && e.detail) {
+            if (e.detail.type === "itemdetail") return true;
+            if (e.detail.contextPath && (e.detail.contextPath.includes("item?id=") || e.detail.contextPath.startsWith("/item"))) return true;
+            if (e.detail.path && (e.detail.path.includes("item?id=") || e.detail.path.startsWith("/item"))) return true;
+            if (e.detail.params && (e.detail.params.id || e.detail.params.itemId)) return true;
         }
-        return !!mediaInfoDiv;
+        const hash = window.location.hash || "";
+        const href = window.location.href || "";
+        return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");
     }
 
     function copyToClipboard(btn, text) {
@@ -425,19 +458,22 @@
         }, step);
     }
 
+    window.snResetProgress = resetProgress;
+
     function initCarouselCard() {
+        if (!isItemDetailPage()) return false;
+
+        const mainDetailButtons = getMainButtonsElement();
+        if (!mainDetailButtons) return false;
+
         let existing = document.getElementById(cardId);
         if (existing) {
+            if (existing.previousElementSibling === mainDetailButtons || existing.parentElement === mainDetailButtons.parentElement) {
+                return true;
+            }
             clearInterval(progressTimer);
             existing.remove();
         }
-
-        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
-        if (!isEmby) {
-            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
-        }
-
-        if (!mainDetailButtons) return;
 
         const cardHtml = `
             <div id="${cardId}" class="sn-carousel-card" role="region" aria-label="Notices Carousel"
@@ -489,7 +525,7 @@
                             আপনার পছন্দের কোনো মুভি বা ওয়েব সিরিজ সার্ভারে খুঁজে না পেলে আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে সরাসরি রিকুয়েস্ট জমা দিন।
                         </p>
                         <div class="sn-c-actions">
-                            <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Join Request Group</a>
+                            <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request Group</a>
                         </div>
                     </div>
                 </div>
@@ -509,32 +545,60 @@
 
         mainDetailButtons.insertAdjacentHTML("afterend", cardHtml);
 
-        // Expose control functions to global for inline handlers
         window.snCurrentSlide = 0;
         window.snCarouselGo = function(idx) {
             goToSlide(idx);
             window.snCurrentSlide = currentSlide;
         };
         window.snResetProgress = resetProgress;
+        window.snProgressTimer = progressTimer;
         
         resetProgress();
+        return true;
     }
 
-    document.addEventListener("viewbeforeshow", function (e) {
-        if (isEmby === "") isEmby = !!e.detail.contextPath;
-        let isItemDetailPage = isEmby 
-            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id=")) 
-            : (e.detail.params && e.detail.params.id);
-        
-        if (isItemDetailPage) {
-            const mutation = new MutationObserver(function() {
-                if (showFlag()) {
-                    initCarouselCard();
-                    mutation.disconnect();
-                }
-            });
-            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
-        }
-    });
+    let activeObserver = null;
+    let fallbackInterval = null;
+
+    function startWatcher(e) {
+        if (!isItemDetailPage(e)) return;
+
+        if (initCarouselCard()) return;
+
+        if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+        if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+
+        let attempts = 0;
+        const maxAttempts = 50;
+
+        activeObserver = new MutationObserver(function () {
+            attempts++;
+            if (initCarouselCard() || attempts >= maxAttempts) {
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+            }
+        });
+
+        activeObserver.observe(document.body, { childList: true, subtree: true });
+
+        fallbackInterval = setInterval(function () {
+            attempts++;
+            if (initCarouselCard() || attempts >= maxAttempts) {
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+            }
+        }, 120);
+    }
+
+    document.addEventListener("viewbeforeshow", startWatcher);
+    document.addEventListener("viewshow", startWatcher);
+    window.addEventListener("hashchange", function () { startWatcher(); });
+    window.addEventListener("popstate", function () { startWatcher(); });
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () { startWatcher(); });
+    } else {
+        startWatcher();
+    }
 })();
 </script>

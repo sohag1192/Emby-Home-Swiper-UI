@@ -43,7 +43,7 @@ Injects customizable, responsive alert boxes and scrolling tickers under action 
 
 ### 🧪 Compatibility Verified
 
-- **Emby Web Client:** 4.9.1.80 – 4.10.1.0+ (Tested on `4.10.1.0` and `4.10.0.40`)
+- **Emby Web Client:** 4.9.1.80 – 4.10.2.0+ (Tested on `4.10.2.0`, `4.10.1.0`, and `4.10.0.40`)
 - **Jellyfin Web Client:** 10.8.x – 10.11.x+
 - **Browsers:** Chrome, Edge, Firefox, Safari (Desktop & Mobile)
 

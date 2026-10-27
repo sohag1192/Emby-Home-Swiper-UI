@@ -51,6 +51,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
+        box-sizing: border-box;
     }
 
     /* Cyber Pinned Badge */
@@ -193,6 +194,10 @@
 
     /* 📱 Responsive Mobile */
     @media (max-width: 600px) {
+        .sn-cyber-outer {
+            margin: 12px 0 8px 0;
+        }
+
         .sn-cyber-inner {
             padding: 8px 10px;
             gap: 8px;
@@ -212,36 +217,57 @@
 <script>
 (function () {
     'use strict';
-    let isEmby = "";
     const tickerOuterId = "sn-cyber-neon-slider";
 
-    const selectors = {
-        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
-        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
-        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
-        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
-    };
+    // Universal selector for Emby & Jellyfin (Desktop & Mobile)
+    function getMainButtonsElement() {
+        return document.querySelector(
+            // Emby Desktop (inside emby-scroller)
+            "div[is='emby-scroller']:not(.hide) .mainDetailButtons:not(.hide), " +
+            // Emby Mobile (emby-scroller is absent or inside .itemDetailPage / .page)
+            "div.itemDetailPage:not(.hide) .mainDetailButtons:not(.hide), " +
+            "div.page:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".detailRibbon:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons, " +
+            // Jellyfin Desktop & Mobile
+            "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer:not(.hide), " +
+            "div.itemDetailPage:not(.hide) .detailPagePrimaryContent:not(.hide), " +
+            ".detailPagePrimaryContainer:not(.hide), " +
+            ".detailPagePrimaryContainer, " +
+            // Custom skins & fallbacks
+            "div.itemDetailPage:not(.hide) .detailRibbon:not(.hide), " +
+            ".detailRibbon"
+        );
+    }
 
-    function showFlag() {
-        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
-        if (!isEmby) {
-            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+    function isItemDetailPage(e) {
+        if (e && e.detail) {
+            if (e.detail.type === "itemdetail") return true;
+            if (e.detail.contextPath && (e.detail.contextPath.includes("item?id=") || e.detail.contextPath.startsWith("/item"))) return true;
+            if (e.detail.path && (e.detail.path.includes("item?id=") || e.detail.path.startsWith("/item"))) return true;
+            if (e.detail.params && (e.detail.params.id || e.detail.params.itemId)) return true;
         }
-        return !!mediaInfoDiv;
+        const hash = window.location.hash || "";
+        const href = window.location.href || "";
+        return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");
     }
 
     function initCyberNeonSlider() {
-        let existing = document.getElementById(tickerOuterId);
-        if (existing) existing.remove();
+        if (!isItemDetailPage()) return false;
 
-        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
-        if (!isEmby) {
-            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
+        const mainDetailButtons = getMainButtonsElement();
+        if (!mainDetailButtons) return false;
+
+        let existing = document.getElementById(tickerOuterId);
+        if (existing) {
+            if (existing.previousElementSibling === mainDetailButtons || existing.parentElement === mainDetailButtons.parentElement) {
+                return true;
+            }
+            existing.remove();
         }
 
-        if (!mainDetailButtons) return;
-
-        const noticeText = '⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Request on Telegram</a>';
+        const noticeText = '⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Telegram Request</a>';
 
         const tickerHtml = `
             <div id="${tickerOuterId}" class="sn-cyber-outer" role="alert">
@@ -266,23 +292,51 @@
         `;
 
         mainDetailButtons.insertAdjacentHTML("afterend", tickerHtml);
+        return true;
     }
 
-    document.addEventListener("viewbeforeshow", function (e) {
-        if (isEmby === "") isEmby = !!e.detail.contextPath;
-        let isItemDetailPage = isEmby 
-            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id="))
-            : (e.detail.params && e.detail.params.id);
-        
-        if (isItemDetailPage) {
-            const mutation = new MutationObserver(function() {
-                if (showFlag()) {
-                    initCyberNeonSlider();
-                    mutation.disconnect();
-                }
-            });
-            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
-        }
-    });
+    let activeObserver = null;
+    let fallbackInterval = null;
+
+    function startWatcher(e) {
+        if (!isItemDetailPage(e)) return;
+
+        if (initCyberNeonSlider()) return;
+
+        if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+        if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+
+        let attempts = 0;
+        const maxAttempts = 50;
+
+        activeObserver = new MutationObserver(function () {
+            attempts++;
+            if (initCyberNeonSlider() || attempts >= maxAttempts) {
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+            }
+        });
+
+        activeObserver.observe(document.body, { childList: true, subtree: true });
+
+        fallbackInterval = setInterval(function () {
+            attempts++;
+            if (initCyberNeonSlider() || attempts >= maxAttempts) {
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+            }
+        }, 120);
+    }
+
+    document.addEventListener("viewbeforeshow", startWatcher);
+    document.addEventListener("viewshow", startWatcher);
+    window.addEventListener("hashchange", function () { startWatcher(); });
+    window.addEventListener("popstate", function () { startWatcher(); });
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () { startWatcher(); });
+    } else {
+        startWatcher();
+    }
 })();
 </script>

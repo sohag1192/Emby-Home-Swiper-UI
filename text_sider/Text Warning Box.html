@@ -73,6 +73,7 @@
     }
 
     .sn-alert-btn {
+        box-sizing: border-box;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -125,16 +126,31 @@
             gap: 10px;
             margin: 12px 0 8px 0;
             border-radius: 8px;
+            box-sizing: border-box;
         }
 
         .sn-alert-actions {
             flex-direction: column;
             width: 100%;
+            gap: 8px;
         }
 
         .sn-alert-btn {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 14px;
+            font-size: 13.5px;
+            box-sizing: border-box;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .sn-alert-btn-request {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
     }
 </style>
@@ -142,34 +158,55 @@
 <script>
 (function () {
     'use strict';
-    let isEmby = "";
     const alertId = "sn-server-warning-box";
 
-    const selectors = {
-        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
-        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
-        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
-        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
-    };
+    // Universal selector for Emby & Jellyfin (Desktop & Mobile)
+    function getMainButtonsElement() {
+        return document.querySelector(
+            // Emby Desktop (inside emby-scroller)
+            "div[is='emby-scroller']:not(.hide) .mainDetailButtons:not(.hide), " +
+            // Emby Mobile (emby-scroller is absent or inside .itemDetailPage / .page)
+            "div.itemDetailPage:not(.hide) .mainDetailButtons:not(.hide), " +
+            "div.page:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".detailRibbon:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons, " +
+            // Jellyfin Desktop & Mobile
+            "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer:not(.hide), " +
+            "div.itemDetailPage:not(.hide) .detailPagePrimaryContent:not(.hide), " +
+            ".detailPagePrimaryContainer:not(.hide), " +
+            ".detailPagePrimaryContainer, " +
+            // Custom skins & fallbacks
+            "div.itemDetailPage:not(.hide) .detailRibbon:not(.hide), " +
+            ".detailRibbon"
+        );
+    }
 
-    function showFlag() {
-        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
-        if (!isEmby) {
-            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+    function isItemDetailPage(e) {
+        if (e && e.detail) {
+            if (e.detail.type === "itemdetail") return true;
+            if (e.detail.contextPath && (e.detail.contextPath.includes("item?id=") || e.detail.contextPath.startsWith("/item"))) return true;
+            if (e.detail.path && (e.detail.path.includes("item?id=") || e.detail.path.startsWith("/item"))) return true;
+            if (e.detail.params && (e.detail.params.id || e.detail.params.itemId)) return true;
         }
-        return !!mediaInfoDiv;
+        const hash = window.location.hash || "";
+        const href = window.location.href || "";
+        return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");
     }
 
     function initWarningBox() {
+        if (!isItemDetailPage()) return false;
+
+        const mainDetailButtons = getMainButtonsElement();
+        if (!mainDetailButtons) return false;
+
         let existing = document.getElementById(alertId);
-        if (existing) existing.remove();
-
-        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
-        if (!isEmby) {
-            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
+        if (existing) {
+            if (existing.previousElementSibling === mainDetailButtons || existing.parentElement === mainDetailButtons.parentElement) {
+                return true;
+            }
+            existing.remove();
         }
-
-        if (!mainDetailButtons) return;
 
         const alertHTML = `
             <div id="${alertId}" class="sn-server-alert" role="alert">
@@ -184,30 +221,58 @@
                         ⚡ Open Server
                     </a>
                     <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-alert-btn sn-alert-btn-request">
-                        💬 Request
+                        💬 Telegram Request
                     </a>
                 </div>
             </div>
         `;
 
         mainDetailButtons.insertAdjacentHTML("afterend", alertHTML);
+        return true;
     }
 
-    document.addEventListener("viewbeforeshow", function (e) {
-        if (isEmby === "") isEmby = !!e.detail.contextPath;
-        let isItemDetailPage = isEmby 
-            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id=")) 
-            : (e.detail.params && e.detail.params.id);
-        
-        if (isItemDetailPage) {
-            const mutation = new MutationObserver(function() {
-                if (showFlag()) {
-                    initWarningBox();
-                    mutation.disconnect();
-                }
-            });
-            mutation.observe(document.body, { childList: true, characterData: true, subtree: true });
-        }
-    });
+    let activeObserver = null;
+    let fallbackInterval = null;
+
+    function startWatcher(e) {
+        if (!isItemDetailPage(e)) return;
+
+        if (initWarningBox()) return;
+
+        if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+        if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+
+        let attempts = 0;
+        const maxAttempts = 50;
+
+        activeObserver = new MutationObserver(function () {
+            attempts++;
+            if (initWarningBox() || attempts >= maxAttempts) {
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+            }
+        });
+
+        activeObserver.observe(document.body, { childList: true, subtree: true });
+
+        fallbackInterval = setInterval(function () {
+            attempts++;
+            if (initWarningBox() || attempts >= maxAttempts) {
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+            }
+        }, 120);
+    }
+
+    document.addEventListener("viewbeforeshow", startWatcher);
+    document.addEventListener("viewshow", startWatcher);
+    window.addEventListener("hashchange", function () { startWatcher(); });
+    window.addEventListener("popstate", function () { startWatcher(); });
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () { startWatcher(); });
+    } else {
+        startWatcher();
+    }
 })();
 </script>

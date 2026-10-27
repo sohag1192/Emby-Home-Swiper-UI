@@ -6,7 +6,7 @@ REM Initialize Git if not already done
 IF NOT EXIST .git (
     git init
     git branch -M main
-    git remote add origin https://github.com/sohag1192/Emby-banner-content-display-.git
+    git remote add origin https://github.com/sohag1192/Emby-Home-Swiper-UI.git
 )
 
 REM Add all files

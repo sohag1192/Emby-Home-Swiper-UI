@@ -21,6 +21,7 @@
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 15px rgba(255, 71, 71, 0.15);
         position: relative;
         z-index: 10;
+        clear: both;
         transition: all 0.3s ease;
     }
 
@@ -158,6 +159,7 @@
             gap: 8px;
             margin: 12px 0 8px 0;
             border-radius: 8px;
+            box-sizing: border-box;
         }
         .sn-slider-badge {
             font-size: 10px;
@@ -172,38 +174,57 @@
 <script>
 (function () {
     'use strict';
-    let isEmby = "";
     const sliderWrapperId = "sn-text-slider-wrapper";
 
-    const selectors = {
-        embyMediaInfoDiv: "div[is='emby-scroller']:not(.hide) .mediaInfo:not(.hide)",
-        jellfinMediaInfoDiv: ".itemMiscInfo-primary:not(.hide)",
-        embyMainDetailButtons: "div[is='emby-scroller']:not(.hide) .mainDetailButtons",
-        jellfinMainDetailButtons: "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer, div.itemDetailPage:not(.hide) .mainDetailButtons",
-    };
+    // Universal selector for Emby & Jellyfin (Desktop & Mobile)
+    function getMainButtonsElement() {
+        return document.querySelector(
+            // Emby Desktop (inside emby-scroller)
+            "div[is='emby-scroller']:not(.hide) .mainDetailButtons:not(.hide), " +
+            // Emby Mobile (emby-scroller is absent or inside .itemDetailPage / .page)
+            "div.itemDetailPage:not(.hide) .mainDetailButtons:not(.hide), " +
+            "div.page:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".detailRibbon:not(.hide) .mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons:not(.hide), " +
+            ".mainDetailButtons, " +
+            // Jellyfin Desktop & Mobile
+            "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer:not(.hide), " +
+            "div.itemDetailPage:not(.hide) .detailPagePrimaryContent:not(.hide), " +
+            ".detailPagePrimaryContainer:not(.hide), " +
+            ".detailPagePrimaryContainer, " +
+            // Custom skins & fallbacks
+            "div.itemDetailPage:not(.hide) .detailRibbon:not(.hide), " +
+            ".detailRibbon"
+        );
+    }
 
-    function showFlag() {
-        let mediaInfoDiv = document.querySelector(selectors.embyMediaInfoDiv);
-        if (!isEmby) {
-            mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
+    function isItemDetailPage(e) {
+        if (e && e.detail) {
+            if (e.detail.type === "itemdetail") return true;
+            if (e.detail.contextPath && (e.detail.contextPath.includes("item?id=") || e.detail.contextPath.startsWith("/item"))) return true;
+            if (e.detail.path && (e.detail.path.includes("item?id=") || e.detail.path.startsWith("/item"))) return true;
+            if (e.detail.params && (e.detail.params.id || e.detail.params.itemId)) return true;
         }
-        return !!mediaInfoDiv;
+        const hash = window.location.hash || "";
+        const href = window.location.href || "";
+        return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");
     }
 
     function initSlider() {
+        if (!isItemDetailPage()) return false;
+
+        const mainDetailButtons = getMainButtonsElement();
+        if (!mainDetailButtons) return false;
+
         let existingSlider = document.getElementById(sliderWrapperId);
         if (existingSlider) {
+            if (existingSlider.previousElementSibling === mainDetailButtons || existingSlider.parentElement === mainDetailButtons.parentElement) {
+                return true;
+            }
             existingSlider.remove();
         }
 
-        let mainDetailButtons = document.querySelector(selectors.embyMainDetailButtons);
-        if (!isEmby) {
-            mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
-        }
-
-        if (!mainDetailButtons) return;
-
-        const noticeText = '⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct High-Speed Download Available! &nbsp; • &nbsp; 💬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Request</a>';
+        const noticeText = '⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct High-Speed Download Available! &nbsp; • &nbsp; 💬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Telegram Request</a>';
 
         const sliderHtml = `
             <div id="${sliderWrapperId}" class="sn-slider-wrapper" role="alert">
@@ -222,30 +243,51 @@
         `;
 
         mainDetailButtons.insertAdjacentHTML("afterend", sliderHtml);
+        return true;
     }
 
-    document.addEventListener("viewbeforeshow", function (e) {
-        if (isEmby === "") {
-            isEmby = !!e.detail.contextPath;
-        }
-        
-        let isItemDetailPage = isEmby 
-            ? (e.detail.contextPath && e.detail.contextPath.startsWith("/item?id="))
-            : (e.detail.params && e.detail.params.id);
-        
-        if (isItemDetailPage) {
-            const mutation = new MutationObserver(function() {
-                if (showFlag()) {
-                    initSlider();
-                    mutation.disconnect();
-                }
-            });
-            mutation.observe(document.body, {
-                childList: true,
-                characterData: true,
-                subtree: true,
-            });
-        }
-    });
+    let activeObserver = null;
+    let fallbackInterval = null;
+
+    function startWatcher(e) {
+        if (!isItemDetailPage(e)) return;
+
+        if (initSlider()) return;
+
+        if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+        if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+
+        let attempts = 0;
+        const maxAttempts = 50;
+
+        activeObserver = new MutationObserver(function () {
+            attempts++;
+            if (initSlider() || attempts >= maxAttempts) {
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+            }
+        });
+
+        activeObserver.observe(document.body, { childList: true, subtree: true });
+
+        fallbackInterval = setInterval(function () {
+            attempts++;
+            if (initSlider() || attempts >= maxAttempts) {
+                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }
+                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }
+            }
+        }, 120);
+    }
+
+    document.addEventListener("viewbeforeshow", startWatcher);
+    document.addEventListener("viewshow", startWatcher);
+    window.addEventListener("hashchange", function () { startWatcher(); });
+    window.addEventListener("popstate", function () { startWatcher(); });
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () { startWatcher(); });
+    } else {
+        startWatcher();
+    }
 })();
 </script>

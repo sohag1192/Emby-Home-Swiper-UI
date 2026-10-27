@@ -5,7 +5,7 @@
 ![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
 ![GitHub stars](https://img.shields.io/github/stars/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=gold)
 ![GitHub forks](https://img.shields.io/github/forks/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=blue)
-![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.1.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.2.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![Jellyfin Version](https://img.shields.io/badge/Jellyfin%20Web-10.8.x%20--%2010.11.x+-AA5CC3?style=flat-square&logo=jellyfin&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
@@ -295,8 +295,9 @@ this.showItemNum = 9;                // Number of items to display
 
 | Platform / Browser | Version | Status |
 | :--- | :--- | :---: |
-| **Emby Web Client** | 4.9.1.80 – 4.10.1.0+ | ✅ Supported (Tested OK) |
-| **Emby Server / Web** | Version [4.10.1.0] (`version=4.10.1.0`) | ✅ Test Done & Working (OK) |
+| **Emby Web Client** | 4.9.1.80 – 4.10.2.0+ | ✅ Supported (Tested OK) |
+| **Emby Server / Web** | Version [4.10.2.0] (`version=4.10.2.0`) | ✅ Test Done & Working (OK) |
+| **Emby Server / Web** | Version [4.10.1.0] (`version=4.10.1.0`) | ✅ Tested & Working (OK) |
 | **Emby Server / Web** | Version [4.10.0.40] (`version=4.10.0.40`) | ✅ Tested & Working (OK) |
 | **Jellyfin Web Client** | 10.8.x – 10.11.x+ | ✅ Supported |
 | **Google Chrome / Chromium** | Latest | ✅ Supported |
@@ -306,7 +307,7 @@ this.showItemNum = 9;                // Number of items to display
 | **Mobile Browsers (Android / iOS)**| Responsive View | ✅ Supported |
 
 > [!NOTE]
-> **Compatibility Verified:** Tested and confirmed working on Emby Web / Server **Version [4.10.1.0]** (`version=4.10.1.0`) (test done) and **Version [4.10.0.40]** (`version=4.10.0.40`).
+> **Compatibility Verified:** Tested and confirmed working on Emby Web / Server **Version [4.10.2.0]** (`version=4.10.2.0`) (test done), **Version [4.10.1.0]** (`version=4.10.1.0`), and **Version [4.10.0.40]** (`version=4.10.0.40`).
 
 
 ---

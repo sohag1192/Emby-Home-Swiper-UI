@@ -669,9 +669,10 @@
     .sn-btn-telegram { background: linear-gradient(135deg, #0088cc 0%, #006699 100%); color: #fff; box-shadow: 0 4px 14px rgba(0, 136, 204, 0.4); }
     .sn-btn-telegram:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6); }
     @media (max-width: 600px) {
-        .sn-aurora-wrapper { padding: 14px 16px; gap: 12px; margin: 14px 0 10px 0; border-radius: 10px; }
-        .sn-aurora-actions { flex-direction: column; width: 100%; }
-        .sn-aurora-btn { width: 100%; padding: 10px 14px; }
+        .sn-aurora-wrapper { padding: 14px 16px; gap: 12px; margin: 14px 0 10px 0; border-radius: 10px; box-sizing: border-box; }
+        .sn-aurora-actions { flex-direction: column; width: 100%; gap: 8px; }
+        .sn-aurora-btn { width: 100%; padding: 11px 14px; font-size: 13.5px; box-sizing: border-box; display: inline-flex !important; align-items: center; justify-content: center; gap: 8px; }
+        .sn-btn-telegram { display: inline-flex !important; align-items: center; justify-content: center; width: 100%; }
     }
 </style>
 <div class="sn-aurora-wrapper" role="alert">
@@ -701,7 +702,7 @@
     <div class="sn-aurora-actions">
         <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-aurora-btn sn-btn-portal">🚀 Open SN File Server</a>
         <button class="sn-aurora-btn sn-btn-glass" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">📋 Copy Server URL</button>
-        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">💬 Request</a>
+        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">💬 Telegram Request</a>
     </div>
 </div>`,
 
@@ -768,8 +769,8 @@
         </div>
         <div class="sn-cyber-track-wrap">
             <div class="sn-cyber-track">
-                <span class="sn-cyber-item">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Request on Telegram</a></span>
-                <span class="sn-cyber-item" aria-hidden="true">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Request on Telegram</a></span>
+                <span class="sn-cyber-item">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Telegram Request</a></span>
+                <span class="sn-cyber-item" aria-hidden="true">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Telegram Request</a></span>
             </div>
         </div>
         <button class="sn-cyber-close" title="Dismiss HUD" onclick="this.closest('.sn-cyber-outer')?.remove();">✕</button>
@@ -815,9 +816,10 @@
     .sn-c-dot { width: 8px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.25); cursor: pointer; transition: all 0.25s ease; }
     .sn-c-dot.active { width: 20px; background: #ff4757; box-shadow: 0 0 8px rgba(255, 71, 87, 0.6); }
     @media (max-width: 600px) {
-        .sn-carousel-card { padding: 12px 14px 10px 14px; gap: 10px; margin: 12px 0 8px 0; border-radius: 10px; }
-        .sn-c-actions { flex-direction: column; width: 100%; }
-        .sn-c-btn { width: 100%; padding: 8px 12px; }
+        .sn-carousel-card { padding: 12px 14px 10px 14px; gap: 10px; margin: 12px 0 8px 0; border-radius: 10px; box-sizing: border-box; }
+        .sn-c-actions { flex-direction: column; width: 100%; gap: 8px; }
+        .sn-c-btn { width: 100%; padding: 10px 14px; font-size: 13px; box-sizing: border-box; display: inline-flex !important; align-items: center; justify-content: center; gap: 8px; }
+        .sn-c-btn-blue { display: inline-flex !important; align-items: center; justify-content: center; width: 100%; }
     }
 </style>
 <div id="sn-demo-carousel" class="sn-carousel-card" role="region" aria-label="Notices Carousel">
@@ -850,7 +852,7 @@
             <h4 class="sn-c-slide-title">💬 মুভি ও সিরিজ রিকুয়েস্ট | Request on Telegram</h4>
             <p class="sn-c-slide-desc">আপনার পছন্দের কোনো মুভি বা ওয়েব সিরিজ সার্ভারে খুঁজে না পেলে আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে সরাসরি রিকুয়েস্ট জমা দিন।</p>
             <div class="sn-c-actions">
-                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Join Request Group</a>
+                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request Group</a>
             </div>
         </div>
     </div>
@@ -942,8 +944,27 @@
 
         window.snCopyUrl = copyToClipboard;
 
+        function getFullProductionCode(name) {
+            const raw = components[name];
+            const styleMatch = raw.match(/<style>([\s\S]*?)<\/style>/);
+            const styleContent = styleMatch ? styleMatch[1].trim() : '';
+            const htmlContent = raw.replace(/<style>[\s\S]*?<\/style>/, '').trim();
+
+            const wrapperIds = {
+                card: 'sn-text-card-wrapper',
+                aurora: 'sn-aurora-vip-wrapper',
+                cyber: 'sn-cyber-neon-slider',
+                carousel: 'sn-multi-carousel-card',
+                ticker: 'sn-text-slider-wrapper',
+                warning: 'sn-server-warning-box'
+            };
+            const id = wrapperIds[name] || 'sn-text-sider-box';
+
+            return `<style>\n${styleContent}\n</style>\n\n<script>\n(function () {\n    'use strict';\n    const cardWrapperId = "${id}";\n\n    // Universal selector for Emby & Jellyfin (Desktop & Mobile)\n    function getMainButtonsElement() {\n        return document.querySelector(\n            "div[is='emby-scroller']:not(.hide) .mainDetailButtons:not(.hide), " +\n            "div.itemDetailPage:not(.hide) .mainDetailButtons:not(.hide), " +\n            "div.page:not(.hide) .mainDetailButtons:not(.hide), " +\n            ".detailRibbon:not(.hide) .mainDetailButtons:not(.hide), " +\n            ".mainDetailButtons:not(.hide), " +\n            ".mainDetailButtons, " +\n            "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer:not(.hide), " +\n            "div.itemDetailPage:not(.hide) .detailPagePrimaryContent:not(.hide), " +\n            ".detailPagePrimaryContainer:not(.hide), " +\n            ".detailPagePrimaryContainer, " +\n            "div.itemDetailPage:not(.hide) .detailRibbon:not(.hide), " +\n            ".detailRibbon"\n        );\n    }\n\n    function isItemDetailPage(e) {\n        if (e && e.detail) {\n            if (e.detail.type === "itemdetail") return true;\n            if (e.detail.contextPath && (e.detail.contextPath.includes("item?id=") || e.detail.contextPath.startsWith("/item"))) return true;\n            if (e.detail.path && (e.detail.path.includes("item?id=") || e.detail.path.startsWith("/item"))) return true;\n            if (e.detail.params && (e.detail.params.id || e.detail.params.itemId)) return true;\n        }\n        const hash = window.location.hash || "";\n        const href = window.location.href || "";\n        return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");\n    }\n\n    function copyToClipboard(btn, text) {\n        function showSuccess() {\n            if (btn) {\n                const orig = btn.getAttribute("data-original-html") || btn.innerHTML;\n                btn.setAttribute("data-original-html", orig);\n                btn.innerHTML = "✅ Copied!";\n                btn.style.borderColor = "#46d369";\n                setTimeout(function () { btn.innerHTML = orig; btn.style.borderColor = ""; }, 2000);\n            }\n        }\n        if (navigator.clipboard && window.isSecureContext) {\n            navigator.clipboard.writeText(text).then(showSuccess).catch(function() { fallbackCopy(text); });\n        } else { fallbackCopy(text); }\n        function fallbackCopy(str) {\n            try {\n                const ta = document.createElement("textarea");\n                ta.value = str;\n                ta.style.position = "fixed";\n                ta.style.left = "-9999px";\n                ta.setAttribute("readonly", "");\n                document.body.appendChild(ta);\n                ta.select();\n                document.execCommand("copy");\n                document.body.removeChild(ta);\n                showSuccess();\n            } catch(e) { window.prompt("Copy URL:", str); }\n        }\n    }\n    window.snCopyUrl = copyToClipboard;\n\n    function initComponent() {\n        if (!isItemDetailPage()) return false;\n        const anchor = getMainButtonsElement();\n        if (!anchor) return false;\n        let existing = document.getElementById(cardWrapperId);\n        if (existing) {\n            if (existing.previousElementSibling === anchor || existing.parentElement === anchor.parentElement) return true;\n            existing.remove();\n        }\n        const html = ${JSON.stringify(htmlContent)};\n        anchor.insertAdjacentHTML("afterend", html);\n        return true;\n    }\n\n    let activeObserver = null;\n    let fallbackInterval = null;\n\n    function startWatcher(e) {\n        if (!isItemDetailPage(e)) return;\n        if (initComponent()) return;\n        if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n        if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n        let attempts = 0;\n        activeObserver = new MutationObserver(function () {\n            if (initComponent() || ++attempts >= 50) {\n                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n            }\n        });\n        activeObserver.observe(document.body, { childList: true, subtree: true });\n        fallbackInterval = setInterval(function () {\n            if (initComponent() || ++attempts >= 50) {\n                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n            }\n        }, 120);\n    }\n\n    document.addEventListener("viewbeforeshow", startWatcher);\n    document.addEventListener("viewshow", startWatcher);\n    window.addEventListener("hashchange", function () { startWatcher(); });\n    window.addEventListener("popstate", function () { startWatcher(); });\n    if (document.readyState === "loading") {\n        document.addEventListener("DOMContentLoaded", function () { startWatcher(); });\n    } else { startWatcher(); }\n})();\n<\/script>`;
+        }
+
         function copyCurrentCode() {
-            let code = components[currentComponent];
+            let code = getFullProductionCode(currentComponent);
             function showToast() {
                 const toast = document.getElementById('toast');
                 toast.style.display = 'block';

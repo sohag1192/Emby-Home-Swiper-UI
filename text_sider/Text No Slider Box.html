@@ -107,11 +107,59 @@
         background: rgba(255, 255, 255, 0.15);
     }
 
+    /* Badges Bar */
+    .sn-card-chips {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .sn-chip {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        letter-spacing: 0.4px;
+    }
+
+    .sn-chip-red { background: rgba(255, 71, 71, 0.18); color: #ff8585; border: 1px solid rgba(255, 71, 71, 0.4); }
+    .sn-chip-green { background: rgba(70, 211, 105, 0.18); color: #6ee7b7; border: 1px solid rgba(70, 211, 105, 0.4); }
+    .sn-chip-blue { background: rgba(0, 180, 255, 0.18); color: #72d6ff; border: 1px solid rgba(0, 180, 255, 0.4); }
+
     /* Card Body */
     .sn-card-body {
         display: flex;
         flex-direction: column;
         gap: 8px;
+    }
+
+    .sn-lang-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 10.5px;
+        font-weight: 800;
+        padding: 2px 7px;
+        border-radius: 4px;
+        letter-spacing: 0.4px;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+
+    .sn-lang-bn {
+        background: rgba(255, 90, 90, 0.15);
+        color: #ff9b9b;
+        border: 1px solid rgba(255, 90, 90, 0.4);
+    }
+
+    .sn-lang-en {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e5e5e5;
+        border: 1px solid rgba(255, 255, 255, 0.22);
     }
 
     .sn-lang-block {
@@ -173,19 +221,6 @@
     .sn-btn-primary:hover {
         background: linear-gradient(135deg, #f40612 0%, #cc0813 100%);
         box-shadow: 0 6px 16px rgba(229, 9, 20, 0.5);
-        transform: translateY(-1px);
-        color: #ffffff;
-        text-decoration: none;
-    }
-
-    .sn-btn-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .sn-btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.2);
         transform: translateY(-1px);
         color: #ffffff;
         text-decoration: none;
@@ -289,62 +324,6 @@
         return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");
     }
 
-    function copyToClipboard(btn, text) {
-        function showSuccess() {
-            if (btn) {
-                const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
-                btn.setAttribute("data-original-html", originalHtml);
-                btn.innerHTML = "✅ Copied!";
-                btn.style.borderColor = "#46d369";
-                btn.style.color = "#46d369";
-                setTimeout(function () {
-                    btn.innerHTML = originalHtml;
-                    btn.style.borderColor = "";
-                    btn.style.color = "";
-                }, 2000);
-            }
-        }
-
-        // Modern Clipboard API (available in HTTPS / Secure Contexts)
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
-                fallbackCopy(text);
-            });
-        } else {
-            // Fallback for HTTP / non-secure contexts & older browsers
-            fallbackCopy(text);
-        }
-
-        function fallbackCopy(str) {
-            let successful = false;
-            try {
-                const ta = document.createElement("textarea");
-                ta.value = str;
-                ta.style.position = "fixed";
-                ta.style.left = "-9999px";
-                ta.style.top = "-9999px";
-                ta.style.opacity = "0";
-                ta.setAttribute("readonly", "");
-                document.body.appendChild(ta);
-                ta.focus();
-                ta.select();
-                successful = document.execCommand("copy");
-                document.body.removeChild(ta);
-            } catch (err) {
-                successful = false;
-            }
-
-            if (successful) {
-                showSuccess();
-            } else {
-                window.prompt("Copy Server URL: Ctrl+C, Enter", str);
-            }
-        }
-    }
-
-    // Expose globally so inline onclick handlers can always reach it
-    window.snCopyUrl = copyToClipboard;
-
     function initNoticeCard() {
         if (!isItemDetailPage()) return false;
 
@@ -371,21 +350,26 @@
                         <button class="sn-card-close" title="Dismiss" aria-label="Close" onclick="this.closest('.sn-card-wrapper')?.remove();">✕</button>
                     </div>
                 </div>
+
+                <div class="sn-card-chips">
+                    <span class="sn-chip sn-chip-red">🎬 4K UHD DIRECT</span>
+                    <span class="sn-chip sn-chip-green">⚡ ZERO BUFFER</span>
+                    <span class="sn-chip sn-chip-blue">🚀 10G BDIX PORTAL</span>
+                </div>
+
                 <div class="sn-card-body">
                     <p class="sn-lang-block">
-                        🇧🇩 <strong>সম্মানিত গ্রাহক:</strong> সার্ভারে অতিরিক্ত চাপের কারণে বাফারিং হতে পারে। নিরবচ্ছিন্ন ফাস্ট স্ট্রিমিং ও ডিরেক্ট ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।
+                        <span class="sn-lang-badge sn-lang-bn">বাংলা</span> <strong>প্রিয় গ্রাহক:</strong> পিক-আওয়ারে বা অতিরিক্ত ট্রাফিকের সময় বাফারিং এড়াতে এবং 10G BDIX ফুল স্পিডে ডিরেক্ট 4K প্লেব্যাক ও ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মিডিয়া রিকুয়েস্ট করতে টেলিগ্রাম বাটনে ক্লিক করুন।
                     </p>
                     <p class="sn-lang-block">
-                        🌐 <strong>Dear User:</strong> If you experience buffering due to high traffic, please use our ultra-fast direct media portal <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>.
+                        <span class="sn-lang-badge sn-lang-en">ENG</span> <strong>Notice:</strong> To bypass server bottleneck and experience direct 10G BDIX high-speed 4K streaming or downloads, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request any missing movie or TV show on Telegram.
                     </p>
                 </div>
+
                 <div class="sn-card-actions">
                     <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">
                         🚀 Open SN File Server
                     </a>
-                    <button class="sn-btn sn-btn-secondary" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">
-                        📋 Copy Server URL
-                    </button>
                     <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-btn sn-btn-request">
                         💬 Telegram Request
                     </a>

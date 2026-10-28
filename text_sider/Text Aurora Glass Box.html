@@ -171,6 +171,32 @@
     .sn-chip-blue { background: rgba(0, 180, 255, 0.2); color: #72d6ff; border: 1px solid rgba(0, 180, 255, 0.4); }
     .sn-chip-purple { background: rgba(186, 85, 211, 0.2); color: #e4a5f7; border: 1px solid rgba(186, 85, 211, 0.4); }
 
+    /* Language Badges */
+    .sn-lang-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 10.5px;
+        font-weight: 800;
+        padding: 2px 7px;
+        border-radius: 4px;
+        letter-spacing: 0.4px;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+
+    .sn-lang-bn {
+        background: rgba(0, 180, 255, 0.15);
+        color: #72d6ff;
+        border: 1px solid rgba(0, 180, 255, 0.4);
+    }
+
+    .sn-lang-en {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e5e5e7;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
     /* Body Text */
     .sn-aurora-body {
         display: flex;
@@ -361,59 +387,6 @@
         return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");
     }
 
-    function copyToClipboard(btn, text) {
-        function showSuccess() {
-            if (btn) {
-                const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
-                btn.setAttribute("data-original-html", originalHtml);
-                btn.innerHTML = "✅ Copied!";
-                btn.style.borderColor = "#00e676";
-                btn.style.color = "#00e676";
-                setTimeout(function () {
-                    btn.innerHTML = originalHtml;
-                    btn.style.borderColor = "";
-                    btn.style.color = "";
-                }, 2000);
-            }
-        }
-
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
-                fallbackCopy(text);
-            });
-        } else {
-            fallbackCopy(text);
-        }
-
-        function fallbackCopy(str) {
-            let successful = false;
-            try {
-                const ta = document.createElement("textarea");
-                ta.value = str;
-                ta.style.position = "fixed";
-                ta.style.left = "-9999px";
-                ta.style.top = "-9999px";
-                ta.style.opacity = "0";
-                ta.setAttribute("readonly", "");
-                document.body.appendChild(ta);
-                ta.focus();
-                ta.select();
-                successful = document.execCommand("copy");
-                document.body.removeChild(ta);
-            } catch (err) {
-                successful = false;
-            }
-
-            if (successful) {
-                showSuccess();
-            } else {
-                window.prompt("Copy Server URL: Ctrl+C, Enter", str);
-            }
-        }
-    }
-
-    window.snCopyUrl = copyToClipboard;
-
     function initAuroraCard() {
         if (!isItemDetailPage()) return false;
 
@@ -449,10 +422,10 @@
 
                 <div class="sn-aurora-body">
                     <p class="sn-aurora-text">
-                        🇧🇩 <strong>সম্মানিত ইউজার:</strong> ট্রাফিকের কারণে বাফারিং এড়াতে বা আল্ট্রা-ফাস্ট ডিরেক্ট ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মুভি/সিরিজ রিকুয়েস্ট করতে টেলিগ্রাম গ্রুপে যুক্ত হন।
+                        <span class="sn-lang-badge sn-lang-bn">বাংলা</span> <strong>প্রিয় গ্রাহক:</strong> পিক-আওয়ারে বা অতিরিক্ত ট্রাফিকের সময় বাফারিং এড়াতে এবং 10G BDIX ফুল স্পিডে ডিরেক্ট 4K প্লেব্যাক ও ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মিডিয়া রিকুয়েস্ট করতে টেলিগ্রাম বাটনে ক্লিক করুন।
                     </p>
                     <p class="sn-aurora-text">
-                        🌐 <strong>Notice:</strong> For ultra-fast streaming and direct 4K download speed without server bottleneck, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request your titles directly via Telegram.
+                        <span class="sn-lang-badge sn-lang-en">ENG</span> <strong>Notice:</strong> To bypass server bottleneck and experience direct 10G BDIX high-speed 4K streaming or downloads, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request any missing movie or TV show on Telegram.
                     </p>
                 </div>
 
@@ -460,9 +433,6 @@
                     <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-aurora-btn sn-btn-portal">
                         🚀 Open SN File Server
                     </a>
-                    <button class="sn-aurora-btn sn-btn-glass" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">
-                        📋 Copy Server URL
-                    </button>
                     <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">
                         💬 Telegram Request
                     </a>

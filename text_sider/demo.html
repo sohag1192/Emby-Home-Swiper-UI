@@ -401,7 +401,15 @@
         font-size: 16px; cursor: pointer; padding: 4px 6px; border-radius: 4px;
     }
     .sn-card-close:hover { color: #fff; background: rgba(255, 255, 255, 0.15); }
+    .sn-card-chips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .sn-chip { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; letter-spacing: 0.4px; }
+    .sn-chip-red { background: rgba(255, 71, 71, 0.18); color: #ff8585; border: 1px solid rgba(255, 71, 71, 0.4); }
+    .sn-chip-green { background: rgba(70, 211, 105, 0.18); color: #6ee7b7; border: 1px solid rgba(70, 211, 105, 0.4); }
+    .sn-chip-blue { background: rgba(0, 180, 255, 0.18); color: #72d6ff; border: 1px solid rgba(0, 180, 255, 0.4); }
     .sn-card-body { display: flex; flex-direction: column; gap: 8px; }
+    .sn-lang-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.4px; margin-right: 6px; vertical-align: middle; }
+    .sn-lang-bn { background: rgba(255, 90, 90, 0.15); color: #ff9b9b; border: 1px solid rgba(255, 90, 90, 0.4); }
+    .sn-lang-en { background: rgba(255, 255, 255, 0.1); color: #e5e5e5; border: 1px solid rgba(255, 255, 255, 0.22); }
     .sn-lang-block { font-size: clamp(13px, 1.1vw, 15px); font-weight: 500; color: #e5e5e5; line-height: 1.6; margin: 0; }
     .sn-lang-block strong { color: #fff; }
     .sn-lang-block a { color: #ff7676; text-decoration: none; font-weight: 700; }
@@ -417,8 +425,6 @@
         box-shadow: 0 4px 12px rgba(229, 9, 20, 0.35);
     }
     .sn-btn-primary:hover { background: linear-gradient(135deg, #f40612 0%, #cc0813 100%); transform: translateY(-1px); }
-    .sn-btn-secondary { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
-    .sn-btn-secondary:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
     .sn-btn-request {
         background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
         color: #fff;
@@ -448,17 +454,21 @@
             <button class="sn-card-close" title="Dismiss" onclick="this.closest('.sn-card-wrapper')?.remove();">✕</button>
         </div>
     </div>
+    <div class="sn-card-chips">
+        <span class="sn-chip sn-chip-red">🎬 4K UHD DIRECT</span>
+        <span class="sn-chip sn-chip-green">⚡ ZERO BUFFER</span>
+        <span class="sn-chip sn-chip-blue">🚀 10G BDIX PORTAL</span>
+    </div>
     <div class="sn-card-body">
         <p class="sn-lang-block">
-            🇧🇩 <strong>সম্মানিত গ্রাহক:</strong> সার্ভারে অতিরিক্ত চাপের কারণে বাফারিং হতে পারে। নিরবচ্ছিন্ন ফাস্ট স্ট্রিমিং ও ডিরেক্ট ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।
+            <span class="sn-lang-badge sn-lang-bn">বাংলা</span> <strong>প্রিয় গ্রাহক:</strong> পিক-আওয়ারে বা অতিরিক্ত ট্রাফিকের সময় বাফারিং এড়াতে এবং 10G BDIX ফুল স্পিডে ডিরেক্ট 4K প্লেব্যাক ও ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মিডিয়া রিকুয়েস্ট করতে টেলিগ্রাম বাটনে ক্লিক করুন।
         </p>
         <p class="sn-lang-block">
-            🌐 <strong>Dear User:</strong> If you experience buffering due to high traffic, please use our ultra-fast direct media portal <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>.
+            <span class="sn-lang-badge sn-lang-en">ENG</span> <strong>Notice:</strong> To bypass server bottleneck and experience direct 10G BDIX high-speed 4K streaming or downloads, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request any missing movie or TV show on Telegram.
         </p>
     </div>
     <div class="sn-card-actions">
         <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">🚀 Open SN File Server</a>
-        <button class="sn-btn sn-btn-secondary" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">📋 Copy Server URL</button>
         <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-btn sn-btn-request">💬 Telegram Request</a>
     </div>
 </div>`,
@@ -651,6 +661,9 @@
     .sn-chip-red { background: rgba(255, 56, 92, 0.2); color: #ff859d; border: 1px solid rgba(255, 56, 92, 0.4); }
     .sn-chip-blue { background: rgba(0, 180, 255, 0.2); color: #72d6ff; border: 1px solid rgba(0, 180, 255, 0.4); }
     .sn-chip-purple { background: rgba(186, 85, 211, 0.2); color: #e4a5f7; border: 1px solid rgba(186, 85, 211, 0.4); }
+    .sn-lang-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.4px; margin-right: 6px; vertical-align: middle; }
+    .sn-lang-bn { background: rgba(0, 180, 255, 0.15); color: #72d6ff; border: 1px solid rgba(0, 180, 255, 0.4); }
+    .sn-lang-en { background: rgba(255, 255, 255, 0.1); color: #e5e5e7; border: 1px solid rgba(255, 255, 255, 0.22); }
     .sn-aurora-body { display: flex; flex-direction: column; gap: 8px; }
     .sn-aurora-text { font-size: clamp(13px, 1.1vw, 15px); font-weight: 500; color: #e5e5e7; line-height: 1.6; margin: 0; }
     .sn-aurora-text strong { color: #ffffff; }
@@ -693,15 +706,14 @@
     </div>
     <div class="sn-aurora-body">
         <p class="sn-aurora-text">
-            🇧🇩 <strong>সম্মানিত ইউজার:</strong> ট্রাফিকের কারণে বাফারিং এড়াতে বা আল্ট্রা-ফাস্ট ডিরেক্ট ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মুভি/সিরিজ রিকুয়েস্ট করতে টেলিগ্রাম গ্রুপে যুক্ত হন।
+            <span class="sn-lang-badge sn-lang-bn">বাংলা</span> <strong>প্রিয় গ্রাহক:</strong> পিক-আওয়ারে বা অতিরিক্ত ট্রাফিকের সময় বাফারিং এড়াতে এবং 10G BDIX ফুল স্পিডে ডিরেক্ট 4K প্লেব্যাক ও ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মিডিয়া রিকুয়েস্ট করতে টেলিগ্রাম বাটনে ক্লিক করুন।
         </p>
         <p class="sn-aurora-text">
-            🌐 <strong>Notice:</strong> For ultra-fast streaming and direct 4K download speed without server bottleneck, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request your titles directly via Telegram.
+            <span class="sn-lang-badge sn-lang-en">ENG</span> <strong>Notice:</strong> To bypass server bottleneck and experience direct 10G BDIX high-speed 4K streaming or downloads, access our <a href="http://100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request any missing movie or TV show on Telegram.
         </p>
     </div>
     <div class="sn-aurora-actions">
         <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-aurora-btn sn-btn-portal">🚀 Open SN File Server</a>
-        <button class="sn-aurora-btn sn-btn-glass" onclick="window.snCopyUrl ? window.snCopyUrl(this, 'http://100.100.100.6/') : (function(b,u){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.left='-9999px';document.body.appendChild(t);t.select();try{document.execCommand('copy');b.innerText='✅ Copied!';setTimeout(function(){b.innerText='📋 Copy Server URL';},2000);}catch(e){prompt('Copy URL:',u);}document.body.removeChild(t);})(this, 'http://100.100.100.6/');">📋 Copy Server URL</button>
         <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">💬 Telegram Request</a>
     </div>
 </div>`,
@@ -837,7 +849,7 @@
             <p class="sn-c-slide-desc">সার্ভারে অতিরিক্ত চাপের কারণে ভিডিও বাফারিং হতে পারে। নিরবচ্ছিন্ন 4K প্লেব্যাক ও আল্ট্রা-ফাস্ট ডিরেক্ট স্ট্রিমিংয়ের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।</p>
             <div class="sn-c-actions">
                 <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">🚀 Open CDN Server</a>
-                <button class="sn-c-btn sn-c-btn-subtle" onclick="window.snCopyUrl(this, 'http://100.100.100.6/');">📋 Copy URL</button>
+                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request</a>
             </div>
         </div>
         <div class="sn-c-slide">
@@ -845,7 +857,7 @@
             <p class="sn-c-slide-desc">আপনার পছন্দের মিডিয়া সরাসরি আইডিএম বা ডাউনলোড ম্যানেজার দিয়ে ফুল স্পিডে ডাউনলোড করতে আমাদের ফাইল সার্ভার পোর্টাল ওপেন করুন।</p>
             <div class="sn-c-actions">
                 <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">⚡ Download Portal</a>
-                <button class="sn-c-btn sn-c-btn-subtle" onclick="window.snCopyUrl(this, 'http://100.100.100.6/');">📋 Copy Server IP</button>
+                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request</a>
             </div>
         </div>
         <div class="sn-c-slide">
@@ -891,59 +903,6 @@
             document.getElementById('injectionZone').innerHTML = components[currentComponent];
         }
 
-        function copyToClipboard(btn, text) {
-            function showSuccess() {
-                if (btn) {
-                    const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
-                    btn.setAttribute("data-original-html", originalHtml);
-                    btn.innerHTML = "✅ Copied!";
-                    btn.style.borderColor = "#46d369";
-                    btn.style.color = "#46d369";
-                    setTimeout(function () {
-                        btn.innerHTML = originalHtml;
-                        btn.style.borderColor = "";
-                        btn.style.color = "";
-                    }, 2000);
-                }
-            }
-
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
-                    fallbackCopy(text);
-                });
-            } else {
-                fallbackCopy(text);
-            }
-
-            function fallbackCopy(str) {
-                let successful = false;
-                try {
-                    const ta = document.createElement("textarea");
-                    ta.value = str;
-                    ta.style.position = "fixed";
-                    ta.style.left = "-9999px";
-                    ta.style.top = "-9999px";
-                    ta.style.opacity = "0";
-                    ta.setAttribute("readonly", "");
-                    document.body.appendChild(ta);
-                    ta.focus();
-                    ta.select();
-                    successful = document.execCommand("copy");
-                    document.body.removeChild(ta);
-                } catch (err) {
-                    successful = false;
-                }
-
-                if (successful) {
-                    showSuccess();
-                } else {
-                    window.prompt("Copy Server URL: Ctrl+C, Enter", str);
-                }
-            }
-        }
-
-        window.snCopyUrl = copyToClipboard;
-
         function getFullProductionCode(name) {
             const raw = components[name];
             const styleMatch = raw.match(/<style>([\s\S]*?)<\/style>/);
@@ -960,7 +919,7 @@
             };
             const id = wrapperIds[name] || 'sn-text-sider-box';
 
-            return `<style>\n${styleContent}\n</style>\n\n<script>\n(function () {\n    'use strict';\n    const cardWrapperId = "${id}";\n\n    // Universal selector for Emby & Jellyfin (Desktop & Mobile)\n    function getMainButtonsElement() {\n        return document.querySelector(\n            "div[is='emby-scroller']:not(.hide) .mainDetailButtons:not(.hide), " +\n            "div.itemDetailPage:not(.hide) .mainDetailButtons:not(.hide), " +\n            "div.page:not(.hide) .mainDetailButtons:not(.hide), " +\n            ".detailRibbon:not(.hide) .mainDetailButtons:not(.hide), " +\n            ".mainDetailButtons:not(.hide), " +\n            ".mainDetailButtons, " +\n            "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer:not(.hide), " +\n            "div.itemDetailPage:not(.hide) .detailPagePrimaryContent:not(.hide), " +\n            ".detailPagePrimaryContainer:not(.hide), " +\n            ".detailPagePrimaryContainer, " +\n            "div.itemDetailPage:not(.hide) .detailRibbon:not(.hide), " +\n            ".detailRibbon"\n        );\n    }\n\n    function isItemDetailPage(e) {\n        if (e && e.detail) {\n            if (e.detail.type === "itemdetail") return true;\n            if (e.detail.contextPath && (e.detail.contextPath.includes("item?id=") || e.detail.contextPath.startsWith("/item"))) return true;\n            if (e.detail.path && (e.detail.path.includes("item?id=") || e.detail.path.startsWith("/item"))) return true;\n            if (e.detail.params && (e.detail.params.id || e.detail.params.itemId)) return true;\n        }\n        const hash = window.location.hash || "";\n        const href = window.location.href || "";\n        return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");\n    }\n\n    function copyToClipboard(btn, text) {\n        function showSuccess() {\n            if (btn) {\n                const orig = btn.getAttribute("data-original-html") || btn.innerHTML;\n                btn.setAttribute("data-original-html", orig);\n                btn.innerHTML = "✅ Copied!";\n                btn.style.borderColor = "#46d369";\n                setTimeout(function () { btn.innerHTML = orig; btn.style.borderColor = ""; }, 2000);\n            }\n        }\n        if (navigator.clipboard && window.isSecureContext) {\n            navigator.clipboard.writeText(text).then(showSuccess).catch(function() { fallbackCopy(text); });\n        } else { fallbackCopy(text); }\n        function fallbackCopy(str) {\n            try {\n                const ta = document.createElement("textarea");\n                ta.value = str;\n                ta.style.position = "fixed";\n                ta.style.left = "-9999px";\n                ta.setAttribute("readonly", "");\n                document.body.appendChild(ta);\n                ta.select();\n                document.execCommand("copy");\n                document.body.removeChild(ta);\n                showSuccess();\n            } catch(e) { window.prompt("Copy URL:", str); }\n        }\n    }\n    window.snCopyUrl = copyToClipboard;\n\n    function initComponent() {\n        if (!isItemDetailPage()) return false;\n        const anchor = getMainButtonsElement();\n        if (!anchor) return false;\n        let existing = document.getElementById(cardWrapperId);\n        if (existing) {\n            if (existing.previousElementSibling === anchor || existing.parentElement === anchor.parentElement) return true;\n            existing.remove();\n        }\n        const html = ${JSON.stringify(htmlContent)};\n        anchor.insertAdjacentHTML("afterend", html);\n        return true;\n    }\n\n    let activeObserver = null;\n    let fallbackInterval = null;\n\n    function startWatcher(e) {\n        if (!isItemDetailPage(e)) return;\n        if (initComponent()) return;\n        if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n        if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n        let attempts = 0;\n        activeObserver = new MutationObserver(function () {\n            if (initComponent() || ++attempts >= 50) {\n                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n            }\n        });\n        activeObserver.observe(document.body, { childList: true, subtree: true });\n        fallbackInterval = setInterval(function () {\n            if (initComponent() || ++attempts >= 50) {\n                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n            }\n        }, 120);\n    }\n\n    document.addEventListener("viewbeforeshow", startWatcher);\n    document.addEventListener("viewshow", startWatcher);\n    window.addEventListener("hashchange", function () { startWatcher(); });\n    window.addEventListener("popstate", function () { startWatcher(); });\n    if (document.readyState === "loading") {\n        document.addEventListener("DOMContentLoaded", function () { startWatcher(); });\n    } else { startWatcher(); }\n})();\n<\/script>`;
+            return `<style>\n${styleContent}\n</style>\n\n<script>\n(function () {\n    'use strict';\n    const cardWrapperId = "${id}";\n\n    // Universal selector for Emby & Jellyfin (Desktop & Mobile)\n    function getMainButtonsElement() {\n        return document.querySelector(\n            "div[is='emby-scroller']:not(.hide) .mainDetailButtons:not(.hide), " +\n            "div.itemDetailPage:not(.hide) .mainDetailButtons:not(.hide), " +\n            "div.page:not(.hide) .mainDetailButtons:not(.hide), " +\n            ".detailRibbon:not(.hide) .mainDetailButtons:not(.hide), " +\n            ".mainDetailButtons:not(.hide), " +\n            ".mainDetailButtons, " +\n            "div.itemDetailPage:not(.hide) div.detailPagePrimaryContainer:not(.hide), " +\n            "div.itemDetailPage:not(.hide) .detailPagePrimaryContent:not(.hide), " +\n            ".detailPagePrimaryContainer:not(.hide), " +\n            ".detailPagePrimaryContainer, " +\n            "div.itemDetailPage:not(.hide) .detailRibbon:not(.hide), " +\n            ".detailRibbon"\n        );\n    }\n\n    function isItemDetailPage(e) {\n        if (e && e.detail) {\n            if (e.detail.type === "itemdetail") return true;\n            if (e.detail.contextPath && (e.detail.contextPath.includes("item?id=") || e.detail.contextPath.startsWith("/item"))) return true;\n            if (e.detail.path && (e.detail.path.includes("item?id=") || e.detail.path.startsWith("/item"))) return true;\n            if (e.detail.params && (e.detail.params.id || e.detail.params.itemId)) return true;\n        }\n        const hash = window.location.hash || "";\n        const href = window.location.href || "";\n        return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");\n    }\n\n    function initComponent() {\n        if (!isItemDetailPage()) return false;\n        const anchor = getMainButtonsElement();\n        if (!anchor) return false;\n        let existing = document.getElementById(cardWrapperId);\n        if (existing) {\n            if (existing.previousElementSibling === anchor || existing.parentElement === anchor.parentElement) return true;\n            existing.remove();\n        }\n        const html = ${JSON.stringify(htmlContent)};\n        anchor.insertAdjacentHTML("afterend", html);\n        return true;\n    }\n\n    let activeObserver = null;\n    let fallbackInterval = null;\n\n    function startWatcher(e) {\n        if (!isItemDetailPage(e)) return;\n        if (initComponent()) return;\n        if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n        if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n        let attempts = 0;\n        activeObserver = new MutationObserver(function () {\n            if (initComponent() || ++attempts >= 50) {\n                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n            }\n        });\n        activeObserver.observe(document.body, { childList: true, subtree: true });\n        fallbackInterval = setInterval(function () {\n            if (initComponent() || ++attempts >= 50) {\n                if (fallbackInterval) { clearInterval(fallbackInterval); fallbackInterval = null; }\n                if (activeObserver) { activeObserver.disconnect(); activeObserver = null; }\n            }\n        }, 120);\n    }\n\n    document.addEventListener("viewbeforeshow", startWatcher);\n    document.addEventListener("viewshow", startWatcher);\n    window.addEventListener("hashchange", function () { startWatcher(); });\n    window.addEventListener("popstate", function () { startWatcher(); });\n    if (document.readyState === "loading") {\n        document.addEventListener("DOMContentLoaded", function () { startWatcher(); });\n    } else { startWatcher(); }\n})();\n<\/script>`;
         }
 
         function copyCurrentCode() {

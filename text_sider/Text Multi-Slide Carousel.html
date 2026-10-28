@@ -358,59 +358,6 @@
         return hash.includes("item?id=") || hash.includes("#!/item") || href.includes("/item?id=") || href.includes("#!/item");
     }
 
-    function copyToClipboard(btn, text) {
-        function showSuccess() {
-            if (btn) {
-                const originalHtml = btn.getAttribute("data-original-html") || btn.innerHTML;
-                btn.setAttribute("data-original-html", originalHtml);
-                btn.innerHTML = "✅ Copied!";
-                btn.style.borderColor = "#46d369";
-                btn.style.color = "#46d369";
-                setTimeout(function () {
-                    btn.innerHTML = originalHtml;
-                    btn.style.borderColor = "";
-                    btn.style.color = "";
-                }, 2000);
-            }
-        }
-
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(showSuccess).catch(function () {
-                fallbackCopy(text);
-            });
-        } else {
-            fallbackCopy(text);
-        }
-
-        function fallbackCopy(str) {
-            let successful = false;
-            try {
-                const ta = document.createElement("textarea");
-                ta.value = str;
-                ta.style.position = "fixed";
-                ta.style.left = "-9999px";
-                ta.style.top = "-9999px";
-                ta.style.opacity = "0";
-                ta.setAttribute("readonly", "");
-                document.body.appendChild(ta);
-                ta.focus();
-                ta.select();
-                successful = document.execCommand("copy");
-                document.body.removeChild(ta);
-            } catch (err) {
-                successful = false;
-            }
-
-            if (successful) {
-                showSuccess();
-            } else {
-                window.prompt("Copy Server URL: Ctrl+C, Enter", str);
-            }
-        }
-    }
-
-    window.snCopyUrl = copyToClipboard;
-
     function goToSlide(index) {
         const card = document.getElementById(cardId);
         if (!card) return;
@@ -502,7 +449,7 @@
                         </p>
                         <div class="sn-c-actions">
                             <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">🚀 Open CDN Server</a>
-                            <button class="sn-c-btn sn-c-btn-subtle" onclick="window.snCopyUrl(this, 'http://100.100.100.6/');">📋 Copy URL</button>
+                            <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request</a>
                         </div>
                     </div>
 
@@ -514,7 +461,7 @@
                         </p>
                         <div class="sn-c-actions">
                             <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">⚡ Download Portal</a>
-                            <button class="sn-c-btn sn-c-btn-subtle" onclick="window.snCopyUrl(this, 'http://100.100.100.6/');">📋 Copy Server IP</button>
+                            <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request</a>
                         </div>
                     </div>
 

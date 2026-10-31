@@ -302,41 +302,102 @@
     /* 📱 Mobile Responsiveness */
     @media (max-width: 600px) {
         .sn-aurora-wrapper {
-            padding: 14px 16px;
-            gap: 12px;
-            margin: 14px 0 10px 0;
-            border-radius: 10px;
+            padding: 11px 13px;
+            gap: 8px;
+            margin: 12px 0 8px 0;
+            border-radius: 9px;
             box-sizing: border-box;
         }
 
         .sn-aurora-header {
-            gap: 8px;
-        }
-
-        .sn-aurora-chips {
+            padding-bottom: 6px;
+            flex-wrap: nowrap;
             gap: 6px;
         }
 
+        .sn-aurora-title-wrap {
+            gap: 6px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .sn-aurora-icon {
+            font-size: 16px;
+        }
+
+        .sn-aurora-title {
+            font-size: 13.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sn-title-sub {
+            display: none;
+        }
+
+        .sn-aurora-header-right {
+            gap: 6px;
+        }
+
+        .sn-aurora-status {
+            font-size: 9.5px;
+            padding: 2px 5px;
+            gap: 4px;
+        }
+
+        .sn-aurora-dot {
+            width: 5px;
+            height: 5px;
+        }
+
+        .sn-aurora-close {
+            font-size: 14px;
+            padding: 2px 4px;
+        }
+
+        .sn-aurora-chips {
+            gap: 5px;
+        }
+
         .sn-chip {
-            font-size: 10px;
+            font-size: 9.5px;
             padding: 2px 6px;
+            letter-spacing: 0.2px;
+        }
+
+        .sn-aurora-body {
+            gap: 6px;
+        }
+
+        .sn-lang-badge {
+            font-size: 9.5px;
+            padding: 1.5px 5px;
+            margin-right: 4px;
+        }
+
+        .sn-aurora-text {
+            font-size: 12.5px;
+            line-height: 1.45;
+            letter-spacing: -0.1px;
         }
 
         .sn-aurora-actions {
             flex-direction: column;
             width: 100%;
-            gap: 8px;
+            gap: 7px;
+            margin-top: 2px;
         }
 
         .sn-aurora-btn {
             width: 100%;
-            padding: 11px 14px;
-            font-size: 13.5px;
+            padding: 9px 12px;
+            font-size: 13px;
             box-sizing: border-box;
             display: inline-flex !important;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .sn-btn-telegram {
@@ -406,7 +467,7 @@
                 <div class="sn-aurora-header">
                     <div class="sn-aurora-title-wrap">
                         <span class="sn-aurora-icon">✨</span>
-                        <h4 class="sn-aurora-title">ভিআইপি নোটিশ | VIP Notice</h4>
+                        <h4 class="sn-aurora-title">ভিআইপি নোটিশ <span class="sn-title-sub">| VIP Notice</span></h4>
                     </div>
                     <div class="sn-aurora-header-right">
                         <span class="sn-aurora-status"><span class="sn-aurora-dot"></span>HIGH SPEED CDN</span>
@@ -422,10 +483,10 @@
 
                 <div class="sn-aurora-body">
                     <p class="sn-aurora-text">
-                        <span class="sn-lang-badge sn-lang-bn">বাংলা</span> <strong>প্রিয় গ্রাহক:</strong> পিক-আওয়ারে বা অতিরিক্ত ট্রাফিকের সময় বাফারিং এড়াতে এবং 10G BDIX ফুল স্পিডে ডিরেক্ট 4K প্লেব্যাক ও ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মিডিয়া রিকুয়েস্ট করতে টেলিগ্রাম বাটনে ক্লিক করুন।
+                        <span class="sn-lang-badge sn-lang-bn">বাংলা</span> বাফারিং এড়াতে 10G BDIX ফুল স্পিডে 4K স্ট্রিমিং ও দ্রুত ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মুভি বা সিরিজ রিকুয়েস্ট করতে <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank">Movies Request</a> বাটনে ক্লিক করুন।
                     </p>
                     <p class="sn-aurora-text">
-                        <span class="sn-lang-badge sn-lang-en">ENG</span> <strong>Notice:</strong> To bypass server bottleneck and experience direct 10G BDIX high-speed 4K streaming or downloads, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request any missing movie or TV show on Telegram.
+                        <span class="sn-lang-badge sn-lang-en">ENG</span> To bypass buffering and enjoy direct 10G BDIX 4K streaming or downloads, use <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Tap <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank">Movies Request</a> for any missing movie or TV show.
                     </p>
                 </div>
 
@@ -434,7 +495,7 @@
                         🚀 Open SN File Server
                     </a>
                     <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">
-                        💬 Telegram Request
+                        🎬 Movies Request
                     </a>
                 </div>
             </div>

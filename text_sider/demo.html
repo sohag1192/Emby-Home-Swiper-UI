@@ -350,128 +350,406 @@
         const components = {
             card: `
 <style>
+    /* ========================================================
+       📢 Premium Glassmorphism Notice Card (text_sider)
+       Supports Emby & Jellyfin Web | Fully Responsive & Mobile-Ready
+       ======================================================== */
     .sn-card-wrapper {
         width: 100%;
         box-sizing: border-box;
-        background: linear-gradient(135deg, rgba(255, 60, 60, 0.12) 0%, rgba(20, 20, 20, 0.85) 100%);
+        background: linear-gradient(135deg, rgba(229, 9, 20, 0.12) 0%, rgba(18, 18, 22, 0.92) 100%);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 80, 80, 0.35);
-        border-left: 4px solid #ff4747;
+        border: 1px solid rgba(255, 75, 75, 0.28);
+        border-left: 4px solid #e50914;
         border-radius: 12px;
-        padding: 16px 20px;
-        margin: 18px 0 14px 0;
+        padding: 14px 18px;
+        margin: 16px 0 12px 0;
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 71, 71, 0.15);
+        gap: 10px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4), 0 0 18px rgba(229, 9, 20, 0.12);
         position: relative;
         z-index: 10;
         clear: both;
         transition: all 0.3s ease;
     }
+
     .sn-card-wrapper:hover {
-        border-color: rgba(255, 90, 90, 0.6);
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 71, 71, 0.25);
+        border-color: rgba(255, 90, 90, 0.55);
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(229, 9, 20, 0.22);
     }
+
+    /* Header */
     .sn-card-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        flex-wrap: wrap;
         gap: 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .sn-card-title-group { display: flex; align-items: center; gap: 10px; }
-    .sn-card-icon { font-size: 20px; line-height: 1; }
-    .sn-card-title { font-size: clamp(15px, 1.3vw, 19px); font-weight: 800; color: #ff9b9b; margin: 0; line-height: 1.2; }
+
+    .sn-card-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .sn-brand-icon {
+        font-size: 18px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: rgba(229, 9, 20, 0.18);
+        border: 1px solid rgba(229, 9, 20, 0.4);
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(229, 9, 20, 0.25);
+        flex-shrink: 0;
+    }
+
+    .sn-card-title {
+        font-size: clamp(14px, 1.2vw, 17px);
+        font-weight: 800;
+        color: #ff9b9b;
+        letter-spacing: 0.3px;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .sn-card-sub {
+        font-size: 11px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.45);
+        margin-left: 6px;
+        letter-spacing: 0.2px;
+    }
+
+    .sn-header-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
     .sn-status-pill {
-        display: inline-flex; align-items: center; gap: 6px;
-        background: rgba(70, 211, 105, 0.15); border: 1px solid rgba(70, 211, 105, 0.4);
-        color: #46d369; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(70, 211, 105, 0.15);
+        border: 1px solid rgba(70, 211, 105, 0.4);
+        color: #46d369;
+        font-size: 10.5px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 20px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        user-select: none;
+        white-space: nowrap;
     }
+
     .sn-pulse-green {
-        width: 6px; height: 6px; background-color: #46d369; border-radius: 50%;
-        box-shadow: 0 0 6px #46d369; animation: sn-pulse-anim 1.5s infinite;
+        width: 6px;
+        height: 6px;
+        background-color: #46d369;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #46d369;
+        animation: sn-pulse-anim 1.5s infinite;
     }
-    @keyframes sn-pulse-anim { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.5; } }
+
+    @keyframes sn-pulse-anim {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.4); opacity: 0.5; }
+    }
+
     .sn-card-close {
-        background: transparent; border: none; color: rgba(255, 255, 255, 0.5);
-        font-size: 16px; cursor: pointer; padding: 4px 6px; border-radius: 4px;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 15px;
+        cursor: pointer;
+        padding: 4px 6px;
+        line-height: 1;
+        border-radius: 4px;
+        transition: all 0.2s ease;
     }
-    .sn-card-close:hover { color: #fff; background: rgba(255, 255, 255, 0.15); }
-    .sn-card-chips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .sn-chip { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; letter-spacing: 0.4px; }
-    .sn-chip-red { background: rgba(255, 71, 71, 0.18); color: #ff8585; border: 1px solid rgba(255, 71, 71, 0.4); }
-    .sn-chip-green { background: rgba(70, 211, 105, 0.18); color: #6ee7b7; border: 1px solid rgba(70, 211, 105, 0.4); }
-    .sn-chip-blue { background: rgba(0, 180, 255, 0.18); color: #72d6ff; border: 1px solid rgba(0, 180, 255, 0.4); }
-    .sn-card-body { display: flex; flex-direction: column; gap: 8px; }
-    .sn-lang-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.4px; margin-right: 6px; vertical-align: middle; }
-    .sn-lang-bn { background: rgba(255, 90, 90, 0.15); color: #ff9b9b; border: 1px solid rgba(255, 90, 90, 0.4); }
-    .sn-lang-en { background: rgba(255, 255, 255, 0.1); color: #e5e5e5; border: 1px solid rgba(255, 255, 255, 0.22); }
-    .sn-lang-block { font-size: clamp(13px, 1.1vw, 15px); font-weight: 500; color: #e5e5e5; line-height: 1.6; margin: 0; }
-    .sn-lang-block strong { color: #fff; }
-    .sn-lang-block a { color: #ff7676; text-decoration: none; font-weight: 700; }
-    .sn-lang-block a:hover { color: #fff; text-decoration: underline; }
-    .sn-card-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+    .sn-card-close:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Content Rows */
+    .sn-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .sn-info-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .sn-row-icon {
+        font-size: 15px;
+        line-height: 1.4;
+        flex-shrink: 0;
+    }
+
+    .sn-row-text {
+        font-size: clamp(12.5px, 1.05vw, 14.5px);
+        font-weight: 500;
+        color: #e5e5e5;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .sn-row-text strong {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .sn-row-text a {
+        color: #ff7676;
+        text-decoration: none;
+        font-weight: 700;
+        transition: color 0.2s ease;
+    }
+
+    .sn-row-text a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+
+    .sn-en-hint {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.9em;
+        font-weight: 500;
+        margin-left: 4px;
+    }
+
+    /* Action Buttons Row */
+    .sn-card-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 2px;
+    }
+
     .sn-btn {
-        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-        padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 700;
-        text-decoration: none; cursor: pointer; border: none; transition: all 0.2s ease;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+        user-select: none;
     }
+
     .sn-btn-primary {
-        background: linear-gradient(135deg, #e50914 0%, #b80610 100%); color: #fff;
+        background: linear-gradient(135deg, #e50914 0%, #b80610 100%);
+        color: #ffffff;
         box-shadow: 0 4px 12px rgba(229, 9, 20, 0.35);
     }
-    .sn-btn-primary:hover { background: linear-gradient(135deg, #f40612 0%, #cc0813 100%); transform: translateY(-1px); }
+
+    .sn-btn-primary:hover {
+        background: linear-gradient(135deg, #f40612 0%, #cc0813 100%);
+        box-shadow: 0 6px 16px rgba(229, 9, 20, 0.5);
+        transform: translateY(-1px);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .sn-btn-pill {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #ffd2d2;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 1.5px 6px;
+        border-radius: 12px;
+        letter-spacing: 0.4px;
+        margin-left: 2px;
+    }
+
     .sn-btn-request {
         background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
-        color: #fff;
+        color: #ffffff;
         box-shadow: 0 4px 12px rgba(0, 136, 204, 0.35);
     }
+
     .sn-btn-request:hover {
         background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
         box-shadow: 0 6px 16px rgba(0, 136, 204, 0.5);
         transform: translateY(-1px);
-        color: #fff;
+        color: #ffffff;
+        text-decoration: none;
     }
+
+    /* 📱 Responsive Mobile View */
     @media (max-width: 600px) {
-        .sn-card-wrapper { padding: 12px 14px; gap: 10px; margin: 14px 0 10px 0; border-radius: 8px; box-sizing: border-box; }
-        .sn-card-actions { flex-direction: column; width: 100%; gap: 8px; }
-        .sn-btn { width: 100%; padding: 11px 14px; font-size: 13.5px; box-sizing: border-box; display: inline-flex !important; align-items: center; justify-content: center; gap: 8px; }
-        .sn-btn-request { display: inline-flex !important; align-items: center; justify-content: center; width: 100%; }
+        .sn-card-wrapper {
+            padding: 10px 12px;
+            gap: 8px;
+            margin: 10px 0 8px 0;
+            border-radius: 9px;
+            box-sizing: border-box;
+        }
+
+        .sn-card-header {
+            padding-bottom: 6px;
+            flex-wrap: nowrap;
+            gap: 6px;
+        }
+
+        .sn-card-brand {
+            gap: 6px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .sn-brand-icon {
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+        }
+
+        .sn-card-title {
+            font-size: 13.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sn-card-sub {
+            display: none;
+        }
+
+        .sn-header-right {
+            gap: 6px;
+        }
+
+        .sn-status-pill {
+            font-size: 9.5px;
+            padding: 2px 6px;
+            gap: 4px;
+        }
+
+        .sn-pulse-green {
+            width: 5px;
+            height: 5px;
+        }
+
+        .sn-card-close {
+            font-size: 14px;
+            padding: 2px 4px;
+        }
+
+        .sn-card-body {
+            gap: 5px;
+        }
+
+        .sn-info-row {
+            gap: 6px;
+        }
+
+        .sn-row-icon {
+            font-size: 14px;
+            line-height: 1.35;
+        }
+
+        .sn-row-text {
+            font-size: 12px;
+            line-height: 1.4;
+            letter-spacing: -0.1px;
+        }
+
+        .sn-en-hint {
+            display: block;
+            font-size: 11px;
+            margin-left: 0;
+            margin-top: 1px;
+        }
+
+        .sn-card-actions {
+            flex-direction: column;
+            width: 100%;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .sn-btn {
+            width: 100%;
+            padding: 9px 12px;
+            font-size: 13px;
+            box-sizing: border-box;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .sn-btn-request {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
     }
 </style>
-<div class="sn-card-wrapper" role="alert">
-    <div class="sn-card-header">
-        <div class="sn-card-title-group">
-            <span class="sn-card-icon">📢</span>
-            <h4 class="sn-card-title">জরুরী বিজ্ঞপ্তি | Important Notice</h4>
-        </div>
-        <div style="display:flex; align-items:center; gap:8px;">
-            <span class="sn-status-pill"><span class="sn-pulse-green"></span>CDN ONLINE</span>
-            <button class="sn-card-close" title="Dismiss" onclick="this.closest('.sn-card-wrapper')?.remove();">✕</button>
-        </div>
-    </div>
-    <div class="sn-card-chips">
-        <span class="sn-chip sn-chip-red">🎬 4K UHD DIRECT</span>
-        <span class="sn-chip sn-chip-green">⚡ ZERO BUFFER</span>
-        <span class="sn-chip sn-chip-blue">🚀 10G BDIX PORTAL</span>
-    </div>
-    <div class="sn-card-body">
-        <p class="sn-lang-block">
-            <span class="sn-lang-badge sn-lang-bn">বাংলা</span> <strong>প্রিয় গ্রাহক:</strong> পিক-আওয়ারে বা অতিরিক্ত ট্রাফিকের সময় বাফারিং এড়াতে এবং 10G BDIX ফুল স্পিডে ডিরেক্ট 4K প্লেব্যাক ও ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মিডিয়া রিকুয়েস্ট করতে টেলিগ্রাম বাটনে ক্লিক করুন।
-        </p>
-        <p class="sn-lang-block">
-            <span class="sn-lang-badge sn-lang-en">ENG</span> <strong>Notice:</strong> To bypass server bottleneck and experience direct 10G BDIX high-speed 4K streaming or downloads, access our <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request any missing movie or TV show on Telegram.
-        </p>
-    </div>
-    <div class="sn-card-actions">
-        <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">🚀 Open SN File Server</a>
-        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-btn sn-btn-request">💬 Telegram Request</a>
-    </div>
-</div>`,
+<div id="sn-text-card-wrapper" class="sn-card-wrapper" role="alert">
+                <div class="sn-card-header">
+                    <div class="sn-card-brand">
+                        <span class="sn-brand-icon">⚡</span>
+                        <h4 class="sn-card-title">10G BDIX সার্ভার নোটিশ <span class="sn-card-sub">| High-Speed Portal</span></h4>
+                    </div>
+                    <div class="sn-header-right">
+                        <span class="sn-status-pill"><span class="sn-pulse-green"></span>ONLINE</span>
+                        <button class="sn-card-close" title="Dismiss" aria-label="Close" onclick="this.closest('.sn-card-wrapper')?.remove();">✕</button>
+                    </div>
+                </div>
+
+                <div class="sn-card-body">
+                    <div class="sn-info-row">
+                        <span class="sn-row-icon">🚀</span>
+                        <p class="sn-row-text">
+                            বাফারিং ছাড়া <strong>4K স্ট্রিমিং</strong> ও <strong>ফুল স্পিড ডাউনলোডে</strong> <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।
+                            <span class="sn-en-hint">(Zero-buffer 10G BDIX 4K playback & IDM download)</span>
+                        </p>
+                    </div>
+                    <div class="sn-info-row">
+                        <span class="sn-row-icon">🎬</span>
+                        <p class="sn-row-text">
+                            পছন্দের কোনো মুভি বা ওয়েব সিরিজ সার্ভারে খুঁজে না পেলে <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank">Movies Request</a> বাটনে ক্লিক করুন।
+                            <span class="sn-en-hint">(Tap Movies Request for missing titles)</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sn-card-actions">
+                    <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-btn sn-btn-primary">
+                        🚀 Open SN File Server <span class="sn-btn-pill">10G BDIX</span>
+                    </a>
+                    <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-btn sn-btn-request">
+                        🎬 Movies Request
+                    </a>
+                </div>
+            </div>`,
 
             ticker: `
 <style>
@@ -532,8 +810,8 @@
     <div class="sn-slider-badge"><span class="sn-pulse-dot"></span><span>NOTICE</span></div>
     <div class="sn-marquee-container">
         <div class="sn-slider-content">
-            <span class="item">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download! &nbsp; • &nbsp; 💬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Telegram Request</a></span>
-            <span class="item" aria-hidden="true">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download! &nbsp; • &nbsp; 💬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Telegram Request</a></span>
+            <span class="item">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download! &nbsp; • &nbsp; 🎬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Movies Request</a></span>
+            <span class="item" aria-hidden="true">⚠️ সার্ভার লোড বেশি এই জন্য ডাউনলোড ও প্লে করতে প্রব্লেম হইতে পারে, সেই জন্য <a href="http://100.100.100.6/" target="_blank">SN FILE SERVER (http://100.100.100.6/)</a> সার্ভার ব্যাবহার করুন। &nbsp; • &nbsp; 💡 Fast Streaming & Direct Download! &nbsp; • &nbsp; 🎬 <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-link-request">Movies Request</a></span>
         </div>
     </div>
     <button class="sn-slider-close" title="Dismiss" onclick="this.closest('.sn-slider-wrapper')?.remove();">✕</button>
@@ -596,7 +874,7 @@
     </div>
     <div class="sn-alert-actions">
         <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-alert-btn">⚡ Open Server</a>
-        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-alert-btn sn-alert-btn-request">💬 Telegram Request</a>
+        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-alert-btn sn-alert-btn-request">🎬 Movies Request</a>
     </div>
 </div>`,
 
@@ -682,9 +960,23 @@
     .sn-btn-telegram { background: linear-gradient(135deg, #0088cc 0%, #006699 100%); color: #fff; box-shadow: 0 4px 14px rgba(0, 136, 204, 0.4); }
     .sn-btn-telegram:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6); }
     @media (max-width: 600px) {
-        .sn-aurora-wrapper { padding: 14px 16px; gap: 12px; margin: 14px 0 10px 0; border-radius: 10px; box-sizing: border-box; }
-        .sn-aurora-actions { flex-direction: column; width: 100%; gap: 8px; }
-        .sn-aurora-btn { width: 100%; padding: 11px 14px; font-size: 13.5px; box-sizing: border-box; display: inline-flex !important; align-items: center; justify-content: center; gap: 8px; }
+        .sn-aurora-wrapper { padding: 11px 13px; gap: 8px; margin: 12px 0 8px 0; border-radius: 9px; box-sizing: border-box; }
+        .sn-aurora-header { padding-bottom: 6px; flex-wrap: nowrap; gap: 6px; }
+        .sn-aurora-title-wrap { gap: 6px; min-width: 0; flex: 1; }
+        .sn-aurora-icon { font-size: 16px; }
+        .sn-aurora-title { font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sn-title-sub { display: none; }
+        .sn-aurora-header-right { gap: 6px; }
+        .sn-aurora-status { font-size: 9.5px; padding: 2px 5px; gap: 4px; }
+        .sn-aurora-dot { width: 5px; height: 5px; }
+        .sn-aurora-close { font-size: 14px; padding: 2px 4px; }
+        .sn-aurora-chips { gap: 5px; }
+        .sn-chip { font-size: 9.5px; padding: 2px 6px; letter-spacing: 0.2px; }
+        .sn-aurora-body { gap: 6px; }
+        .sn-lang-badge { font-size: 9.5px; padding: 1.5px 5px; margin-right: 4px; }
+        .sn-aurora-text { font-size: 12.5px; line-height: 1.45; letter-spacing: -0.1px; }
+        .sn-aurora-actions { flex-direction: column; width: 100%; gap: 7px; margin-top: 2px; }
+        .sn-aurora-btn { width: 100%; padding: 9px 12px; font-size: 13px; box-sizing: border-box; display: inline-flex !important; align-items: center; justify-content: center; gap: 6px; }
         .sn-btn-telegram { display: inline-flex !important; align-items: center; justify-content: center; width: 100%; }
     }
 </style>
@@ -692,7 +984,7 @@
     <div class="sn-aurora-header">
         <div class="sn-aurora-title-wrap">
             <span class="sn-aurora-icon">✨</span>
-            <h4 class="sn-aurora-title">ভিআইপি নোটিশ | VIP Notice</h4>
+            <h4 class="sn-aurora-title">ভিআইপি নোটিশ <span class="sn-title-sub">| VIP Notice</span></h4>
         </div>
         <div class="sn-aurora-header-right">
             <span class="sn-aurora-status"><span class="sn-aurora-dot"></span>HIGH SPEED CDN</span>
@@ -706,15 +998,15 @@
     </div>
     <div class="sn-aurora-body">
         <p class="sn-aurora-text">
-            <span class="sn-lang-badge sn-lang-bn">বাংলা</span> <strong>প্রিয় গ্রাহক:</strong> পিক-আওয়ারে বা অতিরিক্ত ট্রাফিকের সময় বাফারিং এড়াতে এবং 10G BDIX ফুল স্পিডে ডিরেক্ট 4K প্লেব্যাক ও ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মিডিয়া রিকুয়েস্ট করতে টেলিগ্রাম বাটনে ক্লিক করুন।
+            <span class="sn-lang-badge sn-lang-bn">বাংলা</span> বাফারিং এড়াতে 10G BDIX ফুল স্পিডে 4K স্ট্রিমিং ও দ্রুত ডাউনলোডের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন। পছন্দের মুভি বা সিরিজ রিকুয়েস্ট করতে <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank">Movies Request</a> বাটনে ক্লিক করুন।
         </p>
         <p class="sn-aurora-text">
-            <span class="sn-lang-badge sn-lang-en">ENG</span> <strong>Notice:</strong> To bypass server bottleneck and experience direct 10G BDIX high-speed 4K streaming or downloads, access our <a href="http://100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Request any missing movie or TV show on Telegram.
+            <span class="sn-lang-badge sn-lang-en">ENG</span> To bypass buffering and enjoy direct 10G BDIX 4K streaming or downloads, use <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a>. Tap <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank">Movies Request</a> for any missing movie or TV show.
         </p>
     </div>
     <div class="sn-aurora-actions">
         <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-aurora-btn sn-btn-portal">🚀 Open SN File Server</a>
-        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">💬 Telegram Request</a>
+        <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-aurora-btn sn-btn-telegram">🎬 Movies Request</a>
     </div>
 </div>`,
 
@@ -781,8 +1073,8 @@
         </div>
         <div class="sn-cyber-track-wrap">
             <div class="sn-cyber-track">
-                <span class="sn-cyber-item">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Telegram Request</a></span>
-                <span class="sn-cyber-item" aria-hidden="true">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 💬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">📨 Telegram Request</a></span>
+                <span class="sn-cyber-item">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 🎬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">🎬 Movies Request</a></span>
+                <span class="sn-cyber-item" aria-hidden="true">⚡ সার্ভার লোড বা বাফারিং এড়াতে ডিরেক্ট হাই স্পিড লিংক: <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-cyber-link sn-cyber-link-portal">🚀 SN FILE SERVER</a> &nbsp; • &nbsp; 💡 10G BDIX Direct Streaming & Download &nbsp; • &nbsp; 🎬 মুভি বা সিরিজ রিকুয়েস্ট: <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-cyber-link sn-cyber-link-req">🎬 Movies Request</a></span>
             </div>
         </div>
         <button class="sn-cyber-close" title="Dismiss HUD" onclick="this.closest('.sn-cyber-outer')?.remove();">✕</button>
@@ -849,7 +1141,7 @@
             <p class="sn-c-slide-desc">সার্ভারে অতিরিক্ত চাপের কারণে ভিডিও বাফারিং হতে পারে। নিরবচ্ছিন্ন 4K প্লেব্যাক ও আল্ট্রা-ফাস্ট ডিরেক্ট স্ট্রিমিংয়ের জন্য <a href="http://100.100.100.6/#SN_CDN" target="_blank">SN FILE SERVER</a> ব্যবহার করুন।</p>
             <div class="sn-c-actions">
                 <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">🚀 Open CDN Server</a>
-                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request</a>
+                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">🎬 Movies Request</a>
             </div>
         </div>
         <div class="sn-c-slide">
@@ -857,14 +1149,14 @@
             <p class="sn-c-slide-desc">আপনার পছন্দের মিডিয়া সরাসরি আইডিএম বা ডাউনলোড ম্যানেজার দিয়ে ফুল স্পিডে ডাউনলোড করতে আমাদের ফাইল সার্ভার পোর্টাল ওপেন করুন।</p>
             <div class="sn-c-actions">
                 <a href="http://100.100.100.6/#SN_CDN" target="_blank" class="sn-c-btn sn-c-btn-red">⚡ Download Portal</a>
-                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request</a>
+                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">🎬 Movies Request</a>
             </div>
         </div>
         <div class="sn-c-slide">
-            <h4 class="sn-c-slide-title">💬 মুভি ও সিরিজ রিকুয়েস্ট | Request on Telegram</h4>
-            <p class="sn-c-slide-desc">আপনার পছন্দের কোনো মুভি বা ওয়েব সিরিজ সার্ভারে খুঁজে না পেলে আমাদের অফিসিয়াল টেলিগ্রাম গ্রুপে সরাসরি রিকুয়েস্ট জমা দিন।</p>
+            <h4 class="sn-c-slide-title">🎬 মুভি ও সিরিজ রিকুয়েস্ট | Movies Request</h4>
+            <p class="sn-c-slide-desc">আপনার পছন্দের কোনো মুভি বা ওয়েব সিরিজ সার্ভারে খুঁজে না পেলে আমাদের অফিসিয়াল গ্রুপে সরাসরি রিকুয়েস্ট জমা দিন।</p>
             <div class="sn-c-actions">
-                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">💬 Telegram Request Group</a>
+                <a href="https://t.me/+Z1HSzcUk_OViM2E1" target="_blank" class="sn-c-btn sn-c-btn-blue">🎬 Movies Request</a>
             </div>
         </div>
     </div>

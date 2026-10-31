@@ -11,7 +11,7 @@
 
 **Transform your Emby and Jellyfin home screen into a stunning, modern media showcase with dynamic banners, ratings, external player launching, and animated announcements.**
 
-[✨ Features](#-key-features) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure--modules) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-customization--configuration) • [🧪 Troubleshooting](#-troubleshooting--faq) • [📬 Contact](#-contributing--contact) • [💖 Support](#-support--sponsorship)
+[✨ Features](#-key-features) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure--modules) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-customization--configuration) • [🧪 Troubleshooting](#-troubleshooting--faq) • [🔗 Related Projects](#-related-projects--ecosystem-tools) • [📬 Contact](#-contributing--contact) • [💖 Support](#-support--sponsorship)
 
 </div>
 
@@ -309,6 +309,24 @@ this.showItemNum = 9;                // Number of items to display
 > [!NOTE]
 > **Compatibility Verified:** Tested and confirmed working on Emby Web / Server **Version [4.10.2.0]** (`version=4.10.2.0`) (test done), **Version [4.10.1.0]** (`version=4.10.1.0`), and **Version [4.10.0.40]** (`version=4.10.0.40`).
 
+
+---
+
+## 🔗 Related Projects & Ecosystem Tools
+
+Enhance your Emby & Jellyfin media ecosystem with our companion tools and utilities:
+
+### 🔍 [Emby Duplicate Finder](https://github.com/sohag1192/emby-duplicate-finder)
+> **Automated media library cleanup and duplicate detection tool for Emby Server.**
+
+[![GitHub Repository](https://img.shields.io/badge/GitHub-sohag1192%2Femby--duplicate--finder-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/sohag1192/emby-duplicate-finder)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](https://github.com/sohag1192/emby-duplicate-finder)
+
+- 🧹 **Find Duplicate Media:** Quickly scan, identify, and report duplicate movies, series episodes, and extra video files across your Emby libraries.
+- 💾 **Reclaim Storage Space:** Highlight duplicate titles across differing resolutions (e.g., 4K HDR vs 1080p SDR) and audio formats to clean up storage.
+- ⚡ **Lightweight & Fast:** Direct integration with Emby Server APIs for seamless, accurate library analysis.
+
+👉 **GitHub Repository:** [https://github.com/sohag1192/emby-duplicate-finder](https://github.com/sohag1192/emby-duplicate-finder)
 
 ---
 

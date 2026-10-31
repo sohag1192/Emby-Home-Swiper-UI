@@ -69,6 +69,12 @@
 
 ---
 
+## 🔗 Related Projects
+
+- **[Emby Duplicate Finder](https://github.com/sohag1192/emby-duplicate-finder)** — Automated tool to detect and clean up duplicate media in your Emby libraries.
+
+---
+
 ## 🤝 Contributing & Contact
 
 📬 **Email:** [sohag1192@gmail.com](mailto:sohag1192@gmail.com)  

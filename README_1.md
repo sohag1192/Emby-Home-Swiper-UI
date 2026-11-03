@@ -2,7 +2,8 @@
 
 <div align="center">
 
-![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
+[![Today / Total Hits](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Today%20/%20Total%20Hits&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)](https://hitscounter.dev/history?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI)
+[![Hits Today](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI.svg?view=today-total&style=flat-square&label=Hits%20Today&color=2ea44f)](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI/)
 ![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.2.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
@@ -71,6 +72,7 @@
 
 ## 🔗 Related Projects
 
+- **[Emby to Telegram](https://github.com/sohag1192/emby-to-telegram)** — Automated Telegram notification bot for newly added movies and TV series on Emby.
 - **[Emby Duplicate Finder](https://github.com/sohag1192/emby-duplicate-finder)** — Automated tool to detect and clean up duplicate media in your Emby libraries.
 
 ---

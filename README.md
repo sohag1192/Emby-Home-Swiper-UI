@@ -2,7 +2,8 @@
 
 <div align="center">
 
-![Visitors](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Visitors&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)
+[![Today / Total Hits](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Today%20/%20Total%20Hits&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)](https://hitscounter.dev/history?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI)
+[![Hits Today](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI.svg?view=today-total&style=flat-square&label=Hits%20Today&color=2ea44f)](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI/)
 ![GitHub stars](https://img.shields.io/github/stars/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=gold)
 ![GitHub forks](https://img.shields.io/github/forks/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=blue)
 ![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.2.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
@@ -315,6 +316,20 @@ this.showItemNum = 9;                // Number of items to display
 ## 🔗 Related Projects & Ecosystem Tools
 
 Enhance your Emby & Jellyfin media ecosystem with our companion tools and utilities:
+
+### 📢 [Emby to Telegram](https://github.com/sohag1192/emby-to-telegram)
+> **Automated Telegram notification bot for newly added movies and TV series on Emby Server.**
+
+[![GitHub Repository](https://img.shields.io/badge/GitHub-sohag1192%2Femby--to--telegram-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/sohag1192/emby-to-telegram)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](https://github.com/sohag1192/emby-to-telegram)
+
+- 🤖 **Automated Media Alerts:** Periodically checks your Emby server and broadcasts newly added movies and TV shows to your Telegram channel or group.
+- 🖼️ **Rich Notifications:** Sends posters, metadata details (year, rating, overview), and direct links to users.
+- ⚡ **Lightweight & Python-Powered:** Easy deployment via background service or Docker with zero server overhead.
+
+👉 **GitHub Repository:** [https://github.com/sohag1192/emby-to-telegram](https://github.com/sohag1192/emby-to-telegram)
+
+<br/>
 
 ### 🔍 [Emby Duplicate Finder](https://github.com/sohag1192/emby-duplicate-finder)
 > **Automated media library cleanup and duplicate detection tool for Emby Server.**

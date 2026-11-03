@@ -11,7 +11,7 @@
 
 **Transform your Emby and Jellyfin home screen into a stunning, modern media showcase with dynamic banners, ratings, external player launching, and animated announcements.**
 
-[✨ Features](#-key-features) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure--modules) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-customization--configuration) • [🧪 Troubleshooting](#-troubleshooting--faq) • [🔗 Related Projects](#-related-projects--ecosystem-tools) • [📬 Contact](#-contributing--contact) • [💖 Support](#-support--sponsorship)
+[✨ Features](#-key-features) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure--modules) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-customization--configuration) • [🧪 Troubleshooting](#-troubleshooting--faq) • [🔗 Related Projects](#-related-projects--ecosystem-tools) • [📬 Contact](#-contributing--contact) • [💖 Support](#-support--sponsorship) • [⭐ Star History](#-star-history)
 
 </div>
 
@@ -379,6 +379,22 @@ If you find a bug or have an idea to improve the UI, feel free to open an [Issue
 > 💡 *Hover over or tap the code box above and click the **Copy (📋)** button in the top-right corner to copy the wallet address instantly.*
 
 <br/>
+
+---
+
+## ⭐ Star History
+
+<div align="center">
+
+<a href="https://star-history.com/#sohag1192/Emby-Home-Swiper-UI&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=sohag1192/Emby-Home-Swiper-UI&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=sohag1192/Emby-Home-Swiper-UI&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=sohag1192/Emby-Home-Swiper-UI&type=Date" />
+ </picture>
+</a>
+
+</div>
 
 ---
 

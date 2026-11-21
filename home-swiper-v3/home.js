@@ -46,7 +46,7 @@ class HomeSwiper {
 		this.itemQuery.Limit = 10;
 		this.showItemNum = 10;
 		this.slideDelay = 6000;
-		this.cacheVersion = "v6-sn-ultra-banner";
+		this.cacheVersion = "v8-sn-mobile-contain-badge";
 		this.loadFlag = false; 
 		this.flag_cssjs = true; 
 		this._isMounting = false;
@@ -1146,7 +1146,8 @@ div.mySwiper {
 	opacity: 0 !important;
 }
 
-.swiper-slide-active .swiper-slide-active>.custom>* {
+.swiper-slide-active>.custom>*,
+.swiper-slide-active .custom>* {
 	transform: translateY(0);
 	opacity: 1 !important;
 }
@@ -1197,80 +1198,120 @@ div.mySwiper {
 	gap: 0.55rem;
 	flex-wrap: wrap;
 	margin-top: 0.65rem;
-	color: rgba(255, 255, 255, 0.95);
-	font-size: clamp(0.82rem, 0.44rem + 0.82vw, 1.02rem);
-	font-weight: 700;
-	line-height: 1.1;
+	color: #f8fafc;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.2;
 }
 
-.banner-meta span {
+.banner-meta .banner-meta-pill {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	gap: 0.45em;
-	min-height: 2em;
-	padding: 0 0.85em;
-	border-radius: 8px;
-	background: rgba(15, 23, 42, 0.72);
-	border: 1px solid rgba(255, 255, 255, 0.16);
-	-webkit-backdrop-filter: blur(12px);
-	backdrop-filter: blur(12px);
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+	height: 28px;
+	padding: 0 0.8em;
+	border-radius: 6px;
+	background: rgba(15, 23, 42, 0.65);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	-webkit-backdrop-filter: blur(14px);
+	backdrop-filter: blur(14px);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+	color: #e2e8f0;
+	font-size: 13px;
+	font-weight: 600;
+	transition: all 0.2s ease;
+	user-select: none;
 }
 
-.banner-meta span:hover {
+.banner-meta .banner-meta-pill:hover {
 	transform: translateY(-1px);
-	border-color: rgba(255, 255, 255, 0.35);
+	background: rgba(30, 41, 59, 0.8);
+	border-color: rgba(255, 255, 255, 0.28);
+	color: #ffffff;
 }
 
-.banner-meta .meta-rating {
-	border-color: rgba(250, 204, 21, 0.5);
-	color: #facc15;
-	background: rgba(40, 32, 10, 0.75);
-	box-shadow: 0 0 12px rgba(250, 204, 21, 0.25);
-}
-
-.banner-meta .meta-year {
-	border-color: rgba(99, 102, 241, 0.45);
-	color: #c7d2fe;
-	background: rgba(30, 27, 75, 0.7);
-}
-
-.banner-meta .meta-duration {
-	border-color: rgba(20, 184, 166, 0.45);
-	color: #99f6e4;
-	background: rgba(19, 78, 74, 0.7);
-}
-
-.banner-meta .meta-cert {
-	border-color: rgba(244, 63, 94, 0.45);
-	color: #fecdd3;
-	background: rgba(76, 5, 25, 0.7);
-}
-
-.banner-meta .meta-genre {
-	border-color: rgba(6, 182, 212, 0.45);
-	color: #67e8f9;
-	background: rgba(8, 51, 68, 0.72);
-	box-shadow: 0 0 12px rgba(6, 182, 212, 0.25);
-}
-
-.banner-meta .meta-genre:hover {
-	border-color: rgba(6, 182, 212, 0.85);
-	box-shadow: 0 0 16px rgba(6, 182, 212, 0.5);
+.banner-meta .banner-meta-val {
+	display: inline-block;
+	padding: 0 !important;
+	margin: 0 !important;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	border-radius: 0 !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	font-weight: inherit !important;
+	line-height: 1 !important;
 }
 
 .banner-meta .meta-icon {
-	width: 1.05em;
-	height: 1.05em;
-	flex: 0 0 auto;
-	opacity: 0.95;
+	width: 14px;
+	height: 14px;
+	flex: 0 0 14px;
+	display: inline-block;
+	vertical-align: middle;
+	opacity: 0.9;
 }
 
-.banner-meta .icon-star {
-	fill: #facc15;
-	color: #facc15;
+.banner-meta .meta-rating {
+	background: rgba(245, 158, 11, 0.15);
+	border-color: rgba(245, 158, 11, 0.38);
+	color: #fde047;
+	font-weight: 700;
+}
+
+.banner-meta .meta-rating .icon-star {
+	fill: #f59e0b;
+	color: #f59e0b;
+	opacity: 1;
+}
+
+.banner-meta .meta-year {
+	color: #f1f5f9;
+}
+
+.banner-meta .meta-year .meta-icon {
+	color: #94a3b8;
+}
+
+.banner-meta .meta-duration {
+	color: #f1f5f9;
+}
+
+.banner-meta .meta-duration .meta-icon {
+	color: #94a3b8;
+}
+
+.banner-meta .meta-cert {
+	height: 24px;
+	padding: 0 6px;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.45);
+	border: 1px solid rgba(255, 255, 255, 0.32);
+	color: #f8fafc;
+	font-size: 11.5px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.banner-meta .meta-genre {
+	background: rgba(255, 255, 255, 0.07);
+	border-color: rgba(255, 255, 255, 0.12);
+	color: rgba(241, 245, 249, 0.9);
+	font-size: 12.5px;
+	font-weight: 500;
+}
+
+.banner-meta .meta-genre .meta-icon {
+	color: #94a3b8;
+}
+
+.banner-meta .meta-genre:hover {
+	background: rgba(255, 255, 255, 0.14);
+	border-color: rgba(255, 255, 255, 0.25);
+	color: #ffffff;
 }
 
 .custom p {
@@ -1451,74 +1492,57 @@ div.mySwiper {
 	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
-.custom .banner-item-fav {
-	background: rgba(255, 255, 255, 0.12);
-	backdrop-filter: blur(16px);
-	-webkit-backdrop-filter: blur(16px);
-	border: 1px solid rgba(255, 255, 255, 0.22);
-	color: #ffffff;
-	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.custom .banner-item-fav:hover {
-	transform: translateY(-2px) scale(1.03);
-	background: rgba(239, 68, 68, 0.22);
-	border-color: rgba(239, 68, 68, 0.6);
-	box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
-	color: #fca5a5;
-}
-
-.custom .banner-item-fav.is-active {
-	background: rgba(239, 68, 68, 0.28);
-	border-color: rgba(239, 68, 68, 0.75);
-	color: #fca5a5;
-	box-shadow: 0 4px 18px rgba(239, 68, 68, 0.45);
-}
-
-.custom .banner-item-fav .icon-heart {
-	transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.custom .banner-item-fav:hover .icon-heart {
-	transform: scale(1.22);
-}
-
-.custom .banner-item-fav:active {
-	transform: scale(0.96);
-}
-
-.banner-server-pill {
+.hitcounter-link {
 	position: absolute;
-	bottom: 18px;
-	right: calc(2vw + 12px);
-	z-index: 4;
+	right: clamp(0.8rem, 2.6vw, 2rem);
+	bottom: clamp(0.8rem, 2.4vw, 1.6rem);
+	z-index: 8;
 	display: inline-flex;
 	align-items: center;
-	gap: 7px;
-	padding: 6px 14px;
-	border-radius: 20px;
-	background: rgba(15, 23, 42, 0.78);
-	backdrop-filter: blur(14px);
-	-webkit-backdrop-filter: blur(14px);
-	border: 1px solid rgba(255, 255, 255, 0.16);
-	color: #38bdf8;
-	font-size: 11px;
-	font-weight: 800;
-	letter-spacing: 0.8px;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-	pointer-events: auto;
-	user-select: none;
+	justify-content: center;
+	opacity: 0.92;
+	transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.server-pill-beacon {
-	width: 7px;
-	height: 7px;
-	border-radius: 50%;
-	background: #38bdf8;
-	box-shadow: 0 0 10px #38bdf8;
-	display: inline-block;
-	animation: badge-beacon-pulse 1.8s infinite ease-in-out;
+.hitcounter-link:hover {
+	opacity: 1;
+	transform: translateY(-2px);
+}
+
+.hitcounter-link img {
+	display: block;
+	width: clamp(110px, 9.5vw, 140px);
+	height: auto;
+	border-radius: 6px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+.banner-title-wrap {
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 0.85rem;
+	max-width: 54vw;
+	padding: 4px 0;
+}
+
+.banner-title-wrap .title,
+.banner-title-wrap .fallback-title,
+.banner-title-wrap span {
+	display: none !important;
+}
+
+.swiper-slide img.banner-title-logo,
+.banner-title-logo {
+	display: block !important;
+	max-width: min(440px, 48vw) !important;
+	max-height: clamp(65px, 9vw, 125px) !important;
+	width: auto !important;
+	height: auto !important;
+	object-fit: contain !important;
+	object-position: left bottom !important;
+	filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.85)) !important;
+	user-select: none !important;
+	pointer-events: none !important;
 }
 
 .custom button .btn-icon {
@@ -1538,26 +1562,6 @@ div.mySwiper {
 	            linear-gradient(to bottom, rgba(10, 15, 26, 0.5) 0%, transparent 20%);
 	pointer-events: none;
 	z-index: 2;
-}
-
-.banner-logo {
-	position: absolute;
-	user-select: none;
-	object-fit: contain !important;
-	transform: translateY(calc(-50% - clamp(-2rem, -3.455rem + 7.27vw, 2rem)));
-	right: 0;
-	opacity: 0;
-	transition: 1s;
-	transition-delay: 0.8s;
-	width: 15% !important;
-	height: 100px !important;
-	bottom: min(7vw, 150px);
-	z-index: 3;
-}
-
-.swiper-slide-active .banner-logo {
-	transform: translateY(calc(-100% - clamp(-2rem, -3.455rem + 7.27vw, 2rem)));
-	opacity: 1;
 }
 
 @media not all and (min-width: 50em) {
@@ -1588,11 +1592,24 @@ div.mySwiper {
 		font-size: 0.52rem;
 	}
 
+	.swiper-slide .custom {
+		width: 100% !important;
+		padding-left: 14px !important;
+		padding-right: 14px !important;
+		box-sizing: border-box !important;
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: center !important;
+		text-align: center !important;
+		bottom: 18px !important;
+		padding-bottom: 28px !important;
+	}
+
 	.custom button {
-		height: 36px;
-		padding: 0 12px;
-		font-size: 12px;
-		gap: 6px;
+		height: 38px !important;
+		padding: 0 16px !important;
+		font-size: 12.5px !important;
+		gap: 7px !important;
 		border-radius: 8px !important;
 	}
 
@@ -1602,8 +1619,10 @@ div.mySwiper {
 	}
 
 	.custom .morebutton {
-		gap: 8px !important;
-		margin-top: 0.8rem !important;
+		justify-content: center !important;
+		gap: 12px !important;
+		margin-top: 0.85rem !important;
+		width: 100% !important;
 	}
 
 	.swiper-button-next,
@@ -1612,37 +1631,87 @@ div.mySwiper {
 	}
 
 	.custom .title {
-		max-width: 82vw !important;
+		text-align: center !important;
+		margin: 0 auto 0.6rem auto !important;
+		max-width: 88vw !important;
 	}
 
 	.custom .subtitle {
-		max-width: 82vw !important;
+		text-align: center !important;
+		margin: 0 auto 0.45rem auto !important;
+		max-width: 88vw !important;
 	}
 
 	.custom p {
-		max-width: 82vw !important;
+		text-align: center !important;
+		margin: 0 auto 0.85rem auto !important;
+		max-width: 88vw !important;
 		font-size: 0.82rem !important;
-		line-height: 1.35 !important;
+		line-height: 1.45 !important;
 		-webkit-line-clamp: 2 !important;
 	}
 
-	img.banner-logo {
-		width: auto !important;
-		max-width: 45% !important;
-		max-height: 55px !important;
+	.banner-title-wrap {
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 auto 0.95rem auto !important;
+		text-align: center !important;
+		padding: 4px 0 !important;
+		overflow: visible !important;
+	}
+
+	.swiper-slide img.banner-title-logo,
+	.banner-title-logo {
+		margin: 0 auto !important;
+		display: block !important;
+		object-position: center center !important;
+		max-width: min(270px, 75vw) !important;
+		max-height: 68px !important;
 		height: auto !important;
+		width: auto !important;
+		padding: 2px !important;
+		filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.95)) !important;
+		box-sizing: border-box !important;
 	}
 
 	.banner-meta {
-		gap: 0.35rem;
-		margin-top: 0.35rem;
-		font-size: 0.72rem;
+		justify-content: center !important;
+		gap: 0.5rem !important;
+		margin: 0 auto 0.9rem auto !important;
+		width: 100% !important;
+		font-size: 0.75rem !important;
+	}
+
+	.banner-meta .banner-meta-pill {
+		height: 25px !important;
+		padding: 0 8px !important;
+		font-size: 11.5px !important;
+		gap: 0.35rem !important;
+	}
+
+	.banner-meta .meta-cert {
+		height: 22px !important;
+		padding: 0 6px !important;
+		font-size: 11px !important;
+	}
+
+	.banner-meta .meta-icon {
+		width: 13px !important;
+		height: 13px !important;
+		flex: 0 0 13px !important;
 	}
 
 	.banner-top-badge-wrap {
-		top: 4.2rem !important;
-		gap: 5px !important;
-		max-width: 90vw !important;
+		top: clamp(104px, 12.5vh, 114px) !important;
+		left: 14px !important;
+		right: auto !important;
+		transform: none !important;
+		justify-content: flex-start !important;
+		gap: 6px !important;
+		max-width: calc(100vw - 28px) !important;
 	}
 
 	.banner-top-badge {
@@ -1655,8 +1724,14 @@ div.mySwiper {
 		padding: 0.3em 0.6em !important;
 	}
 
-	.banner-server-pill {
-		display: none !important;
+	.hitcounter-link {
+		bottom: 10px !important;
+		right: 12px !important;
+		opacity: 0.88;
+	}
+
+	.hitcounter-link img {
+		width: 100px !important;
 	}
 }
 
@@ -2182,39 +2257,6 @@ div.dialogContainer {
 		});
 	}
 
-	static favlistener() {
-		document.querySelectorAll(".view:not(.hide) .banner-item-fav").forEach(dom => {
-			dom.onclick = async (e) => {
-				e?.stopPropagation();
-				const id = dom.getAttribute("id");
-				if (!id || typeof ApiClient === "undefined") return;
-				const userId = ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
-				if (!userId) return;
-				const isActive = dom.classList.contains("is-active");
-				const newStatus = !isActive;
-
-				// Optimistic UI toggle
-				dom.classList.toggle("is-active", newStatus);
-				const heartSvg = dom.querySelector(".icon-heart");
-				const textSpan = dom.querySelector(".fav-text");
-				if (heartSvg) heartSvg.setAttribute("fill", newStatus ? "#ef4444" : "none");
-				if (textSpan) textSpan.innerText = newStatus ? "SAVED" : "FAVORITE";
-				dom.title = newStatus ? "Remove from Favorites" : "Add to Favorites";
-
-				try {
-					if (ApiClient.updateFavoriteStatus) {
-						await ApiClient.updateFavoriteStatus(userId, id, newStatus);
-					}
-				} catch (err) {
-					console.warn("[HomeSwiper] updateFavoriteStatus failed:", err);
-					dom.classList.toggle("is-active", isActive);
-					if (heartSvg) heartSvg.setAttribute("fill", isActive ? "#ef4444" : "none");
-					if (textSpan) textSpan.innerText = isActive ? "SAVED" : "FAVORITE";
-				}
-			};
-		});
-	}
-
 	static setupPerformanceObserver(element) {
 		if (!('IntersectionObserver' in window) || !element) return;
 		this._bannerObserver?.disconnect();
@@ -2375,10 +2417,9 @@ div.dialogContainer {
       <div class="swiper-wrapper" data-focusscroll="true">
       </div>
    </div>
-   <div class="banner-server-pill" title="Sarker Net Media • 100% BDIX Direct Stream">
-      <span class="server-pill-beacon"></span>
-      <span>10G BDIX • ULTRA HD</span>
-   </div>
+   <a class="hitcounter-link" href="https://hitscounter.dev/" target="_blank" rel="noopener noreferrer" aria-label="Visitor counter">
+      <img src="https://hitscounter.dev/api/hit?url=http%3A%2F%2F100.100.100.6%3A8096%2F&label=Visitors&icon=graph-up&color=%23ffc107&message=&style=flat&tz=Asia%2FDhaka" alt="Visitor Counter" loading="lazy" decoding="async">
+   </a>
 </div>
 `;
 		this.Alldata = await this.getLibItems(false);
@@ -2465,17 +2506,16 @@ div.dialogContainer {
 
 				const metaIcons = {
 					star: `<svg class="meta-icon icon-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.4 7 .7-5.2 4.7 1.5 6.9L12 17.2l-6.2 3.5 1.5-6.9L2.1 9.1l7-.7L12 2Z"/></svg>`,
-					calendar: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
-					clock: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
-					cert: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/></svg>`,
-					genre: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>`
+					calendar: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+					clock: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+					genre: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>`
 				};
 
 				const metaItems = [
 					rating && { icon: metaIcons.star, value: rating, className: "meta-rating" },
 					year && { icon: metaIcons.calendar, value: year, className: "meta-year" },
 					durationText && { icon: metaIcons.clock, value: durationText, className: "meta-duration" },
-					officialRating && { icon: metaIcons.cert, value: officialRating, className: "meta-cert" }
+					officialRating && { icon: "", value: officialRating, className: "meta-cert" }
 				].filter(Boolean);
 
 				// Add up to 2 genres
@@ -2488,21 +2528,25 @@ div.dialogContainer {
 					});
 				});
 
-				const metaHtml = metaItems.map(m => `<span class="${m.className || ''}">${m.icon}<span>${m.value}</span></span>`).join("");
-				const isFavorite = !!detail.UserData?.IsFavorite;
+				const metaHtml = metaItems.map(m => `<span class="banner-meta-pill ${m.className || ''}">${m.icon || ''}<span class="banner-meta-val">${m.value}</span></span>`).join("");
 				const qualityBadgesHtml = qualityBadges.map(q => `<span class="banner-quality-badge ${q.className}">${q.text}</span>`).join("");
 
 				const backdropHtml = `
 <div class="swiper-slide" id="${detail.Id}">
    <img id="${detail.Id}" data-parentid="${datas.Id}" class="banner-cover ${hvclass}" draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" src="${ImageUrl}" alt="${title}" />
-   ${logoUrl ? `<img draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" class="banner-logo padded-right" src="${logoUrl}" alt="${title} logo">` : ``}
    <div class="banner-mask"></div>
    <div class="banner-top-badge-wrap">
       <div class="banner-top-badge ${badgeClass}">${badgeText}</div>
       ${qualityBadgesHtml}
    </div>
    <div class="custom padded-left">
-      <div class="title" data-swiper-parallax="-300">${title}</div>
+      ${logoUrl ? `
+         <div class="banner-title-wrap" data-swiper-parallax="-300">
+            <img draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" class="banner-title-logo" src="${logoUrl}" alt="${title}">
+         </div>
+      ` : `
+         <div class="title" data-swiper-parallax="-300">${title}</div>
+      `}
       ${metaHtml ? `<div class="banner-meta" data-swiper-parallax="-240">${metaHtml}</div>` : ``}
       ${subtitle ? `<div class="subtitle" data-swiper-parallax="-200">${subtitle}</div>` : ``}
       ${overview ? `<div class="text" data-swiper-parallax="-100"><p>${overview}</p></div>` : ``}
@@ -2514,12 +2558,6 @@ div.dialogContainer {
          <button id="${detail.Id}" class="banner-item-more" tabindex="-1">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             <span>MORE</span>
-         </button>
-         <button id="${detail.Id}" class="banner-item-fav ${isFavorite ? 'is-active' : ''}" title="${isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}" tabindex="-1">
-            <svg class="btn-icon icon-heart" viewBox="0 0 24 24" fill="${isFavorite ? '#ef4444' : 'none'}" stroke="currentColor" stroke-width="2">
-               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            <span class="fav-text">${isFavorite ? 'SAVED' : 'FAVORITE'}</span>
          </button>
 	  </div>
    </div>
@@ -2862,7 +2900,6 @@ div.dialogContainer {
 
 		this.playlistener();
 		this.morelistener();
-		this.favlistener();
 		this.setupPerformanceObserver(viewElement || document.querySelector(".section00"));
 	}
 }

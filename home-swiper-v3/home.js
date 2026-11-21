@@ -46,7 +46,7 @@ class HomeSwiper {
 		this.itemQuery.Limit = 10;
 		this.showItemNum = 10;
 		this.slideDelay = 6000;
-		this.cacheVersion = "v8-sn-mobile-contain-badge";
+		this.cacheVersion = "v9-sn-left-aligned";
 		this.loadFlag = false; 
 		this.flag_cssjs = true; 
 		this._isMounting = false;
@@ -1594,13 +1594,13 @@ div.mySwiper {
 
 	.swiper-slide .custom {
 		width: 100% !important;
-		padding-left: 14px !important;
-		padding-right: 14px !important;
+		padding-left: 16px !important;
+		padding-right: 16px !important;
 		box-sizing: border-box !important;
 		display: flex !important;
 		flex-direction: column !important;
-		align-items: center !important;
-		text-align: center !important;
+		align-items: flex-start !important;
+		text-align: left !important;
 		bottom: 18px !important;
 		padding-bottom: 28px !important;
 	}
@@ -1619,7 +1619,7 @@ div.mySwiper {
 	}
 
 	.custom .morebutton {
-		justify-content: center !important;
+		justify-content: flex-start !important;
 		gap: 12px !important;
 		margin-top: 0.85rem !important;
 		width: 100% !important;
@@ -1631,20 +1631,20 @@ div.mySwiper {
 	}
 
 	.custom .title {
-		text-align: center !important;
-		margin: 0 auto 0.6rem auto !important;
+		text-align: left !important;
+		margin: 0 0 0.65rem 0 !important;
 		max-width: 88vw !important;
 	}
 
 	.custom .subtitle {
-		text-align: center !important;
-		margin: 0 auto 0.45rem auto !important;
+		text-align: left !important;
+		margin: 0 0 0.45rem 0 !important;
 		max-width: 88vw !important;
 	}
 
 	.custom p {
-		text-align: center !important;
-		margin: 0 auto 0.85rem auto !important;
+		text-align: left !important;
+		margin: 0 0 0.95rem 0 !important;
 		max-width: 88vw !important;
 		font-size: 0.82rem !important;
 		line-height: 1.45 !important;
@@ -1653,34 +1653,34 @@ div.mySwiper {
 
 	.banner-title-wrap {
 		display: flex !important;
-		justify-content: center !important;
-		align-items: center !important;
+		justify-content: flex-start !important;
+		align-items: flex-end !important;
 		width: 100% !important;
 		max-width: 100% !important;
-		margin: 0 auto 0.95rem auto !important;
-		text-align: center !important;
+		margin: 0 0 0.85rem 0 !important;
+		text-align: left !important;
 		padding: 4px 0 !important;
 		overflow: visible !important;
 	}
 
 	.swiper-slide img.banner-title-logo,
 	.banner-title-logo {
-		margin: 0 auto !important;
+		margin: 0 !important;
 		display: block !important;
-		object-position: center center !important;
-		max-width: min(270px, 75vw) !important;
+		object-position: left bottom !important;
+		max-width: min(280px, 80vw) !important;
 		max-height: 68px !important;
 		height: auto !important;
 		width: auto !important;
-		padding: 2px !important;
+		padding: 2px 0 !important;
 		filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.95)) !important;
 		box-sizing: border-box !important;
 	}
 
 	.banner-meta {
-		justify-content: center !important;
+		justify-content: flex-start !important;
 		gap: 0.5rem !important;
-		margin: 0 auto 0.9rem auto !important;
+		margin: 0 0 0.85rem 0 !important;
 		width: 100% !important;
 		font-size: 0.75rem !important;
 	}
@@ -1706,12 +1706,12 @@ div.mySwiper {
 
 	.banner-top-badge-wrap {
 		top: clamp(104px, 12.5vh, 114px) !important;
-		left: 14px !important;
+		left: 16px !important;
 		right: auto !important;
 		transform: none !important;
 		justify-content: flex-start !important;
 		gap: 6px !important;
-		max-width: calc(100vw - 28px) !important;
+		max-width: calc(100vw - 32px) !important;
 	}
 
 	.banner-top-badge {

@@ -8,7 +8,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=blue)
 ![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.2.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
 ![Jellyfin Version](https://img.shields.io/badge/Jellyfin%20Web-10.8.x%20--%2010.11.x+-AA5CC3?style=flat-square&logo=jellyfin&logoColor=white)
-![UI / UX Overhaul](https://img.shields.io/badge/UI%2FUX%20Overhaul-v2.5%20Cyber--Glass-06b6d4?style=flat-square)
+![UI / UX Overhaul](https://img.shields.io/badge/UI%2FUX%20Overhaul-v3%20Cyber--Glass-06b6d4?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 **Transform your Emby and Jellyfin home screen into a stunning, modern media showcase with dynamic banners, ratings, external player launching, and animated announcements.**
@@ -24,8 +24,7 @@
 **Emby Home Swiper UI** replaces the default library grid on your Emby & Jellyfin home page (`#!/home`) with an interactive, cinematic **Swiper banner carousel**. It dynamically queries your media server's native APIs to showcase the newest, trending, and top-rated movies and TV series — with zero external library overhead for core functionality.
 
 Beyond the home banner carousel, this all-in-one repository also provides:
-- 🚀 **Modular `crx/` Suite (v2.5):** Clean, isolated extension architecture for seamless deployment.
-- 🌟 **Community Ratings & Production Year Badges:** Frosted glass metadata pills with live pulsating status beacons.
+- 🌟 **Home Swiper V3 / Cyber-Glass:** Frosted glass metadata pills with live pulsating status beacons.
 - 🎬 **Cyber-Glass External Player HUD (`emby-player`):** 100% offline vector SVG icons with zero network latency, custom neon glows, and tactile copy feedback (`✅ Copied!`).
 - ✍️ **Bengali Typography Support:** Google Font 'Hind Siliguri' integration with symmetrical centering and emoji wrap fixes (`🍿📺`).
 - 📢 **Item Detail Announcement & Notice Boxes (`text_sider`):** Glassmorphic alert banners, rotating tickers, and VIP cards.
@@ -36,17 +35,10 @@ Beyond the home banner carousel, this all-in-one repository also provides:
 
 ## 📸 Visual Previews
 
-### 🎞️ Emby Home Swiper Carousel (V2 / V2.5)
+### 🎞️ Emby Home Swiper Carousel (V2 / V3)
 ![Emby Swiper V2 Preview 1](home-swiper-v2/img/Screenshot_0.png)
 ![Emby Swiper V2 Preview 2](home-swiper-v2/img/Screenshot_1.png)
 ![Emby Swiper V2 Preview 3](home-swiper-v2/img/Screenshot_2.png)
-
-### 🎬 External Player Integration (v2.5 Cyber-Glass HUD)
-![External Player Preview](emby-player/Screenshot_39.png)
-
-### 🎨 Emby Web Custom UI & Login Showcase
-![Visual Login Preview](crx/img/visual_login_preview.png)
-![Manual Login Preview](crx/img/manual_login_preview.png)
 
 ### 🍿 Jellyfin Home Carousel & Theme
 ![Jellyfin Carousel Preview 1](Jellyfin/img/1.png)
@@ -62,9 +54,9 @@ Beyond the home banner carousel, this all-in-one repository also provides:
 | Category | Feature | Description |
 | :--- | :--- | :--- |
 | 🚀 **Performance** | **Ultra-Lightweight** | Pure native JavaScript utilizing Emby/Jellyfin internal `ApiClient`. Minimal memory footprint. |
-| 💎 **Cyber-Glass UI** | **v2.5 Modern HUD** | Acrylic glass cards (`rgba(15, 23, 42, 0.85)` + 20px blur) with live pulsating beacons and status chips. |
+| 💎 **Cyber-Glass UI** | **Modern HUD** | Acrylic glass cards (`rgba(15, 23, 42, 0.85)` + 20px blur) with live pulsating beacons and status chips. |
 | 🖼️ **Visuals** | **High-Res Backdrops & Logos** | Automatically renders clear transparent PNG logos, backdrop fanart, taglines, and synopsis. |
-| ⭐ **Metadata** | **Rating & Year Badges** | (V2/V2.5) Displays Community Rating (e.g., ⭐ 8.5/10), Production Year (e.g., 2024), and Official Content Rating (PG-13, TV-MA). |
+| ⭐ **Metadata** | **Rating & Year Badges** | (V2/V3) Displays Community Rating (e.g., ⭐ 8.5/10), Production Year (e.g., 2024), and Official Content Rating (PG-13, TV-MA). |
 | 🔄 **Animation** | **Auto-Slide & Pause on Hover** | Rotates slides smoothly every 6–8 seconds; automatically pauses when hovering for uninterrupted reading. |
 | 📱 **Responsiveness** | **Fully Responsive Layout** | Adaptive styling seamlessly scales between 4K TVs, Ultrawide monitors, Laptops, Tablets, and Smartphones. |
 | 🎯 **Navigation** | **Interactive Controls** | Next / Previous buttons, clickable pagination bullet dots, and keyboard/touch swipe navigation. |
@@ -79,26 +71,22 @@ Beyond the home banner carousel, this all-in-one repository also provides:
 
 ```text
 Emby-Home-Swiper-UI/
-├── crx/                         # 🚀 Modern Modular Extension Suite (Recommended v2.5)
-│   ├── home.js                  # 🌟 Cinematic Swiper v2.5 (Cyber-Glass, Ratings, Year)
-│   ├── README.md                # 📋 Comprehensive CRX Changelog & Technical Guide
-│   ├── emby-player/             # 🎬 External Player Launcher (v2.5 Cyber-Glass HUD)
-│   │   ├── emby_launch_player.js# 🎬 Launcher with 100% offline vector SVG icons
-│   │   └── README.md            # 📖 Player documentation & protocol guide
-│   └── img/                     # 📸 Visual and manual login preview assets
+├── home-swiper-v3/              # 🚀 Latest Swiper v3 (Cyber-Glass, Ratings, Year)
+│   └── home.js                  # 🌟 Cinematic Swiper v3 script
 ├── home-swiper-v2/              # 🌟 Advanced Swiper with Ratings, Year & UI upgrades
-│   ├── home.js / home_new.js    # Latest v2.5 Swiper script
+│   ├── home.js / home_new.js    # Synchronized Swiper script
 │   ├── home-swiper.js           # Clean minimalist Swiper script
 │   ├── home_rating with year.js # Classic Swiper with Community Rating ⭐ & Year 📅
-│   ├── README.MD                # V2 Module Documentation
 │   └── img/                     # V2 Screenshots
 ├── home-sider-v1/               # 📦 Classic lightweight home banner slider
 │   ├── home.js                  # V1 base swiper logic
 │   └── img/                     # V1 Screenshots
 ├── emby-player/                 # 🎬 External player launcher (PotPlayer, MPV, VLC)
-│   ├── emby_launch_player.js    # v2.5 Cyber-Glass HUD with offline vector SVGs
-│   ├── embyLaunchPotplayer.js   # Synchronized PotPlayer script
-│   └── README.md                # Player module documentation
+│   ├── v1/                      # v1 classic player scripts
+│   │   ├── emby_launch_player.js
+│   │   └── embyLaunchPotplayer.js
+│   └── v2/                      # v2 Cyber-Glass HUD launcher with offline vector SVGs
+│       └── emby_launch_player.js
 ├── Jellyfin/                    # 🍇 Dedicated Jellyfin Web integration
 │   ├── jellyfin/                # Styles, main.js, jQuery & MD5 dependencies
 │   ├── script.sh                # Auto setup script for Jellyfin Web
@@ -110,14 +98,12 @@ Emby-Home-Swiper-UI/
 │   ├── Text Cyber Neon Slider.html# 360° rotating neon HUD
 │   ├── Text Multi-Slide Carousel.html# 3-slide notice carousel
 │   ├── Text Warning Box.html    # Maintenance notice banner
-│   └── demo.html                # Interactive test sandbox
+│   ├── demo.html                # Interactive test sandbox
+│   └── *.png                    # Preview screenshots
 ├── index_integrated.html        # 🌐 Reference Emby Web index.html with clean script hooks
-├── README_UPDATE.md             # 📋 Dashboard UI & typography update documentation
-├── README_PACKAGE.md            # 📦 Quick CRX package instructions
-├── UPDATE_SUMMARY.txt           # 📄 Full summary of UI updates and ISP alerts
-├── script.sh                    # 🐧 Linux/Docker automatic installation script
-├── setup-swiper.sh              # 🐧 Enhanced Linux/Docker injection script
 ├── download-homejs.bat          # 🪟 Windows PowerShell auto-download script
+├── setup-swiper.sh              # 🐧 Enhanced Linux/Docker injection script
+├── script.sh                    # 🐧 Linux auto-download script
 ├── upload.bat                   # 🛠️ Git upload helper script
 ├── RELEASE_NOTES.md             # 📝 Release history and changelog
 └── README.md                    # 📖 Main documentation
@@ -129,59 +115,42 @@ Emby-Home-Swiper-UI/
 
 Choose your platform and preferred installation method below:
 
-### 🌟 Option 1: Modular CRX Extension Suite (v2.5 — Recommended)
+### 🌟 Option 1: Emby Server Manual Setup (Recommended)
 
-The modern **`crx/`** architecture keeps your scripts clean, isolated, and easy to maintain across server updates.
+#### Step 1: Locate your Emby Web dashboard directory
+Find the `dashboard-ui` folder on your server:
 
-#### Step 1: Copy the `crx/` Folder
-Copy the [`crx/`](crx/) folder directly into your server's `dashboard-ui/` directory:
+- **Windows:** `C:\Users\<User>\AppData\Roaming\Emby-Server\system\dashboard-ui\`
+- **Linux (Debian / Ubuntu):** `/opt/emby-server/system/dashboard-ui/`
+- **Docker (`lovechen/embyserver` or official Emby Docker):** `/system/dashboard-ui/`
+- **Synology NAS:** `/volume1/@appstore/EmbyServer/system/dashboard-ui/`
 
-- **Windows:** `C:\Users\<User>\AppData\Roaming\Emby-Server\system\dashboard-ui\crx\`
-- **Linux (Debian / Ubuntu):** `/opt/emby-server/system/dashboard-ui/crx/`
-- **Docker (`lovechen/embyserver` or official Emby Docker):** `/system/dashboard-ui/crx/`
-- **Synology NAS:** `/volume1/@appstore/EmbyServer/system/dashboard-ui/crx/`
-
-#### Step 2: Inject Script Tags in `index.html`
-Open `dashboard-ui/index.html` and add these two lines immediately after `apploader.js` (or before `</body>`):
-
-```html
-<!-- Emby CRX Extensions Suite (v2.5) -->
-<script src="crx/home.js" defer></script>
-<script src="crx/emby-player/emby_launch_player.js" defer></script>
-```
-
-> [!TIP]
-> You can also reference or copy [`index_integrated.html`](index_integrated.html) which includes pre-configured script hooks and Google Font 'Hind Siliguri' typography.
-
-#### Step 3: Hard Refresh
-Restart your Emby server or hard refresh your browser (`Ctrl + F5` on Windows/Linux or `Cmd + Shift + R` on macOS). Navigate to `#!/home`!
-
----
-
-### 📦 Option 2: Classic Single Script Setup
-
-#### Step 1: Download & Copy the Script
+#### Step 2: Download & Copy the Script
 1. Choose your preferred script:
-   - **Modern Cyber-Glass (v2.5 - Latest):** [`crx/home.js`](crx/home.js) or [`home-swiper-v2/home_new.js`](home-swiper-v2/home_new.js)
-   - **Ratings & Year Edition (v2.0):** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
-   - **Minimalist (v2.0):** [`home-swiper-v2/home-swiper.js`](home-swiper-v2/home-swiper.js)
-   - **Classic (v1.0):** [`home-sider-v1/home.js`](home-sider-v1/home.js)
-2. Rename the selected file to `home.js` and copy it into your `dashboard-ui/` directory.
+   - **Version 3 Cyber-Glass (Latest - Recommended):** [`home-swiper-v3/home.js`](home-swiper-v3/home.js)
+   - **Version 2 Ratings & Year:** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
+   - **Version 2 Minimalist:** [`home-swiper-v2/home-swiper.js`](home-swiper-v2/home-swiper.js)
+   - **Version 1 Classic:** [`home-sider-v1/home.js`](home-sider-v1/home.js)
+2. Place the script into your server's `dashboard-ui/` directory as `home.js` (or in a folder like `dashboard-ui/crx/home.js`).
 
-#### Step 2: Inject the Script in `index.html`
-Open `dashboard-ui/index.html` and add this tag before `</head>` or `</body>`:
+#### Step 3: Inject Script Tag in `index.html`
+Open `dashboard-ui/index.html` and add this line immediately after `apploader.js` (or before `</body>`):
 
 ```html
 <!-- Emby Home Swiper UI -->
 <script src="home.js" defer></script>
 ```
+*(If placed in `crx/home.js`, use `<script src="crx/home.js" defer></script>`)*
+
+#### Step 4: Hard Refresh
+Restart your Emby server or hard refresh your browser (`Ctrl + F5` on Windows/Linux or `Cmd + Shift + R` on macOS). Navigate to `#!/home`!
 
 ---
 
-### ⚡ Option 3: Automated Setup (Windows & Linux)
+### ⚡ Option 2: Automated Setup (Windows & Linux)
 
 #### Windows:
-Run [`download-homejs.bat`](download-homejs.bat) from inside your server's `dashboard-ui` directory. It presents an interactive menu to select v2.5 Cyber-Glass Swiper and automatically configures `index.html`.
+Run [`download-homejs.bat`](download-homejs.bat) from inside your server's `dashboard-ui` directory. It presents an interactive menu to select Version 3 Cyber-Glass Swiper and automatically configures `index.html`.
 
 #### Linux / Docker:
 Run the interactive setup script in your `dashboard-ui` directory:
@@ -193,7 +162,7 @@ curl -sSL https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/s
 
 ---
 
-### 🍇 Option 4: Dedicated Jellyfin Server Installation
+### 🍇 Option 3: Dedicated Jellyfin Server Installation
 
 1. Copy the contents of the [`Jellyfin/jellyfin/`](Jellyfin/jellyfin/) directory into your Jellyfin web root folder:
    - **Linux:** `/usr/share/jellyfin/web/`
@@ -215,11 +184,11 @@ sudo systemctl restart jellyfin
 
 ---
 
-### 🎬 Option 5: External Player Launcher (`emby-player`)
+### 🎬 Option 4: External Player Launcher (`emby-player`)
 
 Route media playback directly to third-party desktop players (PotPlayer, MPV, VLC, IINA, MX Player):
 
-1. Copy [`emby-player/emby_launch_player.js`](emby-player/emby_launch_player.js) (or [`crx/emby-player/emby_launch_player.js`](crx/emby-player/emby_launch_player.js)) into your `dashboard-ui/emby-player/` folder.
+1. Copy [`emby-player/v2/emby_launch_player.js`](emby-player/v2/emby_launch_player.js) into your `dashboard-ui/` (or `dashboard-ui/emby-player/`) folder.
 2. In `dashboard-ui/index.html`, add the following right before `</body>`:
 
 ```html
@@ -234,17 +203,18 @@ Route media playback directly to third-party desktop players (PotPlayer, MPV, VL
 
 ---
 
-### 📢 Option 6: Item Detail Notice Box (`text_sider`)
+### 📢 Option 5: Item Detail Notice Box (`text_sider`)
 
 To display announcement banners or server status warnings on media item detail pages (`#!/item?id=...`):
 
 1. Open [`text_sider/Text Slider Box.html`](text_sider/Text%20Slider%20Box.html) (or `Text Aurora Glass Box.html`, `Text Warning Box.html`).
 2. Copy the `<style>` and `<script>` blocks into your `dashboard-ui/index.html` right before `</body>`.
 3. Customize your alert title and message text in the code as desired.
+4. Test and preview all 6 templates in [`text_sider/demo.html`](text_sider/demo.html).
 
 ---
 
-### 🧩 Option 7: Browser Extension (Tampermonkey / Violentmonkey)
+### 🧩 Option 6: Browser Extension (Tampermonkey / Violentmonkey)
 
 If you do not have root/admin access to modify the server's files, you can inject the script on your client side:
 
@@ -254,11 +224,11 @@ If you do not have root/admin access to modify the server's files, you can injec
 // ==UserScript==
 // @name         Emby Home Swiper UI
 // @namespace    https://github.com/sohag1192/Emby-Home-Swiper-UI
-// @version      2.5.0
+// @version      3.0.0
 // @description  A dynamic banner carousel for Emby Web
 // @match        *://*/web/index.html*
 // @match        *://*/*/web/index.html*
-// @require      https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/crx/home.js
+// @require      https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js
 // @grant        none
 // ==/UserScript==
 ```

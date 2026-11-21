@@ -18,17 +18,17 @@ mkdir -p crx/emby-player
 
 # Step 2: Version selection
 echo "Select banner version to install:"
-echo "  [1] Version 2.5 - Modern Cyber-Glass Swiper (Latest - Recommended)"
-echo "  [2] Version 2.0 - With Ratings ⭐ and Release Year 📅 (Classic V2)"
-echo "  [3] Version 2.0 - Clean Minimal Swiper"
-echo "  [4] Version 1.0 - Classic Lightweight Slider"
+echo "  [1] Version 3 - Cyber-Glass Swiper (Latest - Recommended)"
+echo "  [2] Version 2 - With Ratings ⭐ and Release Year 📅 (Classic V2)"
+echo "  [3] Version 2 - Clean Minimal Swiper"
+echo "  [4] Version 1 - Classic Lightweight Slider"
 echo ""
 read -p "Enter your choice [1-4] (Default: 1): " choice
 choice=${choice:-1}
 
 if [ "$choice" = "1" ]; then
-    RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/crx/home.js"
-    VER_NAME="Home Swiper V2.5 (Cyber-Glass Edition)"
+    RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js"
+    VER_NAME="Home Swiper V3 (Cyber-Glass Edition)"
 elif [ "$choice" = "2" ]; then
     RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home_rating%20with%20year.js"
     VER_NAME="Home Swiper V2.0 (Ratings + Year)"
@@ -39,9 +39,9 @@ elif [ "$choice" = "4" ]; then
     RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-sider-v1/home.js"
     VER_NAME="Home Slider V1.0 (Classic)"
 else
-    echo "⚠️ Invalid choice. Defaulting to Version 2.5 (Cyber-Glass)."
-    RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/crx/home.js"
-    VER_NAME="Home Swiper V2.5 (Cyber-Glass Edition)"
+    echo "⚠️ Invalid choice. Defaulting to Version 3 (Cyber-Glass)."
+    RAW_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js"
+    VER_NAME="Home Swiper V3 (Cyber-Glass Edition)"
 fi
 
 echo "[2/4] Downloading $VER_NAME..."
@@ -62,12 +62,12 @@ echo "✅ home.js downloaded successfully ($VER_NAME)."
 
 # Step 3: Optional Player script
 echo ""
-read -p "Also install External Player Launcher (Cyber-Glass HUD)? [Y/n] (Default: Y): " install_player
+read -p "Also install External Player Launcher (Cyber-Glass HUD v2)? [Y/n] (Default: Y): " install_player
 install_player=${install_player:-Y}
 
 if [[ "$install_player" =~ ^[Yy]$ ]]; then
     echo "Downloading External Player Launcher..."
-    PLAYER_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/crx/emby-player/emby_launch_player.js"
+    PLAYER_URL="https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/emby-player/v2/emby_launch_player.js"
     if command -v curl &> /dev/null; then
         curl -sSL "$PLAYER_URL" -o crx/emby-player/emby_launch_player.js
     elif command -v wget &> /dev/null; then

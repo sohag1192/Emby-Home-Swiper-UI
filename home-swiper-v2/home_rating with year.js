@@ -1,17 +1,32 @@
+/**
+ * ============================================================================
+ * Emby Home Swiper UI - Rating & Year Edition (v2)
+ * High-Visibility Community Ratings, Release Year Badges & Cyber-Glass UI
+ * Copyright (c) 2026 sohag1192 (https://github.com/sohag1192)
+ * All Rights Reserved.
+ *
+ * GitHub: https://github.com/sohag1192/Emby-Home-Swiper-UI
+ * Author & Developer: Md Sohag Rana
+ * ============================================================================
+ */
+
 class CommonUtils {
 	static loadExtastyle(content, id) {
+		let existing = document.getElementById(id);
+		if (existing) {
+			existing.innerHTML = content;
+			return;
+		}
 		let style = document.createElement("style");
 		style.type = "text/css";
 		style.id = id;
 		style.innerHTML = content;
-		document.head.appendChild(style);
+		(document.head || document.documentElement || document.body).appendChild(style);
 	}
 }
+
 class HomeSwiper {
 	static start() {
-		// UPDATED QUERY:
-		// 1. IncludeItemTypes: Set to "Movie,Series" to show only those types.
-		// 2. SortBy: Set to "DateCreated" to show the most recently added items first.
 		this.itemQuery = { 
 			ImageTypes: "Primary,Backdrop", 
 			EnableImageTypes: "Primary,Backdrop,Banner,Logo", 
@@ -20,7 +35,7 @@ class HomeSwiper {
 			Recursive: true, 
 			ImageTypeLimit: 1, 
 			Limit: 10, 
-			Fields: "Taglines,Overview,ParentId,DateCreated,PremiereDate,ProductionYear,CommunityRating,OfficialRating", 
+			Fields: "Taglines,Overview,ParentId,DateCreated,PremiereDate,ProductionYear,CommunityRating,OfficialRating,Genres,RunTimeTicks,MediaSources,MediaStreams", 
 			SortOrder: "Descending", 
 			EnableUserData: true, 
 			EnableTotalRecordCount: false 
@@ -29,13 +44,13 @@ class HomeSwiper {
 		this.backdropOptions = { type: "Backdrop", maxWidth: 3000, adjustForPixelRatio: false };
 		this.logoOptions = { type: "Logo", maxWidth: 500, adjustForPixelRatio: false };
 		this.coverOptions = { type: "Primary", maxWidth: 1000, adjustForPixelRatio: false };
-		this.itemQuery.Limit = 9;
-		this.showItemNum = 9;
-		this.slideDelay = 6e3;
-		this.cacheVersion = "v4-rating-year-newest-first-6s";
+		this.itemQuery.Limit = 10;
+		this.showItemNum = 10;
+		this.slideDelay = 6000;
+		this.cacheVersion = "v12-rating-year-edition";
 		this.loadFlag = false; 
 		this.flag_cssjs = true; 
-
+		this._isMounting = false;
 
 // Swiper Css  //
 this.SwiperCss=` @font-face {
@@ -819,34 +834,67 @@ button.swiper-pagination-bullet {
 `;
 
 // custom Css start //
+this.customCss = `@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap');
 
-this.customCss=`div.swiper-pagination-bullet {
-	transition: height 0.2s ease-in-out 0s;
+.section00,
+.section00 *,
+.swiper-slide .custom,
+.custom .title,
+.custom .subtitle,
+.custom p,
+.banner-meta,
+.banner-meta-pill,
+.banner-top-badge,
+.custom button {
+	font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	-webkit-font-smoothing: antialiased !important;
+	-moz-osx-font-smoothing: grayscale !important;
+	text-rendering: optimizeLegibility !important;
+}
+
+div.swiper-pagination-bullet {
+	transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+	background: rgba(255, 255, 255, 0.45) !important;
+	opacity: 0.65;
+	border-radius: 6px;
+}
+
+div.swiper-pagination-bullet-active {
+	height: 32px !important;
+	width: 8px !important;
+	border-radius: 6px !important;
+	opacity: 1 !important;
+	background: linear-gradient(180deg, #06b6d4 0%, #3b82f6 100%) !important;
+	box-shadow: 0 0 16px rgba(6, 182, 212, 0.85) !important;
 }
 
 div.swiper-button-next:hover,
 div.swiper-button-prev:hover {
-	background-color: rgba(0, 0, 0, 0.5);
-	transform: scale(1.1);
+	background-color: rgba(6, 182, 212, 0.35) !important;
+	border-color: rgba(6, 182, 212, 0.8) !important;
+	transform: scale(1.1) !important;
+	box-shadow: 0 0 24px rgba(6, 182, 212, 0.6), 0 8px 24px rgba(0, 0, 0, 0.8) !important;
 }
 
 div.swiper-button-next,
 div.swiper-button-prev {
-	border-radius: 10em;
-	width: calc(var(--swiper-navigation-size) + 3em);
-	height: calc(var(--swiper-navigation-size) + 3em);
-	margin-top: calc(0px - ((var(--swiper-navigation-size) + 3em) / 2));
-	-webkit-box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 99%);
-	-moz-box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 99%);
-	box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 99%);
-	-webkit-backdrop-filter: blur(0.5em) saturate(0.5);
-	backdrop-filter: blur(0.5em) saturate(0.5);
-	background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 50%;
+	width: calc(var(--swiper-navigation-size) + 2.5em);
+	height: calc(var(--swiper-navigation-size) + 2.5em);
+	margin-top: calc(0px - ((var(--swiper-navigation-size) + 2.5em) / 2));
+	box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.7);
+	-webkit-backdrop-filter: blur(14px) saturate(1.3);
+	backdrop-filter: blur(14px) saturate(1.3);
+	background-color: rgba(15, 23, 42, 0.75);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	color: #ffffff;
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 div.swiper-button-next:after,
 div.swiper-button-prev:after {
 	font-weight: 700;
+	font-size: 16px;
 }
 
 img.homevideos {
@@ -872,11 +920,12 @@ img.homevideos {
 	position: absolute;
 	bottom: 0.5em;
 	left: 0.5em;
-	font-weight: bolder;
-	font-size: clamp(1rem, 0.2rem + 1vw, 1.2rem);
+	font-weight: 700;
+	font-size: clamp(0.85rem, 0.2rem + 0.8vw, 1.1rem);
 	color: #ffffff;
 	border-radius: 0;
 	pointer-events: none;
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
 }
 
 .cardLibText button {
@@ -886,6 +935,7 @@ img.homevideos {
 .my-button-disabled,
 .my-button-hidden {
 	opacity: 0 !important;
+	pointer-events: none !important;
 }
 
 .swiper-slide.swiper-null.swiper-slide-active {
@@ -893,7 +943,8 @@ img.homevideos {
 	justify-content: center;
 	display: flex;
 	align-items: center;
-	font-size: 3em;
+	font-size: 1.6em;
+	color: rgba(255, 255, 255, 0.7);
 }
 
 div.swiper-slide {
@@ -901,17 +952,8 @@ div.swiper-slide {
 }
 
 .banner-cover {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	-webkit-justify-content: center;
 	justify-content: center;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	-webkit-align-items: center;
 	align-items: center;
 }
 
@@ -923,22 +965,23 @@ div.swiper {
 	position: absolute;
 	right: 0;
 	bottom: 0;
-	--swiper-theme-color: #ff6600;
-	--swiper-pagination-color: #00ff33 !important;
+	--swiper-theme-color: #06b6d4;
+	--swiper-pagination-color: #06b6d4 !important;
 	--swiper-pagination-bottom: 0;
 	--swiper-navigation-sides-offset: 30px;
 	--swiper-pagination-bullet-border-radius: 10px;
-	--swiper-pagination-bullet-inactive-color: #ffffff;
-	--swiper-pagination-bullet-inactive-opacity: 1;
+	--swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.5);
+	--swiper-pagination-bullet-inactive-opacity: 0.6;
 	--swiper-pagination-bullet-opacity: 1;
-	--swiper-pagination-bullet-width: 6px;
+	--swiper-pagination-bullet-width: 8px;
 	--swiper-pagination-bullet-height: 20px;
 	--swiper-navigation-size: 20px;
 }
 
 div.swiper-pagination-bullet-active {
-	height: 33px;
-	box-shadow: 0px 0px 20px rgba(252, 56, 56, 0.3);
+	height: 34px;
+	box-shadow: 0px 0px 18px rgba(6, 182, 212, 0.75);
+	background: #06b6d4 !important;
 }
 
 div.swiper-pagination-bullets.swiper-pagination-horizontal {
@@ -947,15 +990,16 @@ div.swiper-pagination-bullets.swiper-pagination-horizontal {
 }
 
 .mySwiper .swiper-slide {
-	/* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), 0 -1px 0 hsla(0, 0%, 100%, 0.5); */
-	transition: all 0.3s cubic-bezier(0, 1.75, 0.25, 1) 0s;
+	transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0s;
 	margin-top: 50px;
 	bottom: 0;
+	border-radius: 8px;
+	overflow: hidden;
 }
 
 .mySwiper .swiper-slide:hover {
-	transform: scale(1.05);
-	bottom: 10px;
+	transform: scale(1.06);
+	bottom: 8px;
 }
 
 .swiper-button-next.swiper-button-disabled,
@@ -966,7 +1010,7 @@ div.swiper-pagination-bullets.swiper-pagination-horizontal {
 div.swiper-button-next,
 div.swiper-button-prev {
 	opacity: 0;
-	transition: opacity 0.5s ease-in-out;
+	transition: opacity 0.4s ease-in-out;
 }
 
 .mySwiper-main:hover .swiper-button-next,
@@ -996,13 +1040,13 @@ div.swiper-button-prev {
 
 .swiper-slide .custom {
 	color: #fff;
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	padding-bottom: 40px;
 	padding-left: calc(3.4vw + min(0.72em, max(0.48em, 1.78vw)));
 	position: absolute;
 	left: 0;
 	bottom: 10px;
+	z-index: 4;
 }
 
 .swiper-slide img {
@@ -1044,27 +1088,28 @@ div.mySwiper {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	opacity: 0.82;
-	transition: opacity 0.2s ease, transform 0.2s ease;
+	opacity: 0.85;
+	transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .hitcounter-link:hover {
 	opacity: 1;
-	transform: translateY(-1px);
+	transform: translateY(-2px);
 }
 
 .hitcounter-link img {
 	display: block;
 	width: clamp(112px, 10vw, 150px);
 	height: auto;
-	border-radius: 4px;
+	border-radius: 6px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
 .mySwiper .swiper-slide {
-	width: clamp(78px, 8.6vw, 136px) !important;
-	max-width: 136px;
+	width: clamp(82px, 8.8vw, 140px) !important;
+	max-width: 140px;
 	flex: 0 0 auto;
-	filter: brightness(0.6);
+	filter: brightness(0.65);
 	opacity: 0.78;
 	cursor: pointer;
 }
@@ -1075,15 +1120,18 @@ div.mySwiper {
 
 .mySwiper-main .swiper-slide .banner-cover {
 	object-position: top;
-	-webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%);
-	mask-image: linear-gradient(to top, transparent 0%, black 30%);
+	-webkit-mask-image: linear-gradient(to top, transparent 0%, black 28%);
+	mask-image: linear-gradient(to top, transparent 0%, black 28%);
 }
 
 .mySwiper .swiper-slide-thumb-active {
 	opacity: 1;
 	bottom: 10px;
-	transform: scale(1.05);
-	filter: brightness(1);
+	transform: scale(1.06);
+	filter: brightness(1.05);
+	box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45);
+	outline: 2px solid #06b6d4;
+	outline-offset: -2px;
 }
 
 .mySwiper .cardBox,
@@ -1097,10 +1145,10 @@ div.mySwiper {
 }
 
 .mySwiper .cardLibText {
-	max-width: calc(100% - 1em);
-	font-size: clamp(0.56rem, 0.24rem + 0.62vw, 0.78rem);
-	line-height: 1.1;
-	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+	max-width: calc(100% - 0.8em);
+	font-size: clamp(0.58rem, 0.25rem + 0.6vw, 0.78rem);
+	line-height: 1.15;
+	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 .mySwiper .cardLibText button {
@@ -1111,203 +1159,382 @@ div.mySwiper {
 	padding: 0;
 }
 
-.swiper-slide .title {
-	font-size: 70px;
-	font-weight: 700;
-	text-align: left;
-}
-
-.swiper-slide .subtitle {
-	font-size: 28px;
-	font-weight: 500;
-	text-align: left;
-}
-
-.swiper-slide .text {
-	font-size: 20px;
-	max-width: 30vw;
-	line-height: 1.3;
-	text-align: left;
-}
-
-@media (min-width: 2560px) {
-	.swiper-slide .text {
-		max-width: 26vw;
-	}
-
-	div.mySwiper {
-		width: 66%;
-	}
-}
-
 .custom>* {
-	transition: all 1.5s cubic-bezier(0, 1.41, 0.36, 0.93) 0.4s;
-	transform: translateY(150%);
+	transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+	transform: translateY(120%);
 	opacity: 0 !important;
 }
 
-.swiper-slide-active .swiper-slide-active>.custom>* {
+.swiper-slide-active>.custom>*,
+.swiper-slide-active .custom>* {
 	transform: translateY(0);
 	opacity: 1 !important;
 }
 
 .custom>div:nth-child(1) {
-	transition-delay: 1s;
+	transition-delay: 0.6s;
 }
 
 .custom>div:nth-child(2) {
-	transition-delay: 1.2s;
+	transition-delay: 0.75s;
 }
 
 .custom>div:nth-child(3) {
-	transition-delay: 1.4s;
+	transition-delay: 0.9s;
 }
 
 .custom>div:nth-child(4) {
-	transition-delay: 1.6s;
+	transition-delay: 1.05s;
 }
 
 .custom .title {
-	color: #fff !important;
-	font-size: clamp(2rem, -0.362rem + 6.75vw, 4.7rem);
-	font-weight: bolder;
+	color: #ffffff !important;
+	font-size: clamp(2.2rem, -0.362rem + 6.2vw, 4.4rem);
+	font-weight: 850;
 	margin: 0;
-	text-shadow: 0 4px 10px rgb(0 0 0 / 20%);
-	max-width: 50vw;
+	text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 0.85);
+	max-width: 52vw;
 	display: -webkit-box !important;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 1;
+	-webkit-line-clamp: 2;
 	overflow: hidden;
+	letter-spacing: -0.025em;
+	line-height: 1.08;
 }
 
 .custom .subtitle {
-	font-size: clamp(1rem, 0.5rem + 1vw, 1.7rem);
-	font-weight: bold;
-	text-align: left;
+	font-size: clamp(0.95rem, 0.45rem + 0.9vw, 1.35rem) !important;
+	font-weight: 650 !important;
+	text-align: left !important;
+	color: #f1f5f9 !important;
+	margin: 0.65rem 0 0.25rem 0 !important;
+	letter-spacing: 0.015em !important;
+	max-width: min(580px, 48vw) !important;
+	display: -webkit-box !important;
+	-webkit-box-orient: vertical !important;
+	-webkit-line-clamp: 2 !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
+}
+
+.custom .text {
+	max-width: min(580px, 46vw) !important;
+	margin: 0.85rem 0 0 0 !important;
+}
+
+.custom .text p,
+.custom p {
+	color: rgba(226, 232, 240, 0.92) !important;
+	font-size: clamp(0.88rem, 0.45rem + 0.65vw, 1.05rem) !important;
+	font-weight: 450 !important;
+	line-height: 1.6 !important;
+	letter-spacing: 0.012em !important;
+	text-align: left !important;
+	display: -webkit-box !important;
+	-webkit-box-orient: vertical !important;
+	-webkit-line-clamp: 3 !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	margin: 0 !important;
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.8) !important;
 }
 
 .banner-meta {
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 0.55rem;
 	flex-wrap: wrap;
-	margin-top: 0.55rem;
-	color: rgba(255, 255, 255, 0.92);
-	font-size: clamp(0.82rem, 0.44rem + 0.82vw, 1.08rem);
-	font-weight: 800;
-	line-height: 1.1;
-	text-shadow: 0 2px 7px rgba(0, 0, 0, 0.75);
+	margin-top: 0.75rem;
+	color: #f8fafc;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.2;
 }
 
-.banner-meta span {
+.banner-meta .banner-meta-pill {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 0.35em;
-	min-height: 1.7em;
-	padding: 0 0.62em;
-	border-radius: 6px;
-	background: rgba(0, 0, 0, 0.48);
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	-webkit-backdrop-filter: blur(0.35em);
-	backdrop-filter: blur(0.35em);
+	gap: 0.42em;
+	height: 28px;
+	padding: 0 0.85em;
+	border-radius: 9999px;
+	background: rgba(15, 23, 42, 0.68);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	-webkit-backdrop-filter: blur(16px);
+	backdrop-filter: blur(16px);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+	color: #f1f5f9;
+	font-size: 12.5px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+	user-select: none;
+}
+
+.banner-meta .banner-meta-pill:hover {
+	transform: translateY(-2px);
+	background: rgba(30, 41, 59, 0.88);
+	border-color: rgba(255, 255, 255, 0.35);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+	color: #ffffff;
+}
+
+.banner-meta .banner-meta-val {
+	display: inline-block;
+	padding: 0 !important;
+	margin: 0 !important;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	border-radius: 0 !important;
+	color: inherit !important;
+	font-size: inherit !important;
+	font-weight: inherit !important;
+	line-height: 1 !important;
 }
 
 .banner-meta .meta-icon {
-	width: 1em;
-	height: 1em;
-	flex: 0 0 auto;
-	opacity: 0.9;
-	fill: none;
-	stroke: currentColor;
-	stroke-width: 2.2;
-	stroke-linecap: round;
-	stroke-linejoin: round;
+	width: 14px;
+	height: 14px;
+	flex: 0 0 14px;
+	display: inline-block;
+	vertical-align: middle;
+	opacity: 0.95;
 }
 
-.custom p {
-	color: #fff !important;
-	font-size: clamp(1rem, 0.4rem + 1vw, 1.6rem);
-	font-weight: bold;
-	opacity: 0.7;
-	display: -webkit-box !important;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 4;
-	overflow: hidden;
+.banner-meta .meta-rating {
+	background: rgba(245, 158, 11, 0.22);
+	border: 1px solid rgba(251, 191, 36, 0.55);
+	box-shadow: 0 0 14px rgba(245, 158, 11, 0.38);
+	color: #fde047;
+	font-weight: 800;
+}
+
+.banner-meta .meta-rating .icon-star {
+	fill: #fbbf24;
+	color: #fbbf24;
+	filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.85));
+	opacity: 1;
+}
+
+.banner-meta .meta-year {
+	background: rgba(99, 102, 241, 0.2);
+	border: 1px solid rgba(165, 180, 252, 0.48);
+	box-shadow: 0 0 12px rgba(99, 102, 241, 0.32);
+	color: #c7d2fe;
+	font-weight: 750;
+}
+
+.banner-meta .meta-year .meta-icon {
+	color: #93c5fd;
+}
+
+.banner-meta .meta-duration {
+	background: rgba(16, 185, 129, 0.14);
+	border-color: rgba(110, 231, 183, 0.35);
+	color: #a7f3d0;
+}
+
+.banner-meta .meta-duration .meta-icon {
+	color: #6ee7b7;
+}
+
+.banner-meta .meta-cert {
+	height: 25px;
+	padding: 0 8px;
+	border-radius: 6px;
+	background: rgba(244, 63, 94, 0.18);
+	border: 1px solid rgba(251, 113, 133, 0.45);
+	color: #fecdd3;
+	font-size: 11.5px;
+	font-weight: 750;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.banner-meta .meta-genre {
+	background: rgba(168, 85, 247, 0.14);
+	border-color: rgba(192, 132, 252, 0.32);
+	color: #e9d5ff;
+	font-size: 12px;
+	font-weight: 550;
+}
+
+.banner-meta .meta-genre .meta-icon {
+	color: #c084fc;
+}
+
+.banner-meta .meta-genre:hover {
+	background: rgba(168, 85, 247, 0.25);
+	border-color: rgba(192, 132, 252, 0.55);
+	color: #ffffff;
+}
+
+.banner-top-badge-wrap {
+	position: absolute;
+	top: clamp(4.2rem, 6.8vw, 7.2rem);
+	left: calc(3.4vw + min(0.72em, max(0.48em, 1.78vw)));
+	z-index: 5;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
 }
 
 .banner-top-badge {
-	position: absolute;
-	top: clamp(4.2rem, 7vw, 7.5rem);
-	left: calc(3.4vw + min(0.72em, max(0.48em, 1.78vw)));
-	z-index: 5;
-	color: #fff;
-	background: rgba(0, 0, 0, 0.58);
-	border: 1px solid rgba(255, 255, 255, 0.22);
-	border-radius: 6px;
-	padding: 0.35em 0.7em;
-	font-size: clamp(0.72rem, 0.36rem + 0.78vw, 1rem);
+	position: static !important;
+	color: #ffffff;
+	background: linear-gradient(135deg, rgba(244, 63, 94, 0.95) 0%, rgba(168, 85, 247, 0.95) 100%);
+	border: 1px solid rgba(255, 255, 255, 0.32);
+	border-radius: 9999px;
+	padding: 0.42em 1.05em;
+	font-size: clamp(0.72rem, 0.36rem + 0.78vw, 0.92rem);
 	font-weight: 800;
-	letter-spacing: 0;
+	letter-spacing: 1.2px;
 	line-height: 1;
-	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-	-webkit-backdrop-filter: blur(0.45em);
-	backdrop-filter: blur(0.45em);
+	text-transform: uppercase;
+	box-shadow: 0 4px 22px rgba(244, 63, 94, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+	-webkit-backdrop-filter: blur(14px);
+	backdrop-filter: blur(14px);
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
 }
 
-.swiper-slide .morebutton {
-	text-align: left;
+.banner-top-badge::before {
+	content: "";
+	width: 7.5px;
+	height: 7.5px;
+	border-radius: 50%;
+	background: #10b981;
+	box-shadow: 0 0 10px #10b981, 0 0 20px rgba(16, 185, 129, 0.7);
+	display: inline-block;
+	animation: badge-beacon-pulse 1.8s infinite ease-in-out;
 }
 
-.autoplay-progress {
-	position: absolute;
-	left: 6px;
-	bottom: 6px;
-	z-index: 10;
-	width: 40px;
-	height: 40px;
+@keyframes badge-beacon-pulse {
+	0%, 100% { transform: scale(0.9); opacity: 0.75; }
+	50% { transform: scale(1.4); opacity: 1; }
+}
+
+.banner-top-badge.badge-tv {
+	background: linear-gradient(135deg, rgba(6, 182, 212, 0.95) 0%, rgba(59, 130, 246, 0.95) 100%);
+	box-shadow: 0 4px 22px rgba(6, 182, 212, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.custom .morebutton {
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	font-weight: bold;
-	color: var(--swiper-theme-color);
-}
-
-.autoplay-progress svg {
-	--progress: 0;
-	position: absolute;
-	left: 0;
-	top: 0px;
-	z-index: 10;
-	width: 100%;
-	height: 100%;
-	stroke-width: 4px;
-	stroke: var(--swiper-theme-color);
-	fill: none;
-	stroke-dashoffset: calc(125.6 * (1 - var(--progress)));
-	stroke-dasharray: 125.6;
-	transform: rotate(-90deg);
+	gap: 12px;
+	margin-top: clamp(1rem, 2.2vw, 2.2rem);
+	flex-wrap: wrap;
 }
 
 .custom button {
 	cursor: pointer;
-	margin-top: clamp(0rem, -2.625rem + 7.5vw, 3rem);
-	width: 6em;
-	height: 1.8em;
-	background-color: #00ff33;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 9px;
+	padding: 0 26px;
+	height: 44px;
+	border-radius: 12px;
+	font-size: 14.5px;
+	font-weight: 750;
+	letter-spacing: 0.9px;
 	border: none;
-	font-size: clamp(1rem, -0.275rem + 2.5vw, 1.6rem);
-	border-radius: 10px;
-	font-weight: bold;
-	letter-spacing: 2px;
-	box-shadow: 0 2px 7px rgba(1, 1, 1, -0.8);
-	font-family: system-ui;
-	transition: 0.2s;
-	margin-right: 1rem;
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	margin-right: 0;
+	font-family: inherit;
 }
 
-.custom button:hover {
-	transform: scale(0.95);
+.custom .banner-item-play {
+	background: linear-gradient(135deg, #06b6d4 0%, #2563eb 50%, #4f46e5 100%);
+	color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	box-shadow: 0 8px 26px rgba(6, 182, 212, 0.5), 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.custom .banner-item-play:hover {
+	transform: translateY(-2px) scale(1.03);
+	box-shadow: 0 12px 34px rgba(6, 182, 212, 0.75), 0 4px 14px rgba(0, 0, 0, 0.5);
+	filter: brightness(1.12);
+}
+
+.custom .banner-item-more {
+	background: rgba(255, 255, 255, 0.14);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid rgba(255, 255, 255, 0.28);
+	color: #ffffff;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.custom .banner-item-more:hover {
+	transform: translateY(-2px) scale(1.03);
+	background: rgba(255, 255, 255, 0.26);
+	border-color: rgba(255, 255, 255, 0.55);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.hitcounter-link {
+	position: absolute;
+	right: clamp(0.8rem, 2.6vw, 2rem);
+	bottom: clamp(0.8rem, 2.4vw, 1.6rem);
+	z-index: 8;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.92;
+	transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.hitcounter-link:hover {
+	opacity: 1;
+	transform: translateY(-2px);
+}
+
+.hitcounter-link img {
+	display: block;
+	width: clamp(110px, 9.5vw, 140px);
+	height: auto;
+	border-radius: 6px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+.banner-title-wrap {
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 0.85rem;
+	max-width: 54vw;
+	padding: 4px 0;
+}
+
+.banner-title-wrap .title,
+.banner-title-wrap .fallback-title,
+.banner-title-wrap span {
+	display: none !important;
+}
+
+.swiper-slide img.banner-title-logo,
+.banner-title-logo {
+	display: block !important;
+	max-width: min(440px, 48vw) !important;
+	max-height: clamp(65px, 9vw, 125px) !important;
+	width: auto !important;
+	height: auto !important;
+	object-fit: contain !important;
+	object-position: left bottom !important;
+	filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.85)) !important;
+	user-select: none !important;
+	pointer-events: none !important;
+}
+
+.custom button .btn-icon {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
 }
 
 .banner-mask {
@@ -1315,29 +1542,12 @@ div.mySwiper {
 	width: 100%;
 	height: 100%;
 	top: 0;
-	background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.6), transparent);
-	-webkit-mask-image: linear-gradient(to top, transparent 0%, black 10%);
-	mask-image: linear-gradient(to top, transparent 0%, black 10%);
+	left: 0;
+	background: linear-gradient(90deg, rgba(10, 15, 26, 0.96) 0%, rgba(10, 15, 26, 0.78) 36%, rgba(10, 15, 26, 0.25) 68%, transparent 100%),
+	            linear-gradient(to top, rgba(10, 15, 26, 0.98) 0%, rgba(10, 15, 26, 0.45) 18%, transparent 40%),
+	            linear-gradient(to bottom, rgba(10, 15, 26, 0.5) 0%, transparent 20%);
 	pointer-events: none;
-}
-
-.banner-logo {
-	position: absolute;
-	user-select: none;
-	object-fit: contain !important;
-	transform: translateY(calc(-50% - clamp(-2rem, -3.455rem + 7.27vw, 2rem)));
-	right: 0;
-	opacity: 0;
-	transition: 1s;
-	transition-delay: 0.8s;
-	width: 15% !important;
-	height: 100px !important;
-	bottom: min(7vw, 150px);
-}
-
-.swiper-slide-active .banner-logo {
-	transform: translateY(calc(-100% - clamp(-2rem, -3.455rem + 7.27vw, 2rem)));
-	opacity: 1;
+	z-index: 2;
 }
 
 @media not all and (min-width: 50em) {
@@ -1345,25 +1555,21 @@ div.mySwiper {
 		height: min(80vh, 148.5vw) !important;
 	}
 
-	.misty-loading h1 {
-		font-size: 2em !important;
-	}
-
 	.mySwiper .cardContent-shadow {
 		display: none;
 	}
 
 	.mySwiper .swiper-slide {
-		width: clamp(58px, 18vw, 86px) !important;
-		max-width: 86px;
+		width: clamp(62px, 18vw, 90px) !important;
+		max-width: 90px;
 		box-shadow: none;
 		margin-top: 12px;
-		opacity: 0.72;
+		opacity: 0.75;
 	}
 
 	div.mySwiper {
 		right: 2vw !important;
-		width: 92vw !important;
+		width: 94vw !important;
 		padding-bottom: 8px;
 		overflow: visible;
 	}
@@ -1372,8 +1578,37 @@ div.mySwiper {
 		font-size: 0.52rem;
 	}
 
+	.swiper-slide .custom {
+		width: 100% !important;
+		padding-left: 16px !important;
+		padding-right: 16px !important;
+		box-sizing: border-box !important;
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-start !important;
+		text-align: left !important;
+		bottom: 18px !important;
+		padding-bottom: 28px !important;
+	}
+
 	.custom button {
-		border-radius: 6px !important;
+		height: 38px !important;
+		padding: 0 16px !important;
+		font-size: 12.5px !important;
+		gap: 7px !important;
+		border-radius: 8px !important;
+	}
+
+	.custom button .btn-icon {
+		width: 15px;
+		height: 15px;
+	}
+
+	.custom .morebutton {
+		justify-content: flex-start !important;
+		gap: 12px !important;
+		margin-top: 0.85rem !important;
+		width: 100% !important;
 	}
 
 	.swiper-button-next,
@@ -1381,40 +1616,125 @@ div.mySwiper {
 		display: none;
 	}
 
-	.swiper-slide .title {
-		max-width: 60vw !important;
+	.custom .title {
+		text-align: left !important;
+		margin: 0 0 0.65rem 0 !important;
+		max-width: 88vw !important;
 	}
 
-	.swiper-slide .subtitle {
-		max-width: 60vw !important;
-	}
-
-	.swiper-slide .text {
-		max-width: 50vw !important;
-	}
-
-	.autoplay-progress {
-		display: none;
-	}
-
-	img.banner-logo {
-		width: 30% !important;
-		height: 50px !important;
-	}
-
-	.custom p {
+	.custom .subtitle {
+		text-align: left !important;
+		margin: 0 0 0.45rem 0 !important;
+		max-width: 88vw !important;
+		display: -webkit-box !important;
+		-webkit-box-orient: vertical !important;
 		-webkit-line-clamp: 2 !important;
+		overflow: hidden !important;
+		text-overflow: ellipsis !important;
+	}
+
+	.custom .text {
+		max-width: 88vw !important;
+		margin: 0 0 0.85rem 0 !important;
+	}
+
+	.custom .text p,
+	.custom p {
+		text-align: left !important;
+		margin: 0 !important;
+		font-size: 0.84rem !important;
+		line-height: 1.5 !important;
+		color: rgba(226, 232, 240, 0.92) !important;
+		display: -webkit-box !important;
+		-webkit-box-orient: vertical !important;
+		-webkit-line-clamp: 2 !important;
+		overflow: hidden !important;
+		text-overflow: ellipsis !important;
+	}
+
+	.banner-title-wrap {
+		display: flex !important;
+		justify-content: flex-start !important;
+		align-items: flex-end !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 0 0.85rem 0 !important;
+		text-align: left !important;
+		padding: 4px 0 !important;
+		overflow: visible !important;
+	}
+
+	.swiper-slide img.banner-title-logo,
+	.banner-title-logo {
+		margin: 0 !important;
+		display: block !important;
+		object-position: left bottom !important;
+		max-width: min(280px, 80vw) !important;
+		max-height: 68px !important;
+		height: auto !important;
+		width: auto !important;
+		padding: 2px 0 !important;
+		filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.95)) !important;
+		box-sizing: border-box !important;
 	}
 
 	.banner-meta {
-		gap: 0.35rem;
-		margin-top: 0.35rem;
-		font-size: 0.72rem;
+		justify-content: flex-start !important;
+		gap: 0.5rem !important;
+		margin: 0 0 0.85rem 0 !important;
+		width: 100% !important;
+		font-size: 0.75rem !important;
+	}
+
+	.banner-meta .banner-meta-pill {
+		height: 25px !important;
+		padding: 0 9px !important;
+		font-size: 11.5px !important;
+		gap: 0.35rem !important;
+		border-radius: 9999px !important;
+	}
+
+	.banner-meta .meta-cert {
+		height: 22px !important;
+		padding: 0 6px !important;
+		font-size: 11px !important;
+		border-radius: 5px !important;
+	}
+
+	.banner-meta .meta-icon {
+		width: 13px !important;
+		height: 13px !important;
+		flex: 0 0 13px !important;
+	}
+
+	.banner-top-badge-wrap {
+		top: clamp(104px, 12.5vh, 114px) !important;
+		left: 16px !important;
+		right: auto !important;
+		transform: none !important;
+		justify-content: flex-start !important;
+		gap: 6px !important;
+		max-width: calc(100vw - 32px) !important;
 	}
 
 	.banner-top-badge {
-		top: 4.4rem;
-		font-size: 0.68rem;
+		font-size: 0.65rem !important;
+		padding: 0.35em 0.7em !important;
+	}
+
+	.banner-quality-badge {
+		font-size: 0.62rem !important;
+		padding: 0.3em 0.6em !important;
+	}
+
+	.hitcounter-link {
+		bottom: 10px !important;
+		right: 12px !important;
+		opacity: 0.88;
+	}
+
+	.hitcounter-link img {
+		width: 100px !important;
 	}
 }
 
@@ -1465,6 +1785,7 @@ div.mySwiper {
 	flex-direction: column;
 }
 
+/* Modern Loading Screen */
 .misty-loading {
 	z-index: 99999999;
 	position: fixed;
@@ -1472,86 +1793,132 @@ div.mySwiper {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 1);
+	background: rgba(8, 12, 22, 0.88);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	cursor: pointer;
+	transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-div.dialogContainer {
-	z-index: 999999999 !important;
+.misty-loading-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 16px;
+	pointer-events: none;
 }
 
+.misty-spinner-wrap {
+	position: relative;
+	width: 64px;
+	height: 64px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.misty-glow-ring {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background: radial-gradient(circle, rgba(6, 182, 212, 0.45) 0%, transparent 70%);
+	animation: misty-pulse 2s infinite ease-in-out;
+}
+
+@keyframes misty-pulse {
+	0%, 100% { transform: scale(0.9); opacity: 0.6; }
+	50% { transform: scale(1.3); opacity: 1; }
+}
+
+.misty-loading h1.misty-server-title,
 .misty-loading h1 {
 	margin: 0;
-	margin-bottom: 3rem;
+	font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+	font-weight: 800;
+	letter-spacing: 2px;
 	text-transform: uppercase;
-	transition: 0.8s;
-	transform: scale(1.15);
-	opacity: 0;
-	font-size: 4em;
+	color: #ffffff;
+	text-shadow: 0 0 24px rgba(6, 182, 212, 0.65), 0 2px 10px rgba(0, 0, 0, 0.8);
+	opacity: 1;
+	transform: scale(1);
 }
 
-.misty-loading h1.active {
-	transform: scale(1);
-	opacity: 1;
+.misty-loading-sub {
+	font-size: 14px;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.7);
+	letter-spacing: 1px;
 }
 
 .misty-loading .mdl-spinner {
 	margin: 0;
 	position: initial;
+	width: 48px;
+	height: 48px;
 }
 
 .misty-loading .mdl-spinner__layer-1 {
-	border-color: #fff;
+	border-color: #06b6d4;
 }
 
 .mdl-spinner {
 	zoom: 0.5;
 }
 
+div.dialogContainer {
+	z-index: 999999999 !important;
+}
 `;
-
-
 //custom Css end//
 
-
 		function saveUser(instance, page) {
-			var user = instance.user;
-			(user.Policy.EnableAllFolders = page.querySelector(
-				".chkEnableAllFolders"
-			).checked),
-				(user.Policy.EnabledFolders = user.Policy.EnableAllFolders
-					? user.Policy.EnabledFolders.length !== 0 ? user.Policy.EnabledFolders : []
+			try {
+				var user = instance.user || { Policy: { EnableAllFolders: true, EnabledFolders: [] } };
+				user.Policy.EnableAllFolders = page.querySelector(".chkEnableAllFolders")?.checked ?? true;
+				user.Policy.EnabledFolders = user.Policy.EnableAllFolders
+					? (user.Policy.EnabledFolders && user.Policy.EnabledFolders.length !== 0 ? user.Policy.EnabledFolders : [])
 					: Array.prototype.filter
 						.call(page.querySelectorAll(".chkFolder"), function (c) {
 							return c.checked;
 						})
 						.map(function (c) {
 							return c.getAttribute("data-id");
-						}));
+						});
 
-			localStorage.setItem(ApiClient.getCurrentUserId() + "-swiperLibraryAccess", JSON.stringify(user));
-			instance.getLibItems(true);
-			require(["toast"], function (toast) {
-				toast("Saved");
-			});
-
+				const userId = typeof ApiClient !== "undefined" && ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
+				if (userId) {
+					localStorage.setItem(userId + "-swiperLibraryAccess", JSON.stringify(user));
+				}
+				instance.getLibItems(true);
+				if (typeof require === "function") {
+					require(["toast"], function (toast) {
+						toast("Saved");
+					});
+				}
+			} catch (err) {
+				console.warn("[HomeSwiper] saveUser error:", err);
+			}
 		}
-		function renderMediaFolders(page, user, mediaFolders) {
 
-			var html =
-				'<div class="checkboxListLabel"><label><h3 style="margin: 0 10px 0 0;"> Select all media libraries</h3><input type="checkbox" is="emby-checkbox" class="chkAllFolder"><span style="font-size: .7em;"><h3 style="margin:0;"></h3></span></label></div><div class="checkboxLists">';
-			
-			for (var i = 0, length = mediaFolders.length; i < length; i++) {
-				var folder = mediaFolders[i],
-					folderId = folder.Guid || folder.Id,
-					isChecked =
-						(user.Policy.EnabledFolders.length === 0 && user.Policy.EnableAllFolders) ||
-						user.Policy.EnabledFolders.includes(folderId),
-					html =
-						(html =
+		function renderMediaFolders(page, user, mediaFolders) {
+			try {
+				var html =
+					'<div class="checkboxListLabel"><label><h3 style="margin: 0 10px 0 0;"> Select all media libraries</h3><input type="checkbox" is="emby-checkbox" class="chkAllFolder"><span style="font-size: .7em;"><h3 style="margin:0;"></h3></span></label></div><div class="checkboxLists">';
+				
+				for (var i = 0, length = (mediaFolders || []).length; i < length; i++) {
+					var folder = mediaFolders[i],
+						folderId = folder.Guid || folder.Id,
+						isChecked =
+							(user.Policy.EnabledFolders.length === 0 && user.Policy.EnableAllFolders) ||
+							user.Policy.EnabledFolders.includes(folderId),
+						html =
 							(html += '<div class="checkboxList" style="margin:0 0 1.5em;">') +
 							('<label><input type="checkbox" is="emby-checkbox" class="chkFolder" data-id="' +
 								folderId +
@@ -1559,69 +1926,76 @@ div.dialogContainer {
 								(isChecked ? ' checked="checked"' : "") +
 								'><span><h3 style="margin:0;">' +
 								folder.Name +
-								"</h3></span></label>")) +
-						"</div>";
+								"</h3></span></label>") +
+							"</div>";
+				}
+				html += "</div>";
+				const folderAccess = page.querySelector(".folderAccess");
+				if (folderAccess) folderAccess.innerHTML = html;
+				const chkAll = page.querySelector(".chkEnableAllFolders");
+				if (chkAll) chkAll.checked = !!user.Policy.EnableAllFolders;
+			} catch (err) {
+				console.warn("[HomeSwiper] renderMediaFolders error:", err);
 			}
-			(html += "</div>"), page.querySelector(".folderAccess").innerHTML = html;
-			page = page.querySelector(".chkEnableAllFolders");
-			(page.checked = user.Policy.EnableAllFolders);
 		}
+
+		// Lifecycle handler: viewbeforeshow
 		document.addEventListener("viewbeforeshow", async function (e) {
 			this.flag_cssjs = false;
-			if (e.detail.type === "home") {
+			if (e.detail?.type === "home") {
 				if (!e.detail.isRestored) {
 					!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
 					!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
-					let swiperLibraryAccess = localStorage.getItem(ApiClient.getCurrentUserId() + "-swiperLibraryAccess");
-					this.user = swiperLibraryAccess ? JSON.parse(swiperLibraryAccess) : { Policy: { EnableAllFolders: true, EnabledFolders: [] } };
-					!localStorage.getItem('CACHE|Movies-Date') && !this.loadFlag && this.initLoading();
-					e.target.setAttribute("data-type", "home");
-					this.mutation = new MutationObserver(async function (mutationRecoards) {
-						for (let mutationRecoard of mutationRecoards) {
-                                if (mutationRecoard.target.classList.contains("homeSectionsContainer")) {
-                                    this.mutation.disconnect();
-									!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
-									!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
-									let sections = e.target.querySelector(".sections"),
-										elem = await this.initBanner();
-									if (elem) {
-										sections.parentNode.insertBefore(elem, sections);
-										this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
-										this.initSwiper(e.target);
-									} else {
-										this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
-										document.getElementById("customCss").remove();
-										document.getElementById("SwiperCss").remove();
-									}
-                                    break;
-                                }
-                        }
-
-					}.bind(this));
-
-					this.mutation.observe(e.target, {
-						attributes:true,
-						childList: true,
-						characterData: true,
-						subtree: true,
-					});
 					
+					const userId = typeof ApiClient !== "undefined" && ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
+					let swiperLibraryAccess = userId ? localStorage.getItem(userId + "-swiperLibraryAccess") : null;
+					this.user = swiperLibraryAccess ? JSON.parse(swiperLibraryAccess) : { Policy: { EnableAllFolders: true, EnabledFolders: [] } };
+					
+					e.target.setAttribute("data-type", "home");
+
+					// Try immediate mount
+					const mounted = await this.tryMount(e.target);
+					if (!mounted) {
+						if (!localStorage.getItem('CACHE|Movies-Date') && !this.loadFlag) {
+							this.initLoading();
+						}
+						this.mutation?.disconnect();
+						this.mutation = new MutationObserver(async (mutationRecords) => {
+							for (let rec of mutationRecords) {
+								if (rec.target?.classList?.contains("homeSectionsContainer") || e.target.querySelector(".sections")) {
+									this.mutation?.disconnect();
+									await this.tryMount(e.target);
+									break;
+								}
+							}
+						});
+						this.mutation.observe(e.target, {
+							attributes: true,
+							childList: true,
+							subtree: true
+						});
+
+						setTimeout(() => this.tryMount(e.target), 300);
+						setTimeout(() => this.tryMount(e.target), 800);
+					}
 				} else {
-					this.swiper = e.target.querySelector('.mySwiper').swiper;
-					this.swiper2 = e.target.querySelector('.mySwiper-main').swiper;
+					this.swiper = e.target.querySelector('.mySwiper')?.swiper;
+					this.swiper2 = e.target.querySelector('.mySwiper-main')?.swiper;
 					this.swiper2?.enable();
-					this.swiper2?.slides[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay.start();
+					this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay?.start();
+					HomeSwiper.hideLoading();
 				}
-
 			} else {
-				this.mutation_cssjs?.disconnect();
 				this.mutation?.disconnect();
+				this.mutation_cssjs?.disconnect();
 				this.swiper2?.disable();
-				this.swiper2?.slides[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay.stop();
-				if (e.detail.type === "settings" && e.detail.title === "HeaderHomeScreen") {
+				this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay?.stop();
+				HomeSwiper.hideLoading();
 
+				if (e.detail?.type === "settings" && e.detail?.title === "HeaderHomeScreen") {
 					if (!e.detail.isRestored) {
-						let swiperLibraryAccess = localStorage.getItem(ApiClient.getCurrentUserId() + "-swiperLibraryAccess");
+						const userId = typeof ApiClient !== "undefined" && ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
+						let swiperLibraryAccess = userId ? localStorage.getItem(userId + "-swiperLibraryAccess") : null;
 						this.user = swiperLibraryAccess ? JSON.parse(swiperLibraryAccess) : { Policy: { EnableAllFolders: true, EnabledFolders: [] } };
 						let selectHomePhotoCarouselHtml = `
 			<div class="verticalSection">
@@ -1647,221 +2021,371 @@ div.dialogContainer {
    <br />
 </div>`;
 						var view = e.target;
-						view.children[0].children[0].insertAdjacentHTML('afterbegin', selectHomePhotoCarouselHtml);
-						await ApiClient.getUserViews({}, ApiClient.getCurrentUserId()).then(function (mediaFolders) {
-							mediaFolders = mediaFolders.Items;
-							renderMediaFolders(view, this.user, mediaFolders);
-						}.bind(this));
+						if (view?.children?.[0]?.children?.[0]) {
+							view.children[0].children[0].insertAdjacentHTML('afterbegin', selectHomePhotoCarouselHtml);
+						}
+						if (typeof ApiClient !== "undefined" && ApiClient.getUserViews) {
+							await ApiClient.getUserViews({}, ApiClient.getCurrentUserId()).then(function (mediaFolders) {
+								mediaFolders = mediaFolders?.Items || [];
+								renderMediaFolders(view, this.user, mediaFolders);
+							}.bind(this)).catch(() => {});
+						}
 
-						view.querySelector(".chkAllFolder").addEventListener("change", function () {
-							for (var checked = this.checked, elems = view.querySelectorAll('.chkFolder'), i = 0, length = elems.length; i < length; i++)
-								elems[i].checked = checked;
-						});
-						view.querySelector(".chkEnableAllFolders").checked
-							? view.querySelector(".folderAccessListContainer").classList.add("hide")
-							: view.querySelector(".folderAccessListContainer").classList.remove("hide");
-						view.querySelector(".chkEnableAllFolders").addEventListener("change", function () {
-							this.checked
-								? view.querySelector(".folderAccessListContainer").classList.add("hide")
-								: view.querySelector(".folderAccessListContainer").classList.remove("hide");
-						});
+						const chkAllFolder = view.querySelector(".chkAllFolder");
+						if (chkAllFolder) {
+							chkAllFolder.addEventListener("change", function () {
+								for (var checked = this.checked, elems = view.querySelectorAll('.chkFolder'), i = 0, length = elems.length; i < length; i++)
+									elems[i].checked = checked;
+							});
+						}
+						const chkEnableAll = view.querySelector(".chkEnableAllFolders");
+						const folderContainer = view.querySelector(".folderAccessListContainer");
+						if (chkEnableAll && folderContainer) {
+							chkEnableAll.checked ? folderContainer.classList.add("hide") : folderContainer.classList.remove("hide");
+							chkEnableAll.addEventListener("change", function () {
+								this.checked ? folderContainer.classList.add("hide") : folderContainer.classList.remove("hide");
+							});
+						}
 
-						view.querySelector(".userLibraryAccessForm").addEventListener(
-							"click",
-							function (e) {
-								return (
-									saveUser(this, view),
-									e.preventDefault(),
-									e.stopPropagation(),
-									!1
-								);
+						const submitBtn = view.querySelector(".userLibraryAccessForm");
+						if (submitBtn) {
+							submitBtn.addEventListener("click", function (evt) {
+								saveUser(this, view);
+								evt.preventDefault();
+								evt.stopPropagation();
+								return false;
 							}.bind(this));
+						}
 					}
 				}
 			}
-
 		}.bind(this));
+
+		// Lifecycle handler: viewshow
+		document.addEventListener("viewshow", function (e) {
+			if (e.detail?.type === "home") {
+				HomeSwiper.tryMount(e.target);
+				setTimeout(() => HomeSwiper.tryMount(e.target), 400);
+				setTimeout(() => HomeSwiper.tryMount(e.target), 1200);
+			}
+		});
+
+		// Visibility change: pause/resume autoplay
 		document.addEventListener("visibilitychange", function (e) {
-			if (e.target.location.hash === "#!/home") {
-				if (e.target.visibilityState === "hidden") {
-					this.swiper2?.slides[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay.stop();
+			if (window.location.hash.startsWith("#!/home")) {
+				if (document.visibilityState === "hidden") {
+					this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay?.stop();
 				} else {
-					this.swiper2?.slides[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay.start();
+					this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper?.autoplay?.start();
 				}
 			}
 		}.bind(this));
-		//Fixed an issue where CSS and JS plugins might not run on the first load.
-		this.mutation_cssjs = new MutationObserver(async function (mutationRecoards) {
+
+		// Initial load observer
+		this.mutation_cssjs = new MutationObserver(async (mutationRecords) => {
 			if (!this.flag_cssjs) {
 				this.mutation_cssjs.disconnect();
 				return;
 			}
 			let view = document.querySelector(".view:not(.hide)");
-			if (view?.controller?.constructor.name === "HomeView") {
-				for (let mutationRecoard of mutationRecoards) {
-				if (mutationRecoard.target.classList.contains("homeSectionsContainer")) {
+			if (view && (view.getAttribute("data-type") === "home" || view.controller?.constructor?.name === "HomeView" || window.location.hash.includes("home"))) {
+				const sections = view.querySelector(".sections");
+				if (sections) {
 					this.mutation_cssjs.disconnect();
 					this.flag_cssjs = false;
-					!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
-					!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
-					!localStorage.getItem('CACHE|Movies-Date') && !this.loadFlag && e.detail.contextPath.endsWith("home") && this.initLoading();
-					let sections = mutationRecoard.target.querySelector(".sections"),
-						elem = await this.initBanner();
-					if (elem) {
-						sections.parentNode.insertBefore(elem, sections);
-						this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
-						this.initSwiper(view);
-					} else {
-						this.loadFlag && this.fadeOut(document.querySelector(".misty-loading"), 500, () => document.querySelector(".misty-loading").remove());
-						document.getElementById("customCss").remove();
-						document.getElementById("SwiperCss").remove();
-					}
-					break;
+					await this.tryMount(view);
 				}
 			}
-			}
-			
-		}.bind(this));
-
-		this.mutation_cssjs.observe(document.body, {
-			attributes: true,
-			childList: true,
-			characterData: true,
-			subtree: true,
 		});
 
+		if (document.body) {
+			this.mutation_cssjs.observe(document.body, {
+				childList: true,
+				subtree: true
+			});
+		}
+
+		// Direct immediate check
+		this.tryMount();
+		setTimeout(() => this.tryMount(), 400);
 	}
 
-	/* Insert Loading */
+	/* Helper: Remove / Hide Loading safely */
+	static hideLoading() {
+		this.loadFlag = false;
+		clearTimeout(this._loadingSafetyTimer);
+		const loadings = document.querySelectorAll(".misty-loading");
+		if (!loadings || !loadings.length) return;
+		loadings.forEach(loading => {
+			loading.style.transition = "opacity 350ms ease, visibility 350ms ease";
+			loading.style.opacity = "0";
+			loading.style.pointerEvents = "none";
+			setTimeout(() => {
+				try { loading.remove(); } catch (err) {}
+			}, 400);
+		});
+	}
+
+	/* Insert Loading with guaranteed auto-dismiss */
 	static async initLoading() {
+		if (this.loadFlag || document.querySelector(".misty-loading")) return;
 		this.loadFlag = true;
-		const load = `
-	<div class="misty-loading">
-   <h1></h1>
-   <div class="mdl-spinner">
-      <div class="mdl-spinner__layer mdl-spinner__layer-1">
-         <div class="mdl-spinner__circle-clipper mdl-spinner__left">
-            <div class="mdl-spinner__circle mdl-spinner__circleLeft"></div>
-         </div>
-         <div class="mdl-spinner__circle-clipper mdl-spinner__right">
-            <div class="mdl-spinner__circle mdl-spinner__circleRight"></div>
-         </div>
-      </div>
-   </div>
-</div>
-			`;
-		document.body.insertAdjacentHTML('beforeend', load);
-		const serverName = await ApiClient.serverName();
-		let loading = document.querySelector(".misty-loading h1");
-		loading && (loading.innerText = serverName, loading.setAttribute("title", serverName), loading.classList.add("active"));
 
+		// Hard safety timeout: auto-remove in 2.2 seconds max
+		clearTimeout(this._loadingSafetyTimer);
+		this._loadingSafetyTimer = setTimeout(() => {
+			HomeSwiper.hideLoading();
+		}, 2200);
+
+		const load = `
+	<div class="misty-loading" onclick="HomeSwiper.hideLoading()" title="Click to dismiss">
+	   <div class="misty-loading-card">
+	      <div class="misty-spinner-wrap">
+	         <div class="misty-glow-ring"></div>
+	         <div class="mdl-spinner is-active">
+	            <div class="mdl-spinner__layer mdl-spinner__layer-1">
+	               <div class="mdl-spinner__circle-clipper mdl-spinner__left">
+	                  <div class="mdl-spinner__circle mdl-spinner__circleLeft"></div>
+	               </div>
+	               <div class="mdl-spinner__circle-clipper mdl-spinner__right">
+	                  <div class="mdl-spinner__circle mdl-spinner__circleRight"></div>
+	               </div>
+	            </div>
+	         </div>
+	      </div>
+	      <h1 class="misty-server-title">SN MEDIA</h1>
+	      <div class="misty-loading-sub">Loading Media Highlights...</div>
+	   </div>
+	</div>
+		`;
+		if (document.body) {
+			document.body.insertAdjacentHTML('beforeend', load);
+		}
+		try {
+			if (typeof ApiClient !== "undefined" && ApiClient.serverName) {
+				const serverName = await ApiClient.serverName().catch(() => "SN MEDIA");
+				let loading = document.querySelector(".misty-loading h1");
+				if (loading && serverName) {
+					loading.innerText = serverName;
+					loading.setAttribute("title", serverName);
+					loading.classList.add("active");
+				}
+			}
+		} catch (e) {}
 	}
+
+	/* Mount banner reliably */
+	static async tryMount(viewElement) {
+		if (this._isMounting) return false;
+		const view = viewElement || document.querySelector(".view[data-type='home']:not(.hide)") || document.querySelector(".view:not(.hide)");
+		if (!view) return false;
+
+		const isHome = (view.getAttribute("data-type") === "home") ||
+		               (view.classList && (view.classList.contains("view-home-home") || view.classList.contains("homeSectionsContainer"))) ||
+		               (view.controller?.constructor?.name === "HomeView") ||
+		               (window.location.hash.startsWith("#!/home") || window.location.hash === "" || window.location.hash === "#!");
+		if (!isHome) return false;
+
+		if (view.querySelector(".section00") || document.querySelector(".section00")) {
+			HomeSwiper.hideLoading();
+			return true;
+		}
+
+		const sections = view.querySelector(".sections") || view.querySelector(".homeSectionsContainer .sections");
+		if (!sections || !sections.parentNode) {
+			return false;
+		}
+
+		this._isMounting = true;
+		try {
+			!document.getElementById("SwiperCss") && CommonUtils.loadExtastyle(this.SwiperCss, 'SwiperCss');
+			!document.getElementById("customCss") && CommonUtils.loadExtastyle(this.customCss, 'customCss');
+
+			const elem = await this.initBanner();
+			if (elem && sections && sections.parentNode && !view.querySelector(".section00")) {
+				sections.parentNode.insertBefore(elem, sections);
+				this.initSwiper(view);
+				return true;
+			}
+		} catch (err) {
+			console.warn("[HomeSwiper] tryMount error:", err);
+		} finally {
+			this._isMounting = false;
+			HomeSwiper.hideLoading();
+		}
+		return false;
+	}
+
 	static async playlistener() {
-		const playbackmanager = (await require(["playbackManager"]))[0];
-		document.querySelectorAll(".view:not(.hide) .banner-item-play").forEach(async (dom, i) => {
-			let id = dom.getAttribute("id");
-			let parentid = dom.getAttribute("data-parentid");
-			const detail = this.Alldata.find(m => m.Id === parentid)?.data?.find(m => m.Id === id);
-			if (!detail) return;
-			dom.onclick = () => {
-				let resume = {
-					startPositionTicks: detail.UserData?.PlaybackPositionTicks || 0, ids: detail.Id, serverId: detail.ServerId, items: [detail]
+		try {
+			let playbackmanager = null;
+			if (typeof require === "function") {
+				const res = await require(["playbackManager"]).catch(() => null);
+				if (res && res[0]) playbackmanager = res[0];
+			}
+			document.querySelectorAll(".view:not(.hide) .banner-item-play").forEach((dom) => {
+				let id = dom.getAttribute("id");
+				let parentid = dom.getAttribute("data-parentid");
+				const detail = this.Alldata?.find(m => m.Id === parentid)?.data?.find(m => m.Id === id);
+				if (!detail) return;
+				dom.onclick = (e) => {
+					e?.stopPropagation();
+					if (playbackmanager && playbackmanager.play) {
+						let resume = {
+							startPositionTicks: detail.UserData?.PlaybackPositionTicks || 0,
+							ids: detail.Id,
+							serverId: detail.ServerId,
+							items: [detail]
+						};
+						playbackmanager.play(resume);
+					} else if (typeof Emby !== "undefined" && Emby.Page?.showItem) {
+						Emby.Page.showItem(detail.Id);
+					}
 				};
-				playbackmanager.play(resume);
-			};
-		});
+			});
+		} catch (err) {
+			console.warn("[HomeSwiper] playlistener error:", err);
+		}
 	}
+
 	static morelistener() {
 		document.querySelectorAll(".view:not(.hide) .banner-item-more").forEach(dom => {
-			dom.onclick = () => {
+			dom.onclick = (e) => {
+				e?.stopPropagation();
 				const id = dom.getAttribute("id");
-				id && Emby.Page.showItem(id);
+				if (id && typeof Emby !== "undefined" && Emby.Page?.showItem) {
+					Emby.Page.showItem(id);
+				}
 			};
 		});
 	}
-	static async getItems(query) {
-		const cacheKey = "CACHE|getItems|" + this.cacheVersion + "|" + (query.ParentId ? query.ParentId : '') + ApiClient.getCurrentUserId() + "-" + ApiClient.serverId();
-		if (!sessionStorage.getItem(cacheKey)) {
-			const data = JSON.stringify(await ApiClient.getItems(ApiClient.getCurrentUserId(), query));
-			sessionStorage.setItem(cacheKey, data);
-		}
-		return JSON.parse(sessionStorage.getItem(cacheKey));
-	}
-	static async getLibItems(refreshFlag) {
-		const cacheKey = "CACHE|getLibItems|" + this.cacheVersion + "|" + ApiClient.getCurrentUserId() + "-" + ApiClient.serverId();
-		if (refreshFlag || !localStorage.getItem(cacheKey)) {
-			this.cacheRefreshFlag = false;
-			let libdata = await ApiClient.getUserViews({}, ApiClient.getCurrentUserId());
-			let libdataitem = this.user.Policy.EnableAllFolders ? libdata.Items : libdata.Items.filter(m => this.user.Policy.EnabledFolders.includes(m.Guid));
-			let Alldata = [];
-			for (let i = 0; i < libdataitem.length; ++i) {
-				let libitem = libdataitem[i]
-				if (libitem.CollectionType && libitem.CollectionType === "homevideos") {
-					this.itemQuery.ImageTypes = "Primary";
+
+	static setupPerformanceObserver(element) {
+		if (!('IntersectionObserver' in window) || !element) return;
+		this._bannerObserver?.disconnect();
+		this._bannerObserver = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				const isVisible = entry.isIntersecting && entry.intersectionRatio > 0.15;
+				if (isVisible) {
+					if (this.swiper2?.autoplay && !this.swiper2.autoplay.running) {
+						this.swiper2.autoplay.start();
+					}
+					const activeChild = this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper;
+					if (activeChild?.autoplay && !activeChild.autoplay.running) {
+						activeChild.autoplay.start();
+					}
 				} else {
-					this.itemQuery.ImageTypes = "Primary,Backdrop";
+					if (this.swiper2?.autoplay && this.swiper2.autoplay.running) {
+						this.swiper2.autoplay.stop();
+					}
+					const activeChild = this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper;
+					if (activeChild?.autoplay && activeChild.autoplay.running) {
+						activeChild.autoplay.stop();
+					}
 				}
-				this.itemQuery.ParentId = libitem.Id;
-				let dataquery = await this.getItems(this.itemQuery);
-				if (!dataquery.Items.length) continue;
-				dataquery.Items.sort((a, b) => this.getNewestItemTime([b]) - this.getNewestItemTime([a]));
-				dataquery.Items.length > this.showItemNum && (dataquery.Items = dataquery.Items.slice(0, this.showItemNum));
-				dataquery.Items.length !== 0 &&
-					Alldata.push({ Id: libitem.Id, Name: libitem.Name, ImageTags: libitem.ImageTags, CollectionType: libitem.CollectionType, data: dataquery.Items });
-			}
-			Alldata.sort((a, b) => this.getNewestItemTime(b.data) - this.getNewestItemTime(a.data));
-			const data = JSON.stringify(Alldata);
-			localStorage.setItem(cacheKey, data);
-			require(["datetime"], function (datetime) {
-				localStorage.setItem('CACHE|Movies-Date', datetime.toLocaleDateString(new Date(), { dateStyle: "short" }))
 			});
-		} else {
-			require(["datetime"], function (datetime) {
-				if (localStorage.getItem('CACHE|Movies-Date') !== datetime.toLocaleDateString(new Date(), { dateStyle: "short" })) {
-					this.cacheRefreshFlag = true;
-				}
-			}.bind(this));
+		}, { threshold: [0, 0.15] });
+		this._bannerObserver.observe(element);
+	}
+
+	static async getItems(query) {
+		try {
+			const userId = typeof ApiClient !== "undefined" && ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
+			const serverId = typeof ApiClient !== "undefined" && ApiClient.serverId ? ApiClient.serverId() : "";
+			const cacheKey = "CACHE|getItems|" + this.cacheVersion + "|" + (query.ParentId ? query.ParentId : '') + userId + "-" + serverId;
+			if (!sessionStorage.getItem(cacheKey)) {
+				const data = JSON.stringify(await ApiClient.getItems(userId, query));
+				sessionStorage.setItem(cacheKey, data);
+			}
+			return JSON.parse(sessionStorage.getItem(cacheKey)) || { Items: [] };
+		} catch (err) {
+			console.warn("[HomeSwiper] getItems error:", err);
+			return { Items: [] };
 		}
-		return JSON.parse(localStorage.getItem(cacheKey));
 	}
+
+	static async getLibItems(refreshFlag) {
+		try {
+			const userId = typeof ApiClient !== "undefined" && ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
+			const serverId = typeof ApiClient !== "undefined" && ApiClient.serverId ? ApiClient.serverId() : "";
+			if (!userId) return [];
+
+			const cacheKey = "CACHE|getLibItems|" + this.cacheVersion + "|" + userId + "-" + serverId;
+			this.user = this.user || { Policy: { EnableAllFolders: true, EnabledFolders: [] } };
+
+			if (refreshFlag || !localStorage.getItem(cacheKey)) {
+				this.cacheRefreshFlag = false;
+				let libdata = await ApiClient.getUserViews({}, userId);
+				let rawItems = libdata?.Items || [];
+				let libdataitem = this.user.Policy.EnableAllFolders ? rawItems : rawItems.filter(m => this.user.Policy.EnabledFolders?.includes(m.Guid || m.Id));
+				let Alldata = [];
+				for (let i = 0; i < libdataitem.length; ++i) {
+					let libitem = libdataitem[i];
+					if (libitem.CollectionType && libitem.CollectionType === "homevideos") {
+						this.itemQuery.ImageTypes = "Primary";
+					} else {
+						this.itemQuery.ImageTypes = "Primary,Backdrop";
+					}
+					this.itemQuery.ParentId = libitem.Id;
+					let dataquery = await this.getItems(this.itemQuery);
+					if (!dataquery?.Items?.length) continue;
+					dataquery.Items.sort((a, b) => this.getNewestItemTime([b]) - this.getNewestItemTime([a]));
+					if (dataquery.Items.length > this.showItemNum) {
+						dataquery.Items = dataquery.Items.slice(0, this.showItemNum);
+					}
+					if (dataquery.Items.length !== 0) {
+						Alldata.push({ Id: libitem.Id, Name: libitem.Name, ImageTags: libitem.ImageTags, CollectionType: libitem.CollectionType, data: dataquery.Items });
+					}
+				}
+				Alldata.sort((a, b) => this.getNewestItemTime(b.data) - this.getNewestItemTime(a.data));
+				const data = JSON.stringify(Alldata);
+				localStorage.setItem(cacheKey, data);
+				const todayStr = new Date().toISOString().slice(0, 10);
+				localStorage.setItem('CACHE|Movies-Date', todayStr);
+			}
+			return JSON.parse(localStorage.getItem(cacheKey)) || [];
+		} catch (err) {
+			console.warn("[HomeSwiper] getLibItems error:", err);
+			return [];
+		}
+	}
+
 	static getImageUrl(item, options) {
-		var imgUrl, width = options.maxWidth, imageTags = item.ImageTags, adjustForPixelRatio = options.adjustForPixelRatio;
-		return options.type == "Thumb" && imageTags && imageTags.Thumb ? (imgUrl = ApiClient.getImageUrl(item.Id, {
+		if (!item || !ApiClient?.getImageUrl) return "";
+		var imgUrl, width = options.maxWidth, imageTags = item.ImageTags || {}, adjustForPixelRatio = options.adjustForPixelRatio;
+		return options.type == "Thumb" && imageTags.Thumb ? (imgUrl = ApiClient.getImageUrl(item.Id, {
 			type: "Thumb", maxWidth: width, tag: imageTags.Thumb, adjustForPixelRatio: adjustForPixelRatio
-		})
-		) : options.type == "Banner" && imageTags && imageTags.Banner ? (imgUrl = ApiClient.getImageUrl(item.Id, {
+		})) : options.type == "Banner" && imageTags.Banner ? (imgUrl = ApiClient.getImageUrl(item.Id, {
 			type: "Banner", maxWidth: width, tag: imageTags.Banner, adjustForPixelRatio: adjustForPixelRatio
-		})
-		) : options.type == "Logo" && imageTags && imageTags.Logo ? (imgUrl = ApiClient.getImageUrl(item.Id, {
+		})) : options.type == "Logo" && imageTags.Logo ? (imgUrl = ApiClient.getImageUrl(item.Id, {
 			type: "Logo", maxWidth: width, tag: imageTags.Logo, adjustForPixelRatio: adjustForPixelRatio
-		})
-		) : options.type == "Backdrop" && item.BackdropImageTags && item.BackdropImageTags.length ? (imgUrl = ApiClient.getImageUrl(item.Id, {
+		})) : options.type == "Backdrop" && item.BackdropImageTags && item.BackdropImageTags.length ? (imgUrl = ApiClient.getImageUrl(item.Id, {
 			type: "Backdrop", maxWidth: width, tag: item.BackdropImageTags[0], adjustForPixelRatio: adjustForPixelRatio
-		})
-		) : options.type == "Primary" && imageTags && imageTags.Primary ? (imgUrl = ApiClient.getImageUrl(item.Id, {
+		})) : options.type == "Primary" && imageTags.Primary ? (imgUrl = ApiClient.getImageUrl(item.Id, {
 			type: "Primary", maxWidth: width, tag: imageTags.Primary, adjustForPixelRatio: adjustForPixelRatio
-		})
-		) : item.BackdropImageTags && item.BackdropImageTags.length && (imgUrl = ApiClient.getImageUrl(item.Id, {
+		})) : item.BackdropImageTags && item.BackdropImageTags.length ? (imgUrl = ApiClient.getImageUrl(item.Id, {
 			type: "Backdrop", maxWidth: width, tag: item.BackdropImageTags[0], adjustForPixelRatio: adjustForPixelRatio
-		})
-		), imgUrl
+		})) : "", imgUrl;
 	}
+
 	static getRandomArrayElements(arr, count) {
-		var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
-		while (i-- > min) {
+		var shuffled = (arr || []).slice(0), i = shuffled.length, min = i - count, temp, index;
+		while (i-- > min && i > 0) {
 			index = Math.floor((i + 1) * Math.random());
 			temp = shuffled[index];
 			shuffled[index] = shuffled[i];
 			shuffled[i] = temp;
 		}
-		return shuffled.slice(min);
+		return shuffled.slice(Math.max(0, min));
 	}
+
 	static getNewestItemTime(items) {
 		return Math.max(...(items || []).map(item => {
 			const dateValue = item.DateCreated || item.PremiereDate || (item.ProductionYear ? `${item.ProductionYear}-01-01` : "");
 			return Date.parse(dateValue) || 0;
 		}), 0);
 	}
+
 	static escapeHtml(value) {
 		return String(value ?? "").replace(/[&<>"']/g, char => ({
 			"&": "&amp;",
@@ -1871,21 +2395,19 @@ div.dialogContainer {
 			"'": "&#39;"
 		})[char]);
 	}
+
 	static fadeOut(elemt, speed, callback) {
-		if (elemt?.style.opacity == 1 || elemt?.style.opacity == "") {
-			elemt.style.transition = `opacity ${speed}ms`;
-			elemt.style.opacity = '0';
-			setTimeout(function () {
-				if (typeof (callback) == 'function') {
-					callback();
-				}
-			}, speed);
+		HomeSwiper.hideLoading();
+		if (typeof callback === 'function') {
+			setTimeout(callback, speed || 300);
 		}
 	}
+
 	static async initBanner() {
 		var element = document.createElement("div");
 		element.className = "verticalSection verticalSection-cards section00 hideThumbs focusable emby-scrollbuttons-scroller";
 		element.setAttribute("data-focusabletype", "nearest");
+		const serverOrigin = encodeURIComponent((typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : 'http://100.100.100.6:8096');
 		element.innerHTML = `
 <div class="padded-top-focusscale padded-bottom-focusscale padded-left padded-left-page padded-right emby-scroller hiddenScrollX scrollFrameX" data-mousewheel="false" data-focusscroll="true" style="height: inherit;">
    <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper-main">
@@ -1900,82 +2422,119 @@ div.dialogContainer {
       </div>
    </div>
    <a class="hitcounter-link" href="https://hitscounter.dev/" target="_blank" rel="noopener noreferrer" aria-label="Visitor counter">
-      <img src="https://hitscounter.dev/api/hit?url=http%3A%2F%2F100.100.100.6%3A8096%2F&label=Visitors&icon=graph-up&color=%23ffc107&message=&style=flat&tz=Asia%2FDhaka" alt="Visitor Counter" loading="lazy" decoding="async">
+      <img src="https://hitscounter.dev/api/hit?url=${serverOrigin}&label=Visitors&icon=graph-up&color=%23ffc107&message=&style=flat&tz=Asia%2FDhaka" alt="Visitor Counter" loading="lazy" decoding="async">
    </a>
 </div>
 `;
 		this.Alldata = await this.getLibItems(false);
-		if (this.Alldata.length == 0) {
-			return;
+		if (!this.Alldata || this.Alldata.length == 0) {
+			return null;
 		}
+
 		const html = { Swiper: "", coverHtml: "" };
 		for (let i = 0; i < this.Alldata.length; ++i) {
 			let datas = this.Alldata[i];
 			let allbackdropHtml = '';
-			let hvclass;
-			if (datas.CollectionType === "homevideos") {
-				hvclass = "homevideos";
-			}
-			else {
-				hvclass = "";
-			};
-			for (let j = 0; j < datas.data.length; ++j) {
+			let hvclass = datas.CollectionType === "homevideos" ? "homevideos" : "";
+
+			for (let j = 0; j < (datas.data || []).length; ++j) {
 				let detail = datas.data[j];
 				let ImageUrl;
 				if (datas.CollectionType === "homevideos") {
 					ImageUrl = await this.getImageUrl(detail, this.coverOptions);
-				}
-				else {
+				} else {
 					ImageUrl = await this.getImageUrl(detail, this.backdropOptions);
-				};
+				}
 				!ImageUrl && (ImageUrl = await this.getImageUrl(detail, this.coverOptions));
 				if (!ImageUrl) continue;
+
 				const title = this.escapeHtml(detail.Name);
 				const subtitle = this.escapeHtml(detail.Taglines?.[0] || "");
 				const overview = this.escapeHtml(detail.Overview || "");
-				const itemType = detail.Type === "Series" ? "TV" : detail.Type === "Movie" ? "MOVIE" : "";
+				const isSeries = detail.Type === "Series";
+				const itemType = isSeries ? "TV" : (detail.Type === "Movie" ? "MOVIE" : "");
+				const badgeClass = isSeries ? "badge-tv" : "badge-movie";
 				const badgeText = itemType ? `NEW ${itemType}` : "NEW";
 				const logoUrl = detail.ImageTags?.Logo ? await this.getImageUrl(detail, this.logoOptions) : "";
 				const year = detail.ProductionYear ? this.escapeHtml(detail.ProductionYear) : "";
 				const rating = Number.isFinite(Number(detail.CommunityRating)) ? Number(detail.CommunityRating).toFixed(1) : "";
 				const officialRating = this.escapeHtml(detail.OfficialRating || "");
+
+				let durationText = "";
+				if (detail.RunTimeTicks) {
+					const mins = Math.round(detail.RunTimeTicks / (10000 * 1000 * 60));
+					if (mins > 0) {
+						const h = Math.floor(mins / 60);
+						const m = mins % 60;
+						durationText = h > 0 ? `${h}h ${m}m` : `${m}m`;
+					}
+				}
+
 				const metaIcons = {
-					year: `<svg class="meta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg>`,
-					rating: `<svg class="meta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.9 6.4 7 .7-5.2 4.7 1.5 6.9L12 17.2l-6.2 3.5 1.5-6.9L2.1 9.1l7-.7L12 2Z"/></svg>`,
-					cert: `<svg class="meta-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/><path d="M9 12l2 2 4-4"/></svg>`
+					star: `<svg class="meta-icon icon-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.4 7 .7-5.2 4.7 1.5 6.9L12 17.2l-6.2 3.5 1.5-6.9L2.1 9.1l7-.7L12 2Z"/></svg>`,
+					calendar: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+					clock: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+					genre: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>`
 				};
+
 				const metaItems = [
-					year && { icon: metaIcons.year, value: year },
-					rating && { icon: metaIcons.rating, value: rating },
-					officialRating && { icon: metaIcons.cert, value: officialRating }
+					rating && { icon: metaIcons.star, value: rating, className: "meta-rating" },
+					year && { icon: metaIcons.calendar, value: year, className: "meta-year" },
+					durationText && { icon: metaIcons.clock, value: durationText, className: "meta-duration" },
+					officialRating && { icon: "", value: officialRating, className: "meta-cert" }
 				].filter(Boolean);
-				const metaHtml = metaItems.map(meta => `<span>${meta.icon}${meta.value}</span>`).join("");
+
+				// Add up to 2 genres
+				const genres = (detail.Genres || []).slice(0, 2);
+				genres.forEach(genre => {
+					metaItems.push({
+						icon: metaIcons.genre,
+						value: this.escapeHtml(genre),
+						className: "meta-genre"
+					});
+				});
+
+				const metaHtml = metaItems.map(m => `<span class="banner-meta-pill ${m.className || ''}">${m.icon || ''}<span class="banner-meta-val">${m.value}</span></span>`).join("");
+
 				const backdropHtml = `
 <div class="swiper-slide" id="${detail.Id}">
    <img id="${detail.Id}" data-parentid="${datas.Id}" class="banner-cover ${hvclass}" draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" src="${ImageUrl}" alt="${title}" />
-   ${logoUrl ? `<img draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" class="banner-logo padded-right" src="${logoUrl}" alt="${title} logo">` : ``}
    <div class="banner-mask"></div>
-   <div class="banner-top-badge">${badgeText}</div>
+   <div class="banner-top-badge-wrap">
+      <div class="banner-top-badge ${badgeClass}">${badgeText}</div>
+   </div>
    <div class="custom padded-left">
-      <div class="title" data-swiper-parallax="-300">${title}</div>
+      ${logoUrl ? `
+         <div class="banner-title-wrap" data-swiper-parallax="-300">
+            <img draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" class="banner-title-logo" src="${logoUrl}" alt="${title}">
+         </div>
+      ` : `
+         <div class="title" data-swiper-parallax="-300">${title}</div>
+      `}
       ${metaHtml ? `<div class="banner-meta" data-swiper-parallax="-240">${metaHtml}</div>` : ``}
-      <div class="subtitle" data-swiper-parallax="-200">${subtitle}</div>
-      <div class="text" data-swiper-parallax="-100">
-         <p>${overview}</p>
-      </div>
+      ${subtitle ? `<div class="subtitle" data-swiper-parallax="-200">${subtitle}</div>` : ``}
+      ${overview ? `<div class="text" data-swiper-parallax="-100"><p>${overview}</p></div>` : ``}
       <div class="morebutton" data-focusabletype="nearest">
-         <button id="${detail.Id}" data-parentid="${datas.Id}" class="banner-item-play" tabindex="-1">PLAY</button>
-         <button id="${detail.Id}" class="banner-item-more" tabindex="-1">MORE</button>
+         <button id="${detail.Id}" data-parentid="${datas.Id}" class="banner-item-play" tabindex="-1">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <span>PLAY</span>
+         </button>
+         <button id="${detail.Id}" class="banner-item-more" tabindex="-1">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>MORE</span>
+         </button>
 	  </div>
    </div>
 </div>
 `;
-allbackdropHtml += backdropHtml;
-}
-allbackdropHtml === '' && (allbackdropHtml = `
-<div class="swiper-slide swiper-null">一Not a single film or television production？！</div>
-`);
-let mySwiper = `
+				allbackdropHtml += backdropHtml;
+			}
+
+			if (allbackdropHtml === '') {
+				allbackdropHtml = `<div class="swiper-slide swiper-null">No media available to display</div>`;
+			}
+
+			let mySwiper = `
 <div class="swiper-slide ${hvclass}" id="${datas.Id}">
    <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper${i}">
       <div class="swiper-wrapper">${allbackdropHtml}</div>
@@ -1985,11 +2544,11 @@ let mySwiper = `
    </div>
 </div>
 `;
-const coverHtml = `
+			const coverHtml = `
 <div class="swiper-slide card card-hoverable focusable card-autoactive" tabindex="0" data-index="${i}">
    <div class="cardBox cardBox-touchzoom">
       <button type="button" data-action="link" tabindex="-1" class="itemAction cardContent-button cardContent cardImageContainer cardContent-background cardContent-bxsborder cardContent-bxsborder-fv coveredImage coveredImage-noScale cardPadder-backdrop">
-      <img draggable="false" alt=" "  loading="eager" decoding="async" class="small-banner cardImage cardImage-bxsborder-fv coveredImage coveredImage-noScale" id="${datas.Id}" src="${await this.getImageUrl(datas, this.coverOptions)}" />
+      <img draggable="false" alt=" " loading="eager" decoding="async" class="small-banner cardImage cardImage-bxsborder-fv coveredImage coveredImage-noScale" id="${datas.Id}" src="${await this.getImageUrl(datas, this.coverOptions)}" />
       </button>
       <div class="cardLibText">
          <button class="itemAction textActionButton cardTextActionButton emby-button" type="button" title="${datas.Name}" tabindex="-1">${datas.Name}</button>
@@ -2000,13 +2559,21 @@ const coverHtml = `
 			html.Swiper += mySwiper;
 			html.coverHtml += coverHtml;
 		}
-		element.querySelector(".mySwiper-main .swiper-wrapper").insertAdjacentHTML('beforeend', html.Swiper);
-		element.querySelector(".mySwiper .swiper-wrapper").insertAdjacentHTML('beforeend', html.coverHtml);
+
+		const mainWrap = element.querySelector(".mySwiper-main .swiper-wrapper");
+		const thumbWrap = element.querySelector(".mySwiper .swiper-wrapper");
+		if (mainWrap) mainWrap.insertAdjacentHTML('beforeend', html.Swiper);
+		if (thumbWrap) thumbWrap.insertAdjacentHTML('beforeend', html.coverHtml);
 		return element;
 	}
+
 	static initSwiper(e) {
 		var interleaveOffset = 0.5;
-		this.swiper = new Swiper(e.querySelector(".mySwiper"), {
+		const thumbEl = e.querySelector(".mySwiper");
+		const mainEl = e.querySelector(".mySwiper-main");
+		if (!thumbEl || !mainEl) return;
+
+		this.swiper = new Swiper(thumbEl, {
 			loop: false,
 			initialSlide: 0,
 			spaceBetween: 10,
@@ -2017,76 +2584,71 @@ const coverHtml = `
 			centeredSlides: false,
 			slideToClickedSlide: true,
 			watchSlidesProgress: true,
-	
-				breakpoints: {
-    0: { spaceBetween: 8 },
-    512: { spaceBetween: 8 },
-    800: { spaceBetween: 10 },
-    1320: { spaceBetween: 12 },
-    2100: { spaceBetween: 14 },
-    3200: { spaceBetween: 16 },
-    4000: { spaceBetween: 18 }
-
+			breakpoints: {
+				0: { spaceBetween: 8 },
+				512: { spaceBetween: 8 },
+				800: { spaceBetween: 10 },
+				1320: { spaceBetween: 12 },
+				2100: { spaceBetween: 14 },
+				3200: { spaceBetween: 16 },
+				4000: { spaceBetween: 18 }
 			},
 			on: {
 				doubleTap: function (swiper, event) {
-					if (event.target.classList?.contains("small-banner")) {
+					if (event.target.classList?.contains("small-banner") && typeof Emby !== "undefined") {
 						Emby.Page.showItem(event.target.id);
-					};
+					}
 				},
 				tap: function (swiper, event) {
-					if (event.target.classList?.contains("small-banner") && event.target.closest(".swiper-slide").classList.contains("swiper-slide-thumb-active")) {
+					if (event.target.classList?.contains("small-banner") && event.target.closest(".swiper-slide")?.classList.contains("swiper-slide-thumb-active") && typeof Emby !== "undefined") {
 						Emby.Page.showItem(event.target.id);
-					};
+					}
 				},
 				breakpoint: function (swiper) {
-
 					swiper.params.loop = false;
 					swiper.wrapperEl.style["justify-content"] = "flex-start";
 					if (window.matchMedia("(max-width: 49.99em)").matches) {
-
-						document.querySelectorAll(".banner-cover").forEach(async function (element, index) {
-							let src1 = element.getAttribute("src");
+						document.querySelectorAll(".banner-cover").forEach(async function (element) {
+							let src1 = element.getAttribute("src") || "";
 							if (src1.includes("Backdrop")) {
 								let id = element.getAttribute("id");
 								let parentid = element.getAttribute("data-parentid");
-								let library = this.Alldata.find(m => m.Id === parentid);
+								let library = this.Alldata?.find(m => m.Id === parentid);
 								let item = library?.data?.find(m => m.Id === id);
 								if (!item?.ImageTags?.Primary || !item?.BackdropImageTags?.[0]) return;
 								let src2 = src1.replace("Backdrop", "Primary").replace(item.BackdropImageTags[0], item.ImageTags.Primary);
 								element.setAttribute('src', src2);
 							}
 						}.bind(this));
-
 					} else {
-
-						document.querySelectorAll(".banner-cover").forEach(async function (element, index) {
-							let src1 = element.getAttribute("src");
+						document.querySelectorAll(".banner-cover").forEach(async function (element) {
+							let src1 = element.getAttribute("src") || "";
 							if (src1.includes("Primary")) {
 								let id = element.getAttribute("id");
 								let parentid = element.getAttribute("data-parentid");
-								let items = this.Alldata.find(m => m.Id === parentid);
-								if (!items) return;
-								if (items.CollectionType !== "homevideos") {
-									let item = items.data.find(m => m.Id === id);
-									if (!item?.ImageTags?.Primary || !item?.BackdropImageTags?.[0]) return;
-									let src2 = src1.replace("Primary", "Backdrop").replace(item.ImageTags.Primary, item.BackdropImageTags[0]);
-									element.setAttribute('src', src2);
-								}
+								let items = this.Alldata?.find(m => m.Id === parentid);
+								if (!items || items.CollectionType === "homevideos") return;
+								let item = items.data?.find(m => m.Id === id);
+								if (!item?.ImageTags?.Primary || !item?.BackdropImageTags?.[0]) return;
+								let src2 = src1.replace("Primary", "Backdrop").replace(item.ImageTags.Primary, item.BackdropImageTags[0]);
+								element.setAttribute('src', src2);
 							}
-
 						}.bind(this));
 					}
-				}.bind(this),
-			},
+				}.bind(this)
+			}
 		});
-		for (let i = 0; i < this.Alldata.length; ++i) {
-			let swiperchild = new Swiper(e.querySelector(".mySwiper" + i), {
+
+		for (let i = 0; i < (this.Alldata || []).length; ++i) {
+			const childEl = e.querySelector(".mySwiper" + i);
+			if (!childEl) continue;
+
+			let swiperchild = new Swiper(childEl, {
 				direction: this.Alldata[i].CollectionType === "homevideos" ? "horizontal" : "vertical",
 				spaceBetween: 0,
 				speed: 1000,
 				nested: true,
-				watchSlidesProgress: this.Alldata[i].CollectionType === "homevideos" ? false : true,
+				watchSlidesProgress: this.Alldata[i].CollectionType !== "homevideos",
 				pagination: {
 					el: ".swiper-pagination",
 					clickable: true,
@@ -2098,37 +2660,34 @@ const coverHtml = `
 				},
 				on: {
 					progress: function (swiper) {
-						for (var i = 0; i < swiper.slides.length; i++) {
-							var slideProgress = swiper.slides[i].progress;
+						for (var k = 0; k < swiper.slides.length; k++) {
+							var slideProgress = swiper.slides[k].progress;
 							var innerOffset = swiper.height * interleaveOffset;
 							var innerTranslate = slideProgress * innerOffset;
-							swiper.slides[i].querySelector(".banner-cover") && (swiper.slides[i].querySelector(".banner-cover").style.transform =
-								"translate3d(0," + innerTranslate + "px, 0)");
+							swiper.slides[k].querySelector(".banner-cover") && (swiper.slides[k].querySelector(".banner-cover").style.transform = "translate3d(0," + innerTranslate + "px, 0)");
 						}
 					},
 					touchStart: function (swiper) {
-						for (var i = 0; i < swiper.slides.length; i++) {
-							swiper.slides[i].style.transition = "";
+						for (var k = 0; k < swiper.slides.length; k++) {
+							swiper.slides[k].style.transition = "";
 						}
 					},
 					setTransition: function (swiper, speed) {
-						for (var i = 0; i < swiper.slides.length; i++) {
-							swiper.slides[i].style.transition = speed + "ms";
-							swiper.slides[i].querySelector(".banner-cover") && (swiper.slides[i].querySelector(".banner-cover").style.transition =
-								speed + "ms");
+						for (var k = 0; k < swiper.slides.length; k++) {
+							swiper.slides[k].style.transition = speed + "ms";
+							swiper.slides[k].querySelector(".banner-cover") && (swiper.slides[k].querySelector(".banner-cover").style.transition = speed + "ms");
 						}
 					},
 					reachEnd: function (swiper) {
 						if (swiper.initialized) {
-							swiper.autoplay.stop();
+							swiper.autoplay?.stop();
 							this.swiper2Delay = setTimeout(() => {
-								this.swiper2.slideNext();
+								this.swiper2?.slideNext();
 							}, this.slideDelay);
 							this.swiperDelay = setTimeout(() => {
 								swiper.slideTo(0);
 								swiper.disable();
 							}, this.slideDelay + 1000);
-
 						}
 					}.bind(this),
 					slideChange: function (swiper) {
@@ -2136,28 +2695,28 @@ const coverHtml = `
 							clearTimeout(this.swiperDelay);
 							clearTimeout(this.swiper2Delay);
 						}
-						let activemorebutton = swiper.slides[swiper.activeIndex].querySelectorAll(".morebutton button");
-						let previousmorebutton = swiper.slides[swiper.previousIndex].querySelectorAll(".morebutton button");
+						let activemorebutton = swiper.slides[swiper.activeIndex]?.querySelectorAll(".morebutton button") || [];
+						let previousmorebutton = swiper.slides[swiper.previousIndex]?.querySelectorAll(".morebutton button") || [];
 						activemorebutton.forEach((button) => {
 							button.setAttribute("tabindex", "0");
 						});
 						previousmorebutton.forEach((button) => {
 							button.setAttribute("tabindex", "-1");
 						});
-
-					}.bind(this),
+					}.bind(this)
 				},
 				slidesPerView: 1,
 				breakpoints: {
 					1000: {
 						slidesPerView: this.Alldata[i].CollectionType === "homevideos" ? 3 : 1,
 						slidesPerGroup: this.Alldata[i].CollectionType === "homevideos" ? 3 : 1,
-					},
-				},
+					}
+				}
 			});
 			i > 0 && swiperchild.disable();
 		}
-		this.swiper2 = new Swiper(e.querySelector(".mySwiper-main"), {
+
+		this.swiper2 = new Swiper(mainEl, {
 			loop: true,
 			initialSlide: 0,
 			speed: 1000,
@@ -2179,24 +2738,28 @@ const coverHtml = `
 			},
 			on: {
 				progress: function (swiper) {
-					for (var i = 0; i < swiper.slides.length; i++) {
-						var slideProgress = swiper.slides[i].progress;
+					for (var k = 0; k < swiper.slides.length; k++) {
+						var slideProgress = swiper.slides[k].progress;
 						var innerOffset = swiper.width * interleaveOffset;
 						var innerTranslate = slideProgress * innerOffset;
-						swiper.slides[i].querySelector(".swiper").style.transform =
-							"translate3d(" + innerTranslate + "px, 0, 0)";
+						const childSwiper = swiper.slides[k].querySelector(".swiper");
+						if (childSwiper) {
+							childSwiper.style.transform = "translate3d(" + innerTranslate + "px, 0, 0)";
+						}
 					}
 				},
 				touchStart: function (swiper) {
-					for (var i = 0; i < swiper.slides.length; i++) {
-						swiper.slides[i].style.transition = "";
+					for (var k = 0; k < swiper.slides.length; k++) {
+						swiper.slides[k].style.transition = "";
 					}
 				},
 				setTransition: function (swiper, speed) {
-					for (var i = 0; i < swiper.slides.length; i++) {
-						swiper.slides[i].style.transition = speed + "ms";
-						swiper.slides[i].querySelector(".swiper").style.transition =
-							speed + "ms";
+					for (var k = 0; k < swiper.slides.length; k++) {
+						swiper.slides[k].style.transition = speed + "ms";
+						const childSwiper = swiper.slides[k].querySelector(".swiper");
+						if (childSwiper) {
+							childSwiper.style.transition = speed + "ms";
+						}
 					}
 				},
 				slideChange: function (swiper) {
@@ -2207,10 +2770,10 @@ const coverHtml = `
 						let previousmorebutton = previousSwiper?.wrapperEl?.querySelectorAll(".morebutton button") || [];
 						let activemorebutton = activeSwiper?.slides?.[activeSwiper.activeIndex]?.querySelectorAll(".morebutton button") || [];
 						if (swiper.activeIndex !== swiper.previousIndex && previousSwiper) {
-							previousSwiper.autoplay.stop();
+							previousSwiper.autoplay?.stop();
 							if (previousSwiper.realIndex + 1 !== previousSwiper.slides.length) {
 								previousSwiper.disable();
-							};
+							}
 							previousmorebutton.forEach((button) => {
 								button.setAttribute("tabindex", "-1");
 							});
@@ -2219,7 +2782,7 @@ const coverHtml = `
 							activeSwiper.enable();
 							if (activeSwiper.slides.length === 1) {
 								this.swiper2Delay = setTimeout(() => {
-									this.swiper2.slideNext();
+									this.swiper2?.slideNext();
 								}, this.slideDelay);
 							} else {
 								activeSwiper.params.autoplay = {
@@ -2227,12 +2790,11 @@ const coverHtml = `
 									disableOnInteraction: true,
 									stopOnLastSlide: true,
 								};
-								activeSwiper.autoplay.start();
+								activeSwiper.autoplay?.start();
 							}
 							activemorebutton.forEach((button) => {
 								button.setAttribute("tabindex", "0");
 							});
-
 						}
 					}
 				}.bind(this),
@@ -2244,7 +2806,7 @@ const coverHtml = `
 							disableOnInteraction: true,
 							stopOnLastSlide: true,
 						};
-						activeSwiper.autoplay.start();
+						activeSwiper.autoplay?.start();
 					}
 				}.bind(this),
 			},
@@ -2256,50 +2818,56 @@ const coverHtml = `
 				swiper: this.swiper,
 			},
 		});
-		this.initEvent();
+
+		this.initEvent(e);
 		if (this.cacheRefreshFlag) {
 			this.getLibItems(true);
 		}
 	}
-	/* 初始事件 */
-	static async initEvent() {
+
+	/* Initial Events */
+	static async initEvent(viewElement) {
 		var mouseoverflag = false;
 		const thumbsHidden = document.querySelector(".section00")?.classList.contains("hideThumbs");
-		for (let i = 0; i < this.swiper.slides.length; i++) {
-			const bullet = this.swiper2.pagination.bullets[i];
-			if (bullet) {
-				bullet.onmouseover = function () {
-					mouseoverflag = true;
-					this.click()
-				};
-				bullet.onclick = function () {
-					!mouseoverflag && (i === this.swiper2.realIndex) && Emby.Page.showItem(this.swiper.slides[i].firstElementChild.id);
-					mouseoverflag = false;
+		if (this.swiper?.slides && this.swiper2?.pagination?.bullets) {
+			for (let i = 0; i < this.swiper.slides.length; i++) {
+				const bullet = this.swiper2.pagination.bullets[i];
+				if (bullet) {
+					bullet.onmouseover = function () {
+						mouseoverflag = true;
+						this.click();
+					};
+					bullet.onclick = function () {
+						!mouseoverflag && (i === this.swiper2.realIndex) && typeof Emby !== "undefined" && Emby.Page.showItem(this.swiper.slides[i].firstElementChild?.id);
+						mouseoverflag = false;
+					}.bind(this);
+				}
+				if (thumbsHidden) continue;
+				this.swiper.slides[i].onmouseover = function () {
+					this.mouseovertimeout = setTimeout(function () {
+						(i !== this.swiper2.realIndex) && this.swiper2.slideTo(this.swiper2.slides.findIndex(m => m.dataset.swiperSlideIndex == i));
+					}.bind(this), 300);
+				}.bind(this);
+				this.swiper.slides[i].onmouseleave = function () {
+					clearTimeout(this.mouseovertimeout);
+				}.bind(this);
+				this.swiper.slides[i].onfocus = function () {
+					this.focustimeout = setTimeout(function () {
+						(i !== this.swiper2.realIndex) && this.swiper2.slideTo(this.swiper2.slides.findIndex(m => m.dataset.swiperSlideIndex == i));
+					}.bind(this), 100);
+				}.bind(this);
+				this.swiper.slides[i].onblur = function () {
+					clearTimeout(this.focustimeout);
 				}.bind(this);
 			}
-			if (thumbsHidden) continue;
-			this.swiper.slides[i].onmouseover = function () {
-				this.mouseovertimeout = setTimeout(function () {
-					(i !== this.swiper2.realIndex) && this.swiper2.slideTo(this.swiper2.slides.findIndex(m => m.dataset.swiperSlideIndex == i));
-				}.bind(this), 300);
-			}.bind(this);
-			this.swiper.slides[i].onmouseleave = function () {
-				clearTimeout(this.mouseovertimeout);
-			}.bind(this);
-			this.swiper.slides[i].onfocus = function () {
-				this.focustimeout = setTimeout(function () {
-					(i !== this.swiper2.realIndex) && this.swiper2.slideTo(this.swiper2.slides.findIndex(m => m.dataset.swiperSlideIndex == i));
-				}.bind(this), 100);
-			}.bind(this);
-			this.swiper.slides[i].onblur = function () {
-				clearTimeout(this.focustimeout);
-			}.bind(this);
 		}
 
 		this.playlistener();
 		this.morelistener();
+		this.setupPerformanceObserver(viewElement || document.querySelector(".section00"));
 	}
 }
+
 /** Swiper 11.1.14 JS**/
  
 var Swiper = function () {
@@ -7332,5 +7900,14 @@ var Swiper = function () {
    }];
    return ie.use(ge), ie
 }();
-// Run
-HomeSwiper.start();
+
+// Run safely with DOM check
+if (typeof document !== "undefined") {
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", function () {
+			HomeSwiper.start();
+		});
+	} else {
+		HomeSwiper.start();
+	}
+}

@@ -1,6 +1,6 @@
 @echo off
 REM Change to current script directory
-cd /d "%~dp0"
+cd /c "C:\Users\Sarker_Net\OneDrive\Desktop\Emby-Home-Swiper-UI"
 
 REM Initialize Git if not already done
 IF NOT EXIST .git (

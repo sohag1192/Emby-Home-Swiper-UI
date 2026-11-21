@@ -1,124 +1,114 @@
-# 🚀 Emby CRX Extensions — Update Log & Documentation
-> **Server:** Sarker Net / SN Media Services  
-> **Directory:** `c:\Users\Sarker_Net\AppData\Roaming\Emby-Server\system\dashboard-ui\crx\`  
-> **Latest Update Date:** 21 November 2026  
-> **Author & Developer:** Md Sohag Rana ❤️  
+# 🌟 Emby Home Swiper V2 — Enhanced & Classic Editions
+
+<div align="center">
+
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](../LICENSE)
+[![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.2.0+-52B54B?style=flat-square&logo=emby&logoColor=white)](https://emby.media)
+[![UI / UX](https://img.shields.io/badge/UI%2FUX-v2%20Enhanced-blue?style=flat-square)](#)
+
+**Versatile, high-performance banner carousels for Emby Web clients, featuring community rating badges, production release years, and refined typography.**
+
+<br/>
+
+![Emby Home Swiper V2 Preview](../screenshots/screenshot1.png)
+
+</div>
 
 ---
 
 ## 📌 ১. ওভারভিউ (Overview)
-`crx` ফোল্ডারটি Emby Web ক্লায়েন্টের জন্য একটি কাস্টম এক্সটেনশন ও অ্যাড-অন স্যুট। এটি সার্ভারের ওয়েব ইন্টারফেসে আধুনিক সিনেমাটিক হোম ব্যানার ক্যারোজেল, রেটিং ব্যাজ এবং এক্সটার্নাল প্লেয়ার ইন্টিগ্রেশন (PotPlayer, VLC, MPV ইত্যাদি) যুক্ত করে।
+
+**Home Swiper V2** হলো Emby Web-এর জন্য অত্যন্ত জনপ্রিয় ও স্থিতিশীল হোম ব্যানার ক্যারোজেল সংস্করণ। এটি ব্যবহারকারীদের বিভিন্ন পছন্দ ও সার্ভারের পারফরম্যান্সের ওপর নির্ভর করে ৩টি বিশেষ ভ্যারিয়েন্ট অফার করে:
+
+1. **`home-swiper.js` (Enhanced Swiper V2):**  
+   সর্বাধুনিক আপগ্রেড সহ সংস্করণ — ভাইব্রেন্ট ফ্রস্টেড গ্লাস মেটাডাটা চিপস, লেফট-অ্যালাইনড লেআউট, ডুয়েল অ্যাকশন বাটন (`PLAY` ও `MORE`), এবং লাইভ কাউন্টার সাপোর্ট।
+
+2. **`home_rating with year.js` (Classic Ratings & Year):**  
+   ক্ল্যাসিক ব্যানার সংস্করণ — কমিউনিটি স্টার রেটিং (`⭐ 8.5/10`) এবং মিডিয়ার রিলিজ বছর (`📅 2024`) সরাসরি ব্যানারের উপর সুন্দরভাবে প্রদর্শন করে।
+
+3. **`home-swiper-v1.js` (Minimalist Clean):**  
+   অতিমাত্রায় হালকা ও মিনিমালিস্ট সংস্করণ — অতিরিক্ত মেটাডাটা ও ব্যাজ ছাড়া কেবল সিনেমাটিক ব্যাকড্রপ, স্বচ্ছ লোগো ও স্মুথ স্লাইডার প্রদান করে।
 
 ---
 
-## 📂 ২. বর্তমান ক্লিন ফোল্ডার স্ট্রাকচার (Clean Architecture)
+## 📂 ২. ফাইল পরিচিতি (File Reference)
+
 ```text
-dashboard-ui/crx/
-├── emby-player/
-│   ├── emby_launch_player.js       # 🎬 আপডেটেড এক্সটার্নাল প্লেয়ার স্ক্রিপ্ট (Zero Transcode HUD)
-│   └── README.md                   # প্লেয়ার সংক্রান্ত ডকুমেন্টেশন ও প্রোটোকল গাইড
-├── home-swiper.js                  # 🌟 প্রিমিয়াম হোম ব্যানার ক্যারোজেল স্ক্রিপ্ট (Home Swiper V2)
-├── home.js                         # 🔄 কম্প্যাটিবিলিটি সিমলিংক/কপি
-└── README.md                       # 📋 এই চেঞ্জলগ ও ডকুমেন্টেশন ফাইল
+home-swiper-v2/
+├── home-swiper.js           # 🌟 Enhanced Swiper v2 (সর্বাধুনিক ফ্রস্টেড গ্লাস মেটাডাটা ও অ্যাকশন বাটন)
+├── home_rating with year.js # ⭐ Classic Swiper v2 (কমিউনিটি রেটিং ও রিলিজ বছর সহ)
+├── home-swiper-v1.js        # ⚡ Clean Minimalist Swiper (সবার জন্য হালকা ও দ্রুতগতির)
+└── README.md                # 📖 এই বিস্তারিত ডকুমেন্টেশন ফাইল
 ```
 
 ---
 
-## 🛠️ ৩. কি কি পরিবর্তন ও আপডেট হয়েছে (Summary of Updates & Changes)
+## 🛠️ ৩. ইনস্টলেশন নির্দেশিকা (Installation Guide)
 
-### ক. অপ্রয়োজনীয় ফাইল ক্লিনআপ (Cleanup & Optimization)
-- ❌ **`crx\home-sider-v1\` রিমুভ:** পুরনো ভার্সন ১ স্লাইডারটি মুছে ফেলা হয়েছে।
-- ❌ **`crx\home-swiper-v2\` রিমুভ:** অপ্রয়োজনীয় ডেমো ও আনইউজড সোর্স ফোল্ডার সম্পূর্ণ ক্লিন করা হয়েছে।
-- ❌ **`crx\text_sider\` রিমুভ:** যেহেতু এর মূল কোড পূর্বেই `index.html`-এ ইনজেক্ট করা ছিল এবং এটি লাইভ সার্ভারে আলাদাভাবে কল হচ্ছিল না, তাই ফোল্ডারটি রিমুভ করা হয়েছে।
-- ❌ **`home.js.bak` ও স্ক্রিনশট রিমুভ:** অপ্রয়োজনীয় ডুপ্লিকেট ব্যাকআপ এবং ভারী `.png` ইমেজ ক্লিন করা হয়েছে।
-- 🛡️ **সম্পূর্ণ ব্যাকআপ সংরক্ষণ:** মুছে ফেলা সব ফাইলের একটি মূল কপি নিরাপদে সংরক্ষণ করা হয়েছে:  
-  `dashboard-ui\crx_backup_original\`
+### ধাপ ১: আপনার পছন্দের স্ক্রিপ্ট নির্বাচন করুন
+উপরের ৩টি স্ক্রিপ্টের যেকোনো একটি নির্বাচন করুন এবং নাম পরিবর্তন করে `home.js` হিসেবে আপনার Emby সার্ভারের `dashboard-ui/` ফোল্ডারে রাখুন:
 
----
+- **Windows:** `C:\Users\<User>\AppData\Roaming\Emby-Server\system\dashboard-ui\home.js`
+- **Linux:** `/opt/emby-server/system/dashboard-ui/home.js`
+- **Docker:** `/system/dashboard-ui/home.js`
 
-### খ. স্ক্রিপ্ট ইনজেকশন ও অর্ডার ফিক্স (`index.html`)
-1. **হেডার থেকে বডিতে স্থানান্তর:**  
-   - পূর্বে `<head>` এর মধ্যে `<script src="crx/home.js"></script>` রাখা ছিল। Emby-এর মূল আর্কিটেকচার অনুযায়ী `apploader.js` লোড হওয়ার আগেই এটি রান হতো, যার ফলে মাঝে মাঝে `ApiClient` রেইস কন্ডিশন তৈরি হতো।
-   - এখন `crx/home.js` ফাইলটিকে `apploader.js`-এর ঠিক পরে `<body>` ট্যাগের মধ্যে `defer` অ্যাট্রিবিউট সহ যুক্ত করা হয়েছে।
-2. **ডিরেক্ট `crx` পাথে সুইচ:**  
-   - এক্সটার্নাল প্লেয়ার স্ক্রিপ্টটি পুরনো পাথ `emby-player/embyLaunchPotplayer.js` থেকে সরিয়ে সরাসরি নতুন **`crx/emby-player/emby_launch_player.js`** থেকে লোড করা হচ্ছে।
-3. **মাল্টি-ইভেন্ট মাউন্টিং রিট্রাই (Mounting Reliability):**  
-   - `crx/home.js`-এ `viewshow` ইভেন্টে অটোমেটিক সিকিউর রিট্রাই যোগ করা হয়েছে, যাতে ইউজার লগইন করার সাথে সাথে ব্যানারটি কোনো ধরনের ফ্লিকার ছাড়া লোড হয়।
+### ধাপ ২: `index.html`-এ স্ক্রিপ্ট যুক্ত করা
+`dashboard-ui/index.html` ফাইলটি টেক্সট এডিটরে ওপেন করে `apploader.js`-এর ঠিক পরে (বা `</body>`-এর আগে) নিচের লাইনটি ইনসার্ট করুন:
 
----
+```html
+<!-- Emby Home Swiper V2 -->
+<script src="home.js" defer></script>
+```
 
-### গ. হোম ব্যানার ক্যারোজেল UI ও UX আপগ্রেড (`crx/home-swiper.js` ও `crx/home.js`)
-1. **সিনেমা-গ্রেড অ্যাম্বিয়েন্ট মাস্ক (Cinematic Ambient Mask):**  
-   - ব্যানারের চারপাশের ট্রানজিশন গ্রেডিয়েন্ট আরও ডিপ করা হয়েছে (3-way ambient occlusion vignette), যাতে টাইটেল এবং তথ্য স্পষ্ট থাকে এবং পেজের ব্যাকগ্রাউন্ডের সাথে নিরবচ্ছিন্নভাবে মিশে যায়।
-2. **মডার্ন টাইপোগ্রাফি ও লেটারস্পেসিং (Plus Jakarta Sans & System Font Stack):**
-   - আধুনিক জিওমেট্রিক স্ট্রিমিং ফন্ট **Plus Jakarta Sans** সংযুক্ত করা হয়েছে সাব-পিক্সেল অ্যান্টি-অ্যালিয়াসিং (`-webkit-font-smoothing: antialiased`) সহ।
-   - টাইটেল, মেটাডাটা ও ওভারভিউ প্যারাগ্রাফের লাইন-হাইট ও রিডাবিলিটি উন্নত করা হয়েছে।
-3. **ক্লিন টপ ব্যাজ ও লাইভ স্ট্যাটাস বিকন (Clean Top Badge & Live Beacon):**  
-   - শীর্ষ ব্যাজে অ্যানিমেটেড সবুজ পালসিং বিকন যুক্ত করা হয়েছে।
-   - অতিরিক্ত কোয়ালিটি ব্যাজ (`1080P FHD`, `5.1 SURROUND`, `4K` ইত্যাদি) রিমুভ করে শুধুমাত্র মূল **`NEW MOVIE`** ও **`NEW TV`** ব্যাজটি একক ও প্রিমিয়াম আকারে রাখা হয়েছে, যাতে হেডার সম্পূর্ণ ক্লিন ও নিটোল থাকে।
-4. **ইউনিফাইড ভাইব্রেন্ট ফ্রস্টেড গ্লাস মেটাডাটা প্যালেট (Vibrant Frosted Glass Metadata):**  
-   - 🌟 **ডাবল-বক্স গ্লিচ ফিক্স:** পূর্বে `.banner-meta span` সিলেকটরের কারণে ভেতরের টেক্সট ডাবল বক্সে আবদ্ধ হয়ে বিশ্রী দেখাতো। এটি সম্পূর্ণ সমাধান করে প্রতিটি চিপকে একক ফ্রস্টেড গ্লাস পিলে রূপান্তর করা হয়েছে।
-   - ⭐ **রেটিং ব্যাজ:** গোল্ডেন ফিল্ড স্টার ও ওয়ার্ম অ্যাম্বার চিপ (`rgba(245, 158, 11, 0.18)` / `#fde047`)।  
-   - 📅 **রিলিজ বছর:** সাইবার আইস-ব্লু গ্লাস চিপ (`rgba(59, 130, 246, 0.14)` / `#bfdbfe`)।  
-   - ⏱️ **ডিউরেশন:** এমারেল্ড মিন্ট গ্লাস চিপ (`rgba(16, 185, 129, 0.14)` / `#a7f3d0`)।  
-   - 🛡️ **সার্টিফিকেশন:** কোরাল ক্রিসমন ব্যাজ (`rgba(244, 63, 94, 0.18)` / `#fecdd3`)।  
-   - 🏷️ **জনরা ও ক্যাটাগরি চিপস:** রয়্যাল ভায়োলেট ট্যাগ চিপস (`rgba(168, 85, 247, 0.14)` / `#e9d5ff`)।
-5. **মডার্ন সিনেমাটিক অ্যাকশন বাটনস (Clean Dual Actions - Play & More):**  
-   - **`PLAY` বাটন:** ভাইব্রেন্ট সায়ান-টু-ইন্ডিগো গ্রেডিয়েন্ট উইথ ৩ডি এলিভেশন ও নিয়ন শ্যাডো।
-   - **`MORE` বাটন:** অ্যাক্রিলিক ফ্রস্টেড গ্লাস উইথ হোভার বর্ডার গ্লো।
-   - ব্যানারকে অতিরিক্ত ঘিঞ্জি হওয়া থেকে বাঁচাতে এবং মোবাইল ভিউতে পারফেক্ট ভারসাম্য রাখতে অপ্রয়োজনীয় `FAVORITE` বাটন রিমুভ করে ক্লিন ২-বাটন লেআউট বজায় রাখা হয়েছে।
-6. **ডাইনামিক ভিজিটর কাউন্টার (`hitscounter.dev`):**  
-   - হার্ডকোডেড আইপি পরিহার করে সার্ভারের ডাইনামিক অরিজিন (`window.location.origin`) ইন্টিগ্রেট করা হয়েছে।
-   - অপ্রয়োজনীয় `10G BDIX • ULTRA HD` রিমুভ করে মূল লাইভ কাউন্টারটি ব্যানারের নিচে ডানে সুনির্দিষ্ট স্থানে স্থাপন করা হয়েছে।
-7. **মুভি লোগো ও মোবাইল স্ক্রিন অপ্টিমাইজেশন (Movie Logo Relocation & Mobile UX):**  
-   - 🎬 **লোগো পজিশন ও ডুপ্লিকেট টেক্সট ফিক্স:** পূর্বে মুভি লোগোটি ব্যানারের নিচে ডানপাশে ক্যারেক্টারের গায়ের ওপর বিশ্রীভাবে ভেসে থাকতো এবং বাঁপাশে আলাদা টেক্সট টাইটেল থাকায় নাম দুইবার দেখাতো। এটি সম্পূর্ণ সমাধান করে লোগোটিকে টাইটেলের স্থানে সেট করা হয়েছে এবং লোগো উপস্থিত থাকলে ডুপ্লিকেট টেক্সট টাইটেল কঠোরভাবে হাইড করা হয়েছে।
-   - 📱 **ইউনিভার্সাল লেফট-অ্যালাইনড লেআউট (Universal Left-Aligned Layout):** মোবাইল এবং ডেস্কটপ উভয় ডিভাইসেই লোগো, মেটাডাটা চিপস, টেক্সট ওভারভিউ এবং অ্যাকশন বাটন (`PLAY` ও `MORE`) সুন্দরভাবে বামপাশে (`x: 16px`) সুবিন্যস্ত করা হয়েছে। এর ফলে সিনেমাটিক ডার্ক গ্রেডিয়েন্ট মাস্কের ওপর সব টেক্সট অত্যন্ত স্পষ্ট ও আকর্ষণীয় দেখায় এবং ব্যাকড্রপের মূল ছবি অনাবৃত থাকে।
-   - 📏 **লোগো অ্যান্টি-ক্লিপিং ও রেসপন্সিভ কনটেইনমেন্ট:** `.swiper-slide img.banner-title-logo` দিয়ে হাই স্পেসিফিসিটি সেট করে `object-fit: contain !important;` এবং `max-width: min(270px, 75vw) !important;` যোগ করা হয়েছে, যাতে কোনো বড় বা স্ক্রিপ্ট লোগো কেটে না যায় বা মোবাইলের স্ক্রিন উপচে না পড়ে।
-   - 📐 **ভার্টিক্যাল মার্জিন ও ব্রিদিং গ্যাপ (Generous Vertical Gaps):** প্রতিটি উপাদানের মাঝে `0.85rem`–`1rem` পর্যন্ত স্পষ্ট ও দৃষ্টিনন্দন মার্জিন যোগ করা হয়েছে।
-   - 🛡️ **মোবাইল হেডার ট্যাব কলিশন সমাধান:** ছোট মোবাইল স্ক্রিনে শীর্ষ কোয়ালিটি ব্যাজগুলো যাতে Emby-এর হেডার ট্যাব (`Home`, `Favourites`)-এর ওপর চেপে না যায়, সে জন্য `top: clamp(104px, 12.5vh, 114px)` নির্ধারণ করা হয়েছে, ফলে এটি ট্যাবের নিচে ৮–১০px নিরাপদ দূরত্বে থাকে।
-   - 🔋 **স্মার্ট পারফরম্যান্স সেভার (IntersectionObserver):** পেজ নিচে স্ক্রল করলে ব্যাটারি ও সিপিইউ বাঁচাতে ব্যাকগ্রাউন্ড অটো-প্লে স্বয়ংক্রিয়ভাবে পজ (Pause) হয়ে যায়।
+### ধাপ ৩: ক্যাশ রিফ্রেশ
+ব্রাউজারে গিয়ে **Ctrl + F5** চেপে রিফ্রেশ করুন এবং আপনার হোম স্ক্রিনে (`#!/home`) প্রবেশ করুন।
 
 ---
 
-### ঘ. এক্সটার্নাল প্লেয়ার ইন্টিগ্রেশন UI ও UX আপগ্রেড (`crx/emby-player/`)
-1. **ডেডিকেটেড সাইবার-গ্লাস HUD বার (Frosted Glass HUD):**  
-   - ডিটেইল পেজে প্লেয়ার বাটনগুলোর জন্য প্রিমিয়াম ডার্ক অ্যাক্রিলিক কার্ড ও হেডার যুক্ত করা হয়েছে:  
-     `🟢 DIRECT STREAM PLAYERS` • `ZERO TRANSCODE` • `100% BITRATE`
-2. **কালার-কোডেড গ্লাস বাটন (Frosted Glass Buttons):**  
-   - 🟨 **PotPlayer:** অ্যাম্বার গোল্ড বর্ডার গ্লো (`#facc15`)  
-   - 🟧 **VLC:** ট্রাফিক অরেঞ্জ বর্ডার গ্লো (`#f97316`)  
-   - 🟪 **MPV:** সাইবার পার্পল বর্ডার গ্লো (`#a855f7`)  
-   - 🟥 **IINA:** ভাইব্রেন্ট রোজ বর্ডার গ্লো (`#f43f5e`)  
-   - 🟦 **MX Player / MXPro:** সায়ান বর্ডার গ্লো (`#06b6d4`)  
-   - 🟩 **Copy Stream URL:** এমারেল্ড গ্রিন বর্ডার গ্লো (`#10b981`)  
-3. **১০০% অফলাইন ভেক্টর SVG আইকন (Zero-Dependency SVG Icons):**  
-   - পূর্বে আইকনগুলোর জন্য বাহ্যিক ডোমেইন `7o7o.cc`-এর উপর নির্ভর করতে হতো, যা BDIX বা অফলাইন নেটওয়ার্কে স্লো বা ফেইল করতো।  
-   - এখন সমস্ত প্লেয়ারের (PotPlayer, VLC, MPV, IINA, MX Player, nPlayer, Infuse ইত্যাদি) জন্য হাই-ডেফিনিশন ভেক্টর SVG সরাসরি স্ক্রিপ্টে বিল্ট-ইন করে দেওয়া হয়েছে। এটি ৪K/রেটিনা ডিসপ্লেতেও ক্রিস্টাল ক্লিয়ার দেখায় এবং জিরো ল্যাটেন্সিতে তাৎক্ষণিক লোড হয়।
-4. **ট্যাকটাইল ক্লিপবোর্ড ফিডব্যাক (Tactile UX Copy Feedback):**  
-   - "Copy Stream URL" বাটনে ক্লিক করলে পূর্বে পুরো আইকন মুছে যেত। এখন আইকন ঠিক রেখে `✅ Copied!` টেক্সট ২.৫ সেকেন্ডের জন্য ভেসে ওঠে এবং স্বয়ংক্রিয়ভাবে রিস্টোর হয়।
-5. **বিস্তারিত ডকুমেন্টেশন:**  
-   - দেখুন: [`crx/emby-player/README.md`](emby-player/README.md)
+## 🧩 ৪. ব্রাউজার এক্সটেনশন সেটআপ (Userscript)
+
+ব্রাউজারে **Tampermonkey** বা **Violentmonkey** এক্সটেনশন ব্যবহার করে সরাসরি ক্লায়েন্ট সাইডে চালাতে পারেন:
+
+```javascript
+// ==UserScript==
+// @name         Emby Home Swiper V2
+// @namespace    https://github.com/sohag1192/Emby-Home-Swiper-UI
+// @version      2.0.0
+// @description  A dynamic banner carousel for Emby Web
+// @match        *://*/web/index.html*
+// @match        *://*/*/web/index.html*
+// @require      https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v2/home-swiper.js
+// @grant        none
+// ==/UserScript==
+```
 
 ---
 
-### ঙ. লগইন পেজ ক্লিনআপ (`index.html`)
-- কাস্টম হিরো কার্ডের নিচে থাকা Emby-এর অতিরিক্ত ডুপ্লিকেট ডিসক্লেইমার টেক্সটটি হাইড করা হয়েছে (`.sn-login-active .disclaimer { display: none !important; }`), ফলে লগইন স্ক্রিনের লেআউট নিখুঁত দেখাচ্ছে।
+## ⚙️ ৫. কনফিগারেশন ও সেটিংস (Configuration)
+
+স্ক্রিপ্টের মধ্যে `class HomeSwiper.start()` ফাংশন থেকে স্লাইড ট্রানজিশন ও কোয়েরি ফিল্টার পরিবর্তন করতে পারেন:
+
+```javascript
+this.itemQuery = {
+    ImageTypes: "Primary,Backdrop",
+    EnableImageTypes: "Primary,Backdrop,Banner,Logo",
+    IncludeItemTypes: "Movie,Series", // ফিল্টার: "Movie" বা "Series"
+    SortBy: "DateCreated",            // "DateCreated", "PremiereDate", "CommunityRating", বা "Random"
+    SortOrder: "Descending",
+    Recursive: true,
+    Limit: 10,                        // মোট ব্যানার স্লাইড সংখ্যা
+    Fields: "Taglines,Overview,ParentId,DateCreated,PremiereDate,ProductionYear,CommunityRating,OfficialRating,Genres,RunTimeTicks"
+};
+
+this.slideDelay = 6000;              // স্লাইড রোটেশন ডিলে (৬ সেকেন্ড)
+this.showItemNum = 10;               // মোট আইটেম সংখ্যা
+```
 
 ---
 
-## 🌐 ৪. টেস্ট ও ভেরিফিকেশন ফলাফল
-- **HTTP Response:** `200 OK` (All 50 network requests passed)
-- **Console Errors:** `0` (কোনো ধরনের JavaScript runtime error নেই)
-- **ক্রস-ডিভাইস রেসপনসিভনেস:** Desktop (1080p, 4K), Laptop, Tablet এবং Mobile ব্রাউজারে টেস্টেড।
+## 📄 ৬. লাইসেন্স ও কপিরাইট (License & Copyright)
 
----
-
-## 📄 ৫. কপিরাইট ও লাইসেন্স (Copyright & License)
 - **Copyright (c) 2026 [sohag1192](https://github.com/sohag1192)** — All Rights Reserved.
 - **GitHub Repository:** [sohag1192/Emby-Home-Swiper-UI](https://github.com/sohag1192/Emby-Home-Swiper-UI)
 - **Author & Developer:** Md Sohag Rana ❤️
-- **License:** [MIT License](../../LICENSE) — Feel free to use, modify, and distribute with attribution.
-
----
-
-> 💡 **নোট:** ভবিষ্যতে Emby Server অটো-আপডেট হলে যদি `index.html` রিসেট হয়, তবে `dashboard-ui/index_backup_crx_integration.html` ফাইল থেকে স্ক্রিপ্ট রেফারেন্স আবার পুনরুদ্ধার করতে পারবেন।
+- **License:** [MIT License](../LICENSE)

@@ -13,7 +13,7 @@
 
 **Transform your Emby and Jellyfin home screen into a breathtaking, cinematic media showcase with frosted Cyber-Glass banners, live ratings, direct external player routing, and kinetic announcement HUDs.**
 
-[✨ Highlights](#-key-features--highlights) • [📊 Feature Matrix](#-version-comparison--feature-matrix) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-configuration--customization) • [🇧🇩 বাংলা গাইড](#-বাংলা-সংক্ষিপ্ত-নির্দেশিকা-bangla-quick-guide) • [🧪 FAQ](#-troubleshooting--faq) • [💖 Support](#-support--sponsorship)
+[✨ Highlights](#-key-features--highlights) • [📊 Feature Matrix](#-version-comparison--feature-matrix) • [📸 Preview](#-visual-preview) • [📂 Modules](#-repository-structure) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-configuration--customization) • [🇧🇩 বাংলা গাইড](#-বাংলা-সংক্ষিপ্ত-নির্দেশিকা-bangla-quick-guide) • [🧪 FAQ](#-troubleshooting--faq) • [💖 Support](#-support--sponsorship)
 
 </div>
 
@@ -67,39 +67,11 @@ Engineered with **zero external dependencies** and pure native ES6 JavaScript, i
 
 ---
 
-## 📸 Visual Previews
+## 📸 Visual Preview
 
 <div align="center">
 
-### 🎞️ Home Swiper Hero Banners (V3 / V2)
-![Emby Swiper V2 Preview 1](home-swiper-v2/img/Screenshot_0.png)  
-![Emby Swiper V2 Preview 2](home-swiper-v2/img/Screenshot_1.png)  
-![Emby Swiper V2 Preview 3](home-swiper-v2/img/Screenshot_2.png)  
-
-<br/>
-
-### 🎬 External Player Integration (v2 Cyber-Glass HUD Bar)
-![External Player Preview](emby-player/Screenshot_39.png)  
-![External Player Interface](emby-player/Screenshot_1.png)  
-![External Player Mobile HUD](emby-player/v2/mobile_player_hud_fixed.png)  
-
-<br/>
-
-### 🎨 Emby Web Modern Login & Typography Overhaul
-![Visual Login Preview](img/visual_login_preview.png)  
-![Manual Login Preview](img/manual_login_preview.png)  
-
-<br/>
-
-### 🍿 Dedicated Jellyfin Web Theme & Carousel
-![Jellyfin Carousel Preview 1](Jellyfin/img/1.png)  
-![Jellyfin Carousel Preview 2](Jellyfin/img/2.png)  
-
-<br/>
-
-### 📢 Item Detail Announcement Suite (`text_sider`)
-![Text Sider Notice Preview](text_sider/Text%20Slider%20Box.png)  
-![Text No Slider Preview](text_sider/Text%20No%20Slider%20Box.png)  
+![Emby Home Swiper UI & Cinematic Carousel](screenshots/screenshot1.png)
 
 </div>
 
@@ -110,25 +82,23 @@ Engineered with **zero external dependencies** and pure native ES6 JavaScript, i
 ```text
 Emby-Home-Swiper-UI/
 ├── home-swiper-v3/              # 🚀 Latest Swiper v3 (Cyber-Glass, Ratings, Year, Beacons)
-│   └── home.js                  # 🌟 Production Swiper v3 script
+│   ├── home.js                  # 🌟 Production Swiper v3 script
+│   └── README.md                # 📖 V3 documentation & setup
 ├── home-swiper-v2/              # 🌟 Swiper v2 with Ratings, Year & UI upgrades
-│   ├── home-swiper.js           # Clean minimalist Swiper script
-│   ├── home_rating with year.js # Classic Swiper with Community Rating ⭐ & Year 📅
-│   └── img/                     # V2 Screenshots
+│   ├── home-swiper.js           # 🌟 Enhanced Swiper v2 script (Frosted glass & Dual Actions)
+│   ├── home_rating with year.js # ⭐ Classic Swiper with Community Rating & Year
+│   ├── home-swiper-v1.js        # ⚡ Clean minimalist lightweight Swiper script
+│   └── README.md                # 📖 V2 documentation & setup
 ├── home-sider-v1/               # 📦 Classic lightweight home banner slider
-│   ├── home.js                  # V1 base swiper logic
-│   └── img/                     # V1 Screenshots
+│   └── home.js                  # V1 base swiper logic
 ├── emby-player/                 # 🎬 External player launcher (PotPlayer, MPV, VLC)
 │   ├── v1/                      # v1 classic player scripts
 │   │   └── emby_launch_player.js
-│   ├── v2/                      # v2 Cyber-Glass HUD launcher with offline vector SVGs
-│   │   └── emby_launch_player.js
-│   ├── Screenshot_1.png         # Player previews
-│   └── Screenshot_39.png
+│   └── v2/                      # v2 Cyber-Glass HUD launcher with offline vector SVGs
+│       └── emby_launch_player.js
 ├── Jellyfin/                    # 🍇 Dedicated Jellyfin Web integration
-│   ├── jellyfin/                # Styles, main.js, jQuery & MD5 dependencies
-│   ├── script.sh                # Auto setup script for Jellyfin Web
-│   └── img/                     # Jellyfin Screenshots
+│   ├── jellyfin/                # Styles, main.js, jQuery, MD5 & logo assets
+│   └── script.sh                # Auto setup script for Jellyfin Web
 ├── text_sider/                  # 📢 Media detail page announcement & notice boxes
 │   ├── Text Slider Box.html     # Continuous scrolling marquee ticker
 │   ├── Text No Slider Box.html  # Dual-language glass announcement card
@@ -136,11 +106,9 @@ Emby-Home-Swiper-UI/
 │   ├── Text Cyber Neon Slider.html# 360° rotating neon HUD marquee
 │   ├── Text Multi-Slide Carousel.html# 3-slide interactive notice carousel
 │   ├── Text Warning Box.html    # Maintenance notice banner
-│   ├── demo.html                # Interactive test sandbox with 1-click code copying
-│   └── *.png                    # Preview screenshots
-├── img/                         # 📸 Login and UI overhaul preview screenshots
-│   ├── visual_login_preview.png
-│   └── manual_login_preview.png
+│   └── demo.html                # Interactive test sandbox with 1-click code copying
+├── screenshots/                 # 📸 Clean UI preview screenshot
+│   └── screenshot1.png
 ├── index_integrated.html        # 🌐 Reference Emby Web index.html with clean script hooks
 ├── download-homejs.bat          # 🪟 Windows PowerShell interactive setup script
 ├── setup-swiper.sh              # 🐧 Linux/Docker interactive setup script
@@ -173,8 +141,9 @@ Locate the web root folder for your operating system:
 #### Step 2: Choose and Copy Your Banner Script
 1. Pick your preferred version:
    - **Version 3 Cyber-Glass (Latest - Recommended):** [`home-swiper-v3/home.js`](home-swiper-v3/home.js)
+   - **Version 2 Enhanced:** [`home-swiper-v2/home-swiper.js`](home-swiper-v2/home-swiper.js)
    - **Version 2 with Ratings & Year:** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
-   - **Version 2 Minimalist Swiper:** [`home-swiper-v2/home-swiper.js`](home-swiper-v2/home-swiper.js)
+   - **Version 2 Minimalist Swiper:** [`home-swiper-v2/home-swiper-v1.js`](home-swiper-v2/home-swiper-v1.js)
    - **Version 1 Classic Slider:** [`home-sider-v1/home.js`](home-sider-v1/home.js)
 2. Place the file into your `dashboard-ui/` folder as `home.js` (or in a subfolder like `dashboard-ui/crx/home.js`).
 

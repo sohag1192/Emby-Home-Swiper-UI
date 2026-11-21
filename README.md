@@ -11,9 +11,9 @@
 ![UI / UX Overhaul](https://img.shields.io/badge/UI%2FUX%20Overhaul-v3%20Cyber--Glass-06b6d4?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-**Transform your Emby and Jellyfin home screen into a stunning, modern media showcase with dynamic banners, ratings, external player launching, and animated announcements.**
+**Transform your Emby and Jellyfin home screen into a breathtaking, cinematic media showcase with frosted Cyber-Glass banners, live ratings, direct external player routing, and kinetic announcement HUDs.**
 
-[✨ Features](#-key-features) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure--modules) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-customization--configuration) • [🧪 Troubleshooting](#-troubleshooting--faq) • [🔗 Related Projects](#-related-projects--ecosystem-tools) • [📬 Contact](#-contributing--contact) • [💖 Support](#-support--sponsorship) • [⭐ Star History](#-star-history)
+[✨ Highlights](#-key-features--highlights) • [📊 Feature Matrix](#-version-comparison--feature-matrix) • [📸 Previews](#-visual-previews) • [📂 Modules](#-repository-structure) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-configuration--customization) • [🇧🇩 বাংলা গাইড](#-বাংলা-সংক্ষিপ্ত-নির্দেশিকা-bangla-quick-guide) • [🧪 FAQ](#-troubleshooting--faq) • [💖 Support](#-support--sponsorship)
 
 </div>
 
@@ -21,60 +21,97 @@
 
 ## 📖 Overview
 
-**Emby Home Swiper UI** replaces the default library grid on your Emby & Jellyfin home page (`#!/home`) with an interactive, cinematic **Swiper banner carousel**. It dynamically queries your media server's native APIs to showcase the newest, trending, and top-rated movies and TV series — with zero external library overhead for core functionality.
+**Emby Home Swiper UI** replaces the default static media grid on your Emby & Jellyfin web clients (`#!/home`) with an interactive, cinematic **Swiper Hero Carousel**. It seamlessly hooks into your server's native internal API to render trending, recently added, and top-rated media with crisp fanart backdrops, transparent title logos, synopsis text, and real-time metadata pills.
 
-Beyond the home banner carousel, this all-in-one repository also provides:
-- 🌟 **Home Swiper V3 / Cyber-Glass:** Frosted glass metadata pills with live pulsating status beacons.
-- 🎬 **Cyber-Glass External Player HUD (`emby-player`):** 100% offline vector SVG icons with zero network latency, custom neon glows, and tactile copy feedback (`✅ Copied!`).
-- ✍️ **Bengali Typography Support:** Google Font 'Hind Siliguri' integration with symmetrical centering and emoji wrap fixes (`🍿📺`).
-- 📢 **Item Detail Announcement & Notice Boxes (`text_sider`):** Glassmorphic alert banners, rotating tickers, and VIP cards.
-- 🎨 **Dedicated Jellyfin Web Theme & Carousel:** Custom theme and setup scripts for Jellyfin 10.8.x – 10.11.x+.
-- ⚡ **1-Click Shell and Batch Setup Scripts:** Interactive installers for Windows, Linux, and Docker environments.
+Engineered with **zero external dependencies** and pure native ES6 JavaScript, it introduces zero memory leaks, loads in sub-milliseconds, and runs flawlessly across 4K Smart TVs, ultra-wide desktop monitors, tablets, and smartphones.
+
+### 🌟 What Makes This Suite Essential:
+- 💎 **Modern Cyber-Glass Aesthetics (V3):** Frosted dark acrylic cards (`rgba(15, 23, 42, 0.88)` + 20px blur), pulsing emerald beacons, glowing brand accents, and tactile hover feedback.
+- ⭐ **Dynamic Ratings & Production Year Badges:** Automatically pulls and presents Community Ratings (e.g. `⭐ 8.5/10`), Release Year (e.g. `2024`), and official certification pills (`PG-13`, `TV-MA`, `R`).
+- 🎬 **Zero-Transcode External Player Routing (`emby-player`):** Route streams directly to PotPlayer, MPV, VLC, IINA, and MX Player with **100% offline vector SVG icons** — eliminating server CPU/GPU transcoding bottlenecks.
+- 📢 **Item Detail Announcement Suite (`text_sider`):** 6 responsive notification styles (Aurora VIP Cards, Cyber Neon Tickers, Multi-Slide Carousels, Maintenance Warning Boxes) for media detail pages (`#!/item?id=...`).
+- 🍇 **Dedicated Jellyfin Web Client Support:** Tailored CSS themes, JavaScript carousel engine, and automatic setup scripts for Jellyfin 10.8.x – 10.11.x+.
+- ✍️ **Bengali Typography Optimization:** Full integration for Google Font 'Hind Siliguri', fixing broken compound glyphs, symmetrical flex centering, and emoji wrap overflow.
+
+---
+
+## ✨ Key Features & Highlights
+
+| Category | Feature | Benefit & Technical Implementation |
+| :--- | :--- | :--- |
+| 🚀 **Performance** | **Zero-Dependency Engine** | Written in lightweight ES6 vanilla JavaScript using internal `ApiClient`. No heavy jQuery or external runtime required for core Swiper banners. |
+| 💎 **Design System** | **Cyber-Glass HUD** | Dual-layer backdrop masking, 20px frosted glass filter, glowing cyan borders, and ambient shadows ensure readability over any backdrop image. |
+| ⭐ **Rich Metadata** | **Live Ratings & Year Pills** | Dynamically calculates and renders community ratings, production years, runtime ticks, and genre tags into elegant glass pills. |
+| 🔄 **Intelligent Motion** | **Auto-Play & Smart Hover** | Smooth 6–8 second banner rotation with automatic pause on mouse hover or touch gesture for effortless synopsis reading. |
+| 📱 **Responsiveness** | **Adaptive Fluid Layout** | Scales dynamically across 4K displays (2160p), Ultrawide (21:9), 1080p Laptops, iPads/Tablets, and Mobile touchscreens. |
+| 🎮 **Navigation** | **Tactile Controls** | Interactive Previous / Next glass navigation buttons, synchronized bullet dot pagination, and touch swipe gestures. |
+| 🍿 **Playback** | **Native Desktop Launchers** | Bypasses browser codec limits (Direct 4K HDR10+, Dolby Vision Profile 5/8, TrueHD Atmos, ASS subtitles) straight into native media players. |
+| ⚡ **Offline SVGs** | **Zero Network Latency** | Player brand icons (PotPlayer, VLC, MPV, IINA, MX Player) are embedded directly as crisp vector SVG data URIs. |
+| 🛡️ **Reliability** | **Multi-Event Mounting Retry** | Listens to `viewshow`, `pageshow`, and route change events with automated fail-safes against race conditions with `apploader.js`. |
+
+---
+
+## 📊 Version Comparison & Feature Matrix
+
+| Feature / Capability | Emby Default | Home Slider V1 | Home Swiper V2 | Home Swiper V3 (Cyber-Glass) |
+| :--- | :---: | :---: | :---: | :---: |
+| **High-Res Fanart Backdrops** | ❌ Static Posters | ✅ Full Width | ✅ Enhanced Contrast | ✅ Triple Gradient Masking |
+| **Clear PNG Title Logos** | ❌ Plain Text | ✅ Supported | ✅ Supported | ✅ Auto-Fallback to Styled Text |
+| **Community Rating Badges (⭐)** | ❌ Small Text | ❌ None | ✅ Classic Pill | ✅ Frosted Glass + Ambient Glow |
+| **Production Year Metadata (📅)**| ❌ Plain Info | ❌ None | ✅ Classic Pill | ✅ Violet Glass Tag |
+| **Official Content Rating Pills**| ❌ Small Info | ❌ None | ✅ Classic Pill | ✅ Neon Border Tag |
+| **External Player HUD Integration**| ❌ Browser Player Only| ❌ None | ⚠️ Basic Buttons | ✅ Cyber-Glass HUD + Offline SVGs |
+| **Pulsating Live Status Beacons** | ❌ None | ❌ None | ❌ None | ✅ Emerald Glow Beacon |
+| **Multi-Event Mounting Retry** | ❌ None | ⚠️ Single Event | ⚠️ Basic Retry | ✅ Automated Fail-Safe Loop |
+| **Google Font 'Hind Siliguri'** | ❌ System Default | ❌ None | ❌ None | ✅ Native Bengali Font Stack |
 
 ---
 
 ## 📸 Visual Previews
 
-### 🎞️ Emby Home Swiper Carousel (V2 / V3)
-![Emby Swiper V2 Preview 1](home-swiper-v2/img/Screenshot_0.png)
-![Emby Swiper V2 Preview 2](home-swiper-v2/img/Screenshot_1.png)
-![Emby Swiper V2 Preview 3](home-swiper-v2/img/Screenshot_2.png)
+<div align="center">
 
-### 🍿 Jellyfin Home Carousel & Theme
-![Jellyfin Carousel Preview 1](Jellyfin/img/1.png)
-![Jellyfin Carousel Preview 2](Jellyfin/img/2.png)
+### 🎞️ Home Swiper Hero Banners (V3 / V2)
+![Emby Swiper V2 Preview 1](home-swiper-v2/img/Screenshot_0.png)  
+![Emby Swiper V2 Preview 2](home-swiper-v2/img/Screenshot_1.png)  
+![Emby Swiper V2 Preview 3](home-swiper-v2/img/Screenshot_2.png)  
 
-### 📢 Item Detail Notice & Announcement Box (`text_sider`)
-![Text Sider Notice Preview](text_sider/Text%20Slider%20Box.png)
+<br/>
+
+### 🎬 External Player Integration (v2 Cyber-Glass HUD Bar)
+![External Player Preview](emby-player/Screenshot_39.png)  
+![External Player Interface](emby-player/Screenshot_1.png)  
+![External Player Mobile HUD](emby-player/v2/mobile_player_hud_fixed.png)  
+
+<br/>
+
+### 🎨 Emby Web Modern Login & Typography Overhaul
+![Visual Login Preview](img/visual_login_preview.png)  
+![Manual Login Preview](img/manual_login_preview.png)  
+
+<br/>
+
+### 🍿 Dedicated Jellyfin Web Theme & Carousel
+![Jellyfin Carousel Preview 1](Jellyfin/img/1.png)  
+![Jellyfin Carousel Preview 2](Jellyfin/img/2.png)  
+
+<br/>
+
+### 📢 Item Detail Announcement Suite (`text_sider`)
+![Text Sider Notice Preview](text_sider/Text%20Slider%20Box.png)  
+![Text No Slider Preview](text_sider/Text%20No%20Slider%20Box.png)  
+
+</div>
 
 ---
 
-## ✨ Key Features
-
-| Category | Feature | Description |
-| :--- | :--- | :--- |
-| 🚀 **Performance** | **Ultra-Lightweight** | Pure native JavaScript utilizing Emby/Jellyfin internal `ApiClient`. Minimal memory footprint. |
-| 💎 **Cyber-Glass UI** | **Modern HUD** | Acrylic glass cards (`rgba(15, 23, 42, 0.85)` + 20px blur) with live pulsating beacons and status chips. |
-| 🖼️ **Visuals** | **High-Res Backdrops & Logos** | Automatically renders clear transparent PNG logos, backdrop fanart, taglines, and synopsis. |
-| ⭐ **Metadata** | **Rating & Year Badges** | (V2/V3) Displays Community Rating (e.g., ⭐ 8.5/10), Production Year (e.g., 2024), and Official Content Rating (PG-13, TV-MA). |
-| 🔄 **Animation** | **Auto-Slide & Pause on Hover** | Rotates slides smoothly every 6–8 seconds; automatically pauses when hovering for uninterrupted reading. |
-| 📱 **Responsiveness** | **Fully Responsive Layout** | Adaptive styling seamlessly scales between 4K TVs, Ultrawide monitors, Laptops, Tablets, and Smartphones. |
-| 🎯 **Navigation** | **Interactive Controls** | Next / Previous buttons, clickable pagination bullet dots, and keyboard/touch swipe navigation. |
-| 🍿 **Playback** | **External Player Routing** | Launch streams straight into PotPlayer (Windows), MPV (via `mpv-handler`), VLC, IINA, and MX Player with 100% offline vector SVG icons. |
-| ✍️ **Typography** | **Bangla Font Integration** | Google Font 'Hind Siliguri' support for crisp Bengali script and symmetrical layout alignment. |
-| 📢 **Announcements** | **Detail Page Alert Box** | Inject customizable multilingual notice banners on media detail pages with smooth kinetic animation. |
-| 🛡️ **Reliability** | **Graceful Error Handling** | Fallback backdrops, multi-event mounting retries, and error catches prevent layout breaks when metadata or fanart is missing. |
-
----
-
-## 📂 Repository Structure & Modules
+## 📂 Repository Structure
 
 ```text
 Emby-Home-Swiper-UI/
-├── home-swiper-v3/              # 🚀 Latest Swiper v3 (Cyber-Glass, Ratings, Year)
-│   └── home.js                  # 🌟 Cinematic Swiper v3 script
-├── home-swiper-v2/              # 🌟 Advanced Swiper with Ratings, Year & UI upgrades
-│   ├── home.js / home_new.js    # Synchronized Swiper script
+├── home-swiper-v3/              # 🚀 Latest Swiper v3 (Cyber-Glass, Ratings, Year, Beacons)
+│   └── home.js                  # 🌟 Production Swiper v3 script
+├── home-swiper-v2/              # 🌟 Swiper v2 with Ratings, Year & UI upgrades
 │   ├── home-swiper.js           # Clean minimalist Swiper script
 │   ├── home_rating with year.js # Classic Swiper with Community Rating ⭐ & Year 📅
 │   └── img/                     # V2 Screenshots
@@ -83,77 +120,94 @@ Emby-Home-Swiper-UI/
 │   └── img/                     # V1 Screenshots
 ├── emby-player/                 # 🎬 External player launcher (PotPlayer, MPV, VLC)
 │   ├── v1/                      # v1 classic player scripts
-│   │   ├── emby_launch_player.js
-│   │   └── embyLaunchPotplayer.js
-│   └── v2/                      # v2 Cyber-Glass HUD launcher with offline vector SVGs
-│       └── emby_launch_player.js
+│   │   └── emby_launch_player.js
+│   ├── v2/                      # v2 Cyber-Glass HUD launcher with offline vector SVGs
+│   │   └── emby_launch_player.js
+│   ├── Screenshot_1.png         # Player previews
+│   └── Screenshot_39.png
 ├── Jellyfin/                    # 🍇 Dedicated Jellyfin Web integration
 │   ├── jellyfin/                # Styles, main.js, jQuery & MD5 dependencies
 │   ├── script.sh                # Auto setup script for Jellyfin Web
 │   └── img/                     # Jellyfin Screenshots
 ├── text_sider/                  # 📢 Media detail page announcement & notice boxes
-│   ├── Text Slider Box.html     # Scrolling notice banner
-│   ├── Text No Slider Box.html  # Dual-language announcement card
-│   ├── Text Aurora Glass Box.html# Aurora VIP glass card
-│   ├── Text Cyber Neon Slider.html# 360° rotating neon HUD
-│   ├── Text Multi-Slide Carousel.html# 3-slide notice carousel
+│   ├── Text Slider Box.html     # Continuous scrolling marquee ticker
+│   ├── Text No Slider Box.html  # Dual-language glass announcement card
+│   ├── Text Aurora Glass Box.html# Aurora VIP glass card with ambient glow
+│   ├── Text Cyber Neon Slider.html# 360° rotating neon HUD marquee
+│   ├── Text Multi-Slide Carousel.html# 3-slide interactive notice carousel
 │   ├── Text Warning Box.html    # Maintenance notice banner
-│   ├── demo.html                # Interactive test sandbox
+│   ├── demo.html                # Interactive test sandbox with 1-click code copying
 │   └── *.png                    # Preview screenshots
+├── img/                         # 📸 Login and UI overhaul preview screenshots
+│   ├── visual_login_preview.png
+│   └── manual_login_preview.png
 ├── index_integrated.html        # 🌐 Reference Emby Web index.html with clean script hooks
-├── download-homejs.bat          # 🪟 Windows PowerShell auto-download script
-├── setup-swiper.sh              # 🐧 Enhanced Linux/Docker injection script
-├── script.sh                    # 🐧 Linux auto-download script
+├── download-homejs.bat          # 🪟 Windows PowerShell interactive setup script
+├── setup-swiper.sh              # 🐧 Linux/Docker interactive setup script
 ├── upload.bat                   # 🛠️ Git upload helper script
-├── RELEASE_NOTES.md             # 📝 Release history and changelog
-└── README.md                    # 📖 Main documentation
+├── RELEASE_NOTES.md             # 📝 Detailed release history & changelog
+├── LICENSE                      # 📄 MIT License
+└── README.md                    # 📖 Master documentation
 ```
 
 ---
 
 ## 🛠️ Installation Guide
 
-Choose your platform and preferred installation method below:
+Select your target server platform and preferred installation approach:
 
-### 🌟 Option 1: Emby Server Manual Setup (Recommended)
+### 🌟 Option 1: Emby Server Manual Installation (Recommended)
 
-#### Step 1: Locate your Emby Web dashboard directory
-Find the `dashboard-ui` folder on your server:
+#### Step 1: Locate your Emby Web `dashboard-ui` directory
+Locate the web root folder for your operating system:
 
-- **Windows:** `C:\Users\<User>\AppData\Roaming\Emby-Server\system\dashboard-ui\`
-- **Linux (Debian / Ubuntu):** `/opt/emby-server/system/dashboard-ui/`
-- **Docker (`lovechen/embyserver` or official Emby Docker):** `/system/dashboard-ui/`
-- **Synology NAS:** `/volume1/@appstore/EmbyServer/system/dashboard-ui/`
+| Operating System / Container | Standard Path to `dashboard-ui` |
+| :--- | :--- |
+| 🪟 **Windows Server / Desktop** | `C:\Users\<User>\AppData\Roaming\Emby-Server\system\dashboard-ui\` |
+| 🐧 **Linux (Debian / Ubuntu)** | `/opt/emby-server/system/dashboard-ui/` |
+| 🐳 **Docker (`official` / `lovechen`)** | `/system/dashboard-ui/` *(or locate via container volume mount)* |
+| 💾 **Synology NAS** | `/volume1/@appstore/EmbyServer/system/dashboard-ui/` |
+| 📦 **QNAP NAS** | `/share/CACHEDEV1_DATA/.qpkg/EmbyServer/system/dashboard-ui/` |
+| ⚡ **Unraid / TrueNAS** | AppData path mapped to `/system/dashboard-ui/` |
 
-#### Step 2: Download & Copy the Script
-1. Choose your preferred script:
+#### Step 2: Choose and Copy Your Banner Script
+1. Pick your preferred version:
    - **Version 3 Cyber-Glass (Latest - Recommended):** [`home-swiper-v3/home.js`](home-swiper-v3/home.js)
-   - **Version 2 Ratings & Year:** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
-   - **Version 2 Minimalist:** [`home-swiper-v2/home-swiper.js`](home-swiper-v2/home-swiper.js)
-   - **Version 1 Classic:** [`home-sider-v1/home.js`](home-sider-v1/home.js)
-2. Place the script into your server's `dashboard-ui/` directory as `home.js` (or in a folder like `dashboard-ui/crx/home.js`).
+   - **Version 2 with Ratings & Year:** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
+   - **Version 2 Minimalist Swiper:** [`home-swiper-v2/home-swiper.js`](home-swiper-v2/home-swiper.js)
+   - **Version 1 Classic Slider:** [`home-sider-v1/home.js`](home-sider-v1/home.js)
+2. Place the file into your `dashboard-ui/` folder as `home.js` (or in a subfolder like `dashboard-ui/crx/home.js`).
 
-#### Step 3: Inject Script Tag in `index.html`
-Open `dashboard-ui/index.html` and add this line immediately after `apploader.js` (or before `</body>`):
+#### Step 3: Inject the Script in `dashboard-ui/index.html`
+Open `dashboard-ui/index.html` with your code editor and add the script tag right after `apploader.js` (or before `</body>`):
 
 ```html
 <!-- Emby Home Swiper UI -->
 <script src="home.js" defer></script>
 ```
-*(If placed in `crx/home.js`, use `<script src="crx/home.js" defer></script>`)*
+*(If stored inside `crx/home.js`, use `<script src="crx/home.js" defer></script>`)*
+
+> [!TIP]
+> You can also reference [`index_integrated.html`](index_integrated.html) which includes pre-configured script hooks, Google Font 'Hind Siliguri', and optimized login styling.
 
 #### Step 4: Hard Refresh
-Restart your Emby server or hard refresh your browser (`Ctrl + F5` on Windows/Linux or `Cmd + Shift + R` on macOS). Navigate to `#!/home`!
+Restart your Emby server or perform a hard refresh in your browser (`Ctrl + F5` on Windows/Linux or `Cmd + Shift + R` on macOS). Open `#!/home` to enjoy!
 
 ---
 
-### ⚡ Option 2: Automated Setup (Windows & Linux)
+### ⚡ Option 2: Automated 1-Click Installation (Windows & Linux)
 
-#### Windows:
-Run [`download-homejs.bat`](download-homejs.bat) from inside your server's `dashboard-ui` directory. It presents an interactive menu to select Version 3 Cyber-Glass Swiper and automatically configures `index.html`.
+#### 🪟 Windows Setup Script:
+1. Place [`download-homejs.bat`](download-homejs.bat) inside your Emby `dashboard-ui` directory.
+2. Double-click to run. Choose your desired version from the interactive menu:
+   - `[1] Version 3 - Cyber-Glass Swiper (Latest - Recommended)`
+   - `[2] Version 2 - With Ratings ⭐ and Release Year 📅`
+   - `[3] Version 2 - Clean Minimal Swiper`
+   - `[4] Version 1 - Classic Lightweight Slider`
+3. The script automatically downloads the script and safely injects it into `index.html`.
 
-#### Linux / Docker:
-Run the interactive setup script in your `dashboard-ui` directory:
+#### 🐧 Linux / Docker Automated Script:
+Run the following interactive installer inside your server terminal:
 
 ```bash
 cd /path/to/emby/system/dashboard-ui/
@@ -162,13 +216,52 @@ curl -sSL https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/s
 
 ---
 
-### 🍇 Option 3: Dedicated Jellyfin Server Installation
+### 🎬 Option 3: External Player Launcher (`emby-player/v2`)
+
+Intercept browser playback clicks and stream directly into high-performance desktop players:
+
+| Player | Platform | Supported Protocols | Key Feature |
+| :--- | :--- | :--- | :--- |
+| **PotPlayer** | 🪟 Windows | `potplayer://` | Full external soft-subtitle auto-load, custom pixel shaders, multi-audio. |
+| **MPV** | 🪟 Win / 🐧 Linux / 🍎 Mac | Protocol via [mpv-handler](https://github.com/akiirui/mpv-handler) | Minimalist, scriptable, zero overhead, Anime 4K upscaling. |
+| **VLC Media Player**| 🌐 Universal | `vlc://` | Unrivaled cross-platform compatibility. |
+| **IINA** | 🍎 macOS | `iina://weblink` | Polished native modern macOS player with Touch Bar integration. |
+| **MX Player / nPlayer** | 📱 Android / iOS | Mobile intent & URL scheme | Direct hardware decoding on mobile devices. |
+
+#### Setup:
+1. Copy [`emby-player/v2/emby_launch_player.js`](emby-player/v2/emby_launch_player.js) into your `dashboard-ui/emby-player/` folder.
+2. In `dashboard-ui/index.html`, add this line before `</body>`:
+
+```html
+<!-- External Player Cyber-Glass HUD -->
+<script src="emby-player/emby_launch_player.js" defer></script>
+```
+
+---
+
+### 📢 Option 4: Item Detail Notice Box Suite (`text_sider`)
+
+To display announcement banners, BDIX file server links, or Telegram requests on media detail pages (`#!/item?id=...`):
+
+1. Choose a template from [`text_sider/`](text_sider/):
+   - **`Text Aurora Glass Box.html`**: Flowing ambient mesh gradient, live shimmer bar, and VIP action buttons.
+   - **`Text Cyber Neon Slider.html`**: Cyberpunk aesthetic with 360° neon border and animated soundwave equalizer.
+   - **`Text Multi-Slide Carousel.html`**: 3-slide interactive notice carousel (CDN, IDM Download, Telegram Request) with progress timer.
+   - **`Text No Slider Box.html`**: Dual-language (Bangla + English) frosted glass notice card.
+   - **`Text Slider Box.html`**: Continuous horizontal marquee ticker with pause-on-hover.
+   - **`Text Warning Box.html`**: Compact high-visibility maintenance alert banner.
+2. Open the `.html` file, copy the `<style>` and `<script>` blocks, and paste them before `</body>` in `dashboard-ui/index.html`.
+3. Test and preview all 6 templates in the interactive sandbox: [`text_sider/demo.html`](text_sider/demo.html).
+
+---
+
+### 🍇 Option 5: Dedicated Jellyfin Server Installation
 
 1. Copy the contents of the [`Jellyfin/jellyfin/`](Jellyfin/jellyfin/) directory into your Jellyfin web root folder:
    - **Linux:** `/usr/share/jellyfin/web/`
    - **Windows:** `C:\Program Files\Jellyfin\Server\jellyfin-web\`
    - **Docker:** `/jellyfin/jellyfin-web/`
-2. Edit `index.html` in your Jellyfin web directory and insert before `</head>`:
+2. Open `index.html` in your Jellyfin web root and add before `</head>`:
 
 ```html
 <!-- Jellyfin Swiper UI Assets -->
@@ -177,55 +270,23 @@ curl -sSL https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/s
 <script src="jellyfin-crx/md5.min.js"></script>
 <script src="jellyfin-crx/main.js"></script>
 ```
-3. Restart Jellyfin:
-```bash
-sudo systemctl restart jellyfin
-```
+3. Restart Jellyfin: `sudo systemctl restart jellyfin`.
 
 ---
 
-### 🎬 Option 4: External Player Launcher (`emby-player`)
+### 🧩 Option 6: Client-Side UserScript (Tampermonkey / Violentmonkey)
 
-Route media playback directly to third-party desktop players (PotPlayer, MPV, VLC, IINA, MX Player):
+If you do not have administrative access to the server's files, inject the script locally in your browser:
 
-1. Copy [`emby-player/v2/emby_launch_player.js`](emby-player/v2/emby_launch_player.js) into your `dashboard-ui/` (or `dashboard-ui/emby-player/`) folder.
-2. In `dashboard-ui/index.html`, add the following right before `</body>`:
-
-```html
-<!-- External Player Hook -->
-<script src="emby-player/emby_launch_player.js" defer></script>
-```
-
-> **Requirements for External Players:**
-> - **PotPlayer (Windows):** Ensure PotPlayer is installed. Soft subtitles and direct streams are supported out-of-the-box.
-> - **MPV (Windows/macOS/Linux):** Requires [mpv-handler](https://github.com/akiirui/mpv-handler) protocol handler installed locally.
-> - **IINA (macOS):** Requires IINA media player with URL protocol registered.
-
----
-
-### 📢 Option 5: Item Detail Notice Box (`text_sider`)
-
-To display announcement banners or server status warnings on media item detail pages (`#!/item?id=...`):
-
-1. Open [`text_sider/Text Slider Box.html`](text_sider/Text%20Slider%20Box.html) (or `Text Aurora Glass Box.html`, `Text Warning Box.html`).
-2. Copy the `<style>` and `<script>` blocks into your `dashboard-ui/index.html` right before `</body>`.
-3. Customize your alert title and message text in the code as desired.
-4. Test and preview all 6 templates in [`text_sider/demo.html`](text_sider/demo.html).
-
----
-
-### 🧩 Option 6: Browser Extension (Tampermonkey / Violentmonkey)
-
-If you do not have root/admin access to modify the server's files, you can inject the script on your client side:
-
-1. Install **Tampermonkey** or **Violentmonkey** extension in your browser.
+1. Install [Tampermonkey](https://www.tampermonkey.net/) or Violentmonkey in Chrome, Edge, Firefox, or Safari.
 2. Create a new UserScript with the following header:
+
 ```javascript
 // ==UserScript==
-// @name         Emby Home Swiper UI
+// @name         Emby Home Swiper UI (V3 Cyber-Glass)
 // @namespace    https://github.com/sohag1192/Emby-Home-Swiper-UI
 // @version      3.0.0
-// @description  A dynamic banner carousel for Emby Web
+// @description  Cinematic Home Swiper Carousel for Emby Web
 // @match        *://*/web/index.html*
 // @match        *://*/*/web/index.html*
 // @require      https://raw.githubusercontent.com/sohag1192/Emby-Home-Swiper-UI/main/home-swiper-v3/home.js
@@ -235,56 +296,97 @@ If you do not have root/admin access to modify the server's files, you can injec
 
 ---
 
-## ⚙️ Customization & Configuration
+## ⚙️ Configuration & Customization
 
-You can easily adjust settings inside `home.js` in `class HomeSwiper.start()`:
+You can fine-tune query parameters, slide intervals, and image sizes directly inside `home.js` under `class HomeSwiper.start()`:
 
 ```javascript
-this.itemQuery = {
-    ImageTypes: "Primary,Backdrop",
-    EnableImageTypes: "Primary,Backdrop,Banner,Logo",
-    IncludeItemTypes: "Movie,Series", // Filter item types (e.g. "Movie", "Series", "BoxSet")
-    SortBy: "DateCreated",            // Sort order: "DateCreated", "PremiereDate", "CommunityRating", or "Random"
-    SortOrder: "Descending",
-    Recursive: true,
-    Limit: 10,                        // Maximum number of banner slides
-    Fields: "Taglines,Overview,ParentId,DateCreated,PremiereDate,ProductionYear,CommunityRating,OfficialRating,Genres,RunTimeTicks"
+this.itemQuery = { 
+    ImageTypes: "Primary,Backdrop", 
+    EnableImageTypes: "Primary,Backdrop,Banner,Logo", 
+    IncludeItemTypes: "Movie,Series", // Filter item types: "Movie", "Series", "BoxSet"
+    SortBy: "DateCreated",            // Sorting: "DateCreated", "PremiereDate", "CommunityRating", "Random"
+    SortOrder: "Descending",          // "Descending" (newest first) or "Ascending"
+    Recursive: true, 
+    ImageTypeLimit: 1, 
+    Limit: 10,                        // Maximum items fetched from your library
+    Fields: "Taglines,Overview,ParentId,DateCreated,PremiereDate,ProductionYear,CommunityRating,OfficialRating,Genres,RunTimeTicks", 
+    EnableUserData: true, 
+    EnableTotalRecordCount: false 
 };
 
-this.slideDelay = 6000;              // Slide rotation duration in milliseconds (e.g., 6000 = 6 seconds)
-this.showItemNum = 10;               // Number of items to display
+this.slideDelay = 6000;  // Auto-slide rotation delay in milliseconds (6000 = 6 seconds)
+this.showItemNum = 10;   // Number of banner slides in rotation
 ```
+
+### 💡 Common Query Presets:
+
+- **⭐ Top-Rated Showcase:**
+  ```javascript
+  SortBy: "CommunityRating",
+  SortOrder: "Descending",
+  ```
+- **📅 Newest Premiere Date:**
+  ```javascript
+  SortBy: "PremiereDate",
+  SortOrder: "Descending",
+  ```
+- **🎲 Random Discovery Shuffle:**
+  ```javascript
+  SortBy: "Random",
+  ```
+
+---
+
+## 🇧🇩 বাংলা সংক্ষিপ্ত নির্দেশিকা (Bangla Quick Guide)
+
+<details>
+<summary><b>📌 Emby ও Jellyfin সার্ভারে বাংলায় সেটআপ নির্দেশিকা দেখতে এখানে ক্লিক করুন</b></summary>
+
+### ১. মূল বৈশিষ্ট্যসমূহ:
+- **সিনেমাটিক হোম ব্যানার (Home Swiper V3):** সার্ভারের নতুন এবং ট্রেন্ডিং মুভি/সিরিজ স্বয়ংক্রিয়ভাবে হোম পেজে বড় ব্যানার আকারে স্লাইড করবে।
+- **রেটিং ও রিলিজ ইয়ার:** প্রতিটি ব্যানারের উপর কমিউনিটি রেটিং (`⭐ 8.5/10`), রিলিজ সাল ও কনটেন্ট রেটিং প্রদর্শিত হবে।
+- **এক্সটার্নাল প্লেয়ার সাপোর্ট (PotPlayer, VLC, MPV):** ব্রাউজারের প্লেয়ারে 4K HDR বা বড় ফাইল বাফারিং ও ট্রান্সকোডিং ছাড়াই সরাসরি পিসির পটলিপ্লেয়ার বা ভিএলসিতে জিরো ল্যাটেন্সিতে চলবে।
+- **আইটেম ডিটেইল নোটিশ বক্স (`text_sider`):** মুভি বা সিরিজের ডিটেইল পেজে প্লে বাটনের নিচে নোটিশ বা আপনার নিজস্ব ফাইল সার্ভার লিংক প্রদর্শিত হবে।
+
+### ২. দ্রুত ইনস্টলেশন:
+1. আপনার Emby সার্ভারের `dashboard-ui/` ফোল্ডারে প্রবেশ করুন।
+2. [`home-swiper-v3/home.js`](home-swiper-v3/home.js) ফাইলটি ডাউনলোড করে `dashboard-ui/home.js` হিসেবে সেভ করুন।
+3. `dashboard-ui/index.html` ফাইলের একদম নিচে `</body>` ট্যাগের ঠিক আগে নিচের কোডটি যুক্ত করুন:
+   ```html
+   <script src="home.js" defer></script>
+   ```
+4. ব্রাউজারে গিয়ে **Ctrl + F5** চেপে হার্ড রিফ্রেশ করুন এবং `#!/home` পেজে প্রবেশ করুন।
+
+</details>
 
 ---
 
 ## 🧪 Troubleshooting & FAQ
 
 <details>
-<summary><b>1. The banner is not appearing on the home page</b></summary>
+<summary><b>1. The banner is not displaying on the home page</b></summary>
 
-- **Check the URL Route:** The script only triggers on the home route: `#!/home`. Make sure you are on the main dashboard home page.
-- **Open Developer Tools (`F12`):** Check the **Console** tab for any red errors.
-- **Verify `ApiClient` Availability:**
-  ```javascript
-  console.log(ApiClient);
-  ```
-- **Manually Initialize:**
+- **Verify Route:** The script only triggers on the main home screen: `#!/home`.
+- **Check Developer Console (`F12`):** Check the Console tab for any red JavaScript errors.
+- **Verify `ApiClient`:** In your browser console, type `console.log(ApiClient);`. If it returns `undefined`, make sure your `<script>` tag has the `defer` attribute and is loaded after `apploader.js`.
+- **Manual Launch Test:** Execute manually in console:
   ```javascript
   HomeSwiper.init();
   ```
 </details>
 
 <details>
-<summary><b>2. Images or logos appear blank</b></summary>
+<summary><b>2. Fanart or title logos appear blank</b></summary>
 
-- Ensure your media items have identified metadata with backdrops and clear logos in Emby.
-- If an item does not have a logo, the script automatically falls back to clean styled text title.
+- Ensure your media items have identified metadata with valid backdrops and transparent PNG logos in Emby.
+- If an item does not have a transparent logo, the script automatically falls back to a stylized typographic title.
 </details>
 
 <details>
-<summary><b>3. Changes reset after server update</b></summary>
+<summary><b>3. Changes reset after an official Emby Server update</b></summary>
 
-- Official server upgrades often overwrite `index.html`. Keep a backup of your script tags or use [`index_integrated.html`](index_integrated.html) to quickly restore hooks.
+- Official server upgrades often overwrite `index.html`. Keep a backup of your script tags or use [`index_integrated.html`](index_integrated.html) to quickly restore your script hooks.
 </details>
 
 ---

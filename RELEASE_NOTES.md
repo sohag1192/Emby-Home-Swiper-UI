@@ -30,7 +30,7 @@
 - **100% Offline Vector SVG Icons:** Eliminated external CDN dependencies (`7o7o.cc`). All player brand icons (PotPlayer, VLC, MPV, IINA, MX Player) are embedded directly as crisp vector SVGs with zero network latency and pixel-perfect 4K/Retina scaling.
 - **Brand Neon Glows:** Custom brand-matched hover effects (PotPlayer Amber `#facc15`, VLC Orange `#f97316`, MPV Purple `#a855f7`, IINA Rose `#f43f5e`, MX Cyan `#06b6d4`, Copy Emerald `#10b981`).
 - **Tactile Copy Feedback:** Clicking "Copy Stream URL" displays an interactive `✅ Copied!` animation for 2.5 seconds while preserving the original SVG icon.
-- **Synchronized Standalone Launcher:** Added `embyLaunchPotplayer.js` for standalone and userscript usage.
+- **Streamlined Standalone Launcher:** Standardized unified `emby_launch_player.js` for seamless multi-player routing.
 
 #### 3. 🌟 Cinematic Swiper Carousel v2.5 Upgrades (`home.js`)
 - **Frosted Glass Metadata Chips:** Modern acrylic metadata pills for Community Rating ⭐, Production Year 📅, and Content Certification with smooth hover scale (`1.03x`).
@@ -44,9 +44,9 @@
 - **ISP Alert Notice & Login Polish:** Cleaned up redundant headers and disclaimer boxes for a distraction-free, premium login screen.
 
 #### 5. 🧹 Repository Optimization & Cleanup
-- ❌ **Removed:** Redundant temporary files (`home-swiper-v2/home._old.js`) and outdated testing scripts (`emby-player/emby_launch_player_testing.js`).
+- ❌ **Removed:** Redundant duplicate files (`home-swiper-v2/home_new.js`, `home-swiper-v2/home.js`, `embyLaunchPotplayer.js`, root `script.sh`) and outdated documentation across subfolders.
 - 📦 **Clean Packaging:** Archived update bundles into structured directories and added `.gitignore` to prevent archive pollution.
-- 🛠️ **Updated Auto-Installers:** Enhanced `download-homejs.bat`, `setup-swiper.sh`, and `script.sh` to install the latest v2.5 Cyber-Glass suite with 1 click.
+- 🛠️ **Updated Auto-Installers:** Enhanced `download-homejs.bat` and `setup-swiper.sh` to install the latest Cyber-Glass suite with 1 click.
 
 ---
 
@@ -87,7 +87,7 @@ Injects customizable, responsive alert boxes and scrolling tickers under action 
 - Custom theme (`style.css`), modern carousel scripts, and dedicated shell setup script for Jellyfin Web (`10.8.x – 10.11.x+`).
 
 #### 5. 🛠️ 1-Click Setup Scripts
-- **Linux/Docker:** `setup-swiper.sh` / `script.sh` with interactive version selection.
+- **Linux/Docker:** `setup-swiper.sh` with interactive version selection.
 - **Windows:** `download-homejs.bat` with automated PowerShell download and `index.html` injection.
 - **Client-Side:** UserScript support for Tampermonkey / Violentmonkey.
 

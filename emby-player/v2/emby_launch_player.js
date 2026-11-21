@@ -93,16 +93,13 @@
     // Jellyfin Icons: https://marella.github.io/material-icons/demo
     // Emby Icons: https://fonts.google.com/icons
     const customBtns = [
-        { id: "hideByOS", title: "Heterogeneous Players", iconName: "more", onClick: hideByOSHandler, },
+        { id: "hideByOS", title: "Filter OS", iconName: "tune", onClick: hideByOSHandler, },
         { id: "iconOnly", title: "Display Mode", iconName: "open_in_full", onClick: iconOnlyHandler, },
-        { id: "notCurrentPot", title: "Multi-instance Potplayer", iconName: "window", onClick: notCurrentPotHandler, },
+        { id: "notCurrentPot", title: "Multi-Pot", iconName: "window", onClick: notCurrentPotHandler, },
         { id: "strmDirect", title: "STRM Direct", desc: "AList note: turn off sign, otherwise do not enable this option, still processed by server side sign"
             , iconName: "link", onClick: strmDirectHandler,
         },
     ];
-    if (!iconConfig.removeCustomBtns) {
-        playBtns.push(...customBtns);
-    }
     const fileNameReg = /.*[\\/]|(\?.*)?$/g;
     const selectors = {
         // Detail page rating, release date information bar
@@ -128,18 +125,17 @@
             style.innerHTML = `
                 #ExternalPlayersBtns {
                     width: 100% !important;
-                    margin: 16px 0 12px 0 !important;
-                    padding: 14px 18px !important;
+                    margin: 14px 0 10px 0 !important;
+                    padding: 14px 16px !important;
                     border-radius: 16px !important;
-                    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(20, 28, 48, 0.78) 100%) !important;
+                    background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(20, 28, 48, 0.82) 100%) !important;
                     backdrop-filter: blur(20px) !important;
                     -webkit-backdrop-filter: blur(20px) !important;
                     border: 1px solid rgba(255, 255, 255, 0.14) !important;
                     border-left: 4px solid #06b6d4 !important;
                     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(6, 182, 212, 0.15) !important;
                     display: flex !important;
-                    flex-wrap: wrap !important;
-                    align-items: center !important;
+                    flex-direction: column !important;
                     gap: 10px !important;
                     box-sizing: border-box !important;
                     position: relative !important;
@@ -149,7 +145,7 @@
                     display: flex !important;
                     align-items: center !important;
                     justify-content: space-between !important;
-                    margin-bottom: 8px !important;
+                    margin-bottom: 2px !important;
                     padding-bottom: 8px !important;
                     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
                     flex-wrap: wrap !important;
@@ -161,7 +157,7 @@
                     gap: 8px !important;
                     font-size: 12px !important;
                     font-weight: 800 !important;
-                    letter-spacing: 1px !important;
+                    letter-spacing: 0.8px !important;
                     color: #ffffff !important;
                     text-transform: uppercase !important;
                 }
@@ -173,6 +169,7 @@
                     box-shadow: 0 0 12px #10b981 !important;
                     display: inline-block !important;
                     animation: sn-hud-pulse 1.8s infinite ease-in-out !important;
+                    flex-shrink: 0 !important;
                 }
                 @keyframes sn-hud-pulse {
                     0%, 100% { transform: scale(0.9); opacity: 0.7; }
@@ -199,34 +196,46 @@
                     background: rgba(16, 185, 129, 0.15) !important;
                     border-color: rgba(16, 185, 129, 0.35) !important;
                 }
+                .sn-player-grid {
+                    width: 100% !important;
+                    display: grid !important;
+                    grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)) !important;
+                    gap: 10px !important;
+                    box-sizing: border-box !important;
+                }
                 #ExternalPlayersBtns .detailButton {
                     background: rgba(255, 255, 255, 0.07) !important;
                     backdrop-filter: blur(14px) !important;
                     -webkit-backdrop-filter: blur(14px) !important;
                     border: 1px solid rgba(255, 255, 255, 0.16) !important;
-                    border-radius: 11px !important;
+                    border-radius: 12px !important;
                     color: #ffffff !important;
                     font-weight: 700 !important;
-                    font-size: 13.5px !important;
-                    height: 40px !important;
-                    padding: 0 16px !important;
+                    font-size: 13px !important;
+                    height: 42px !important;
+                    padding: 0 12px !important;
                     display: inline-flex !important;
                     align-items: center !important;
                     justify-content: center !important;
                     gap: 8px !important;
-                    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
                     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
                     cursor: pointer !important;
                     font-family: inherit !important;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
+                    margin: 0 !important;
+                    -webkit-tap-highlight-color: transparent !important;
+                    user-select: none !important;
                 }
                 #ExternalPlayersBtns .detailButton:hover {
-                    transform: translateY(-3px) scale(1.03) !important;
+                    transform: translateY(-2px) scale(1.02) !important;
                     background: rgba(255, 255, 255, 0.18) !important;
                     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
                     filter: brightness(1.1) !important;
                 }
                 #ExternalPlayersBtns .detailButton:active {
-                    transform: translateY(-1px) scale(0.98) !important;
+                    transform: scale(0.97) !important;
                 }
                 #ExternalPlayersBtns #embyPot:hover {
                     border-color: rgba(250, 204, 21, 0.85) !important;
@@ -250,12 +259,13 @@
                     box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35) !important;
                 }
                 #ExternalPlayersBtns #embyCopyUrl {
-                    background: rgba(16, 185, 129, 0.12) !important;
-                    border-color: rgba(16, 185, 129, 0.35) !important;
+                    background: rgba(16, 185, 129, 0.15) !important;
+                    border-color: rgba(16, 185, 129, 0.45) !important;
+                    grid-column: 1 / -1 !important;
                 }
                 #ExternalPlayersBtns #embyCopyUrl:hover {
-                    background: rgba(16, 185, 129, 0.25) !important;
-                    border-color: rgba(16, 185, 129, 0.85) !important;
+                    background: rgba(16, 185, 129, 0.3) !important;
+                    border-color: rgba(16, 185, 129, 0.9) !important;
                     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4) !important;
                 }
                 #ExternalPlayersBtns .detailButton-content {
@@ -263,6 +273,12 @@
                     align-items: center !important;
                     justify-content: center !important;
                     gap: 8px !important;
+                    max-width: 100% !important;
+                }
+                #ExternalPlayersBtns .button-text {
+                    white-space: nowrap !important;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
                 }
                 #ExternalPlayersBtns .detailButton-icon {
                     width: 22px !important;
@@ -275,6 +291,137 @@
                     background-position: center !important;
                     background-repeat: no-repeat !important;
                     border-radius: 6px !important;
+                    flex-shrink: 0 !important;
+                }
+
+                /* HUD Utility Toolbar */
+                .sn-player-hud-toolbar {
+                    width: 100% !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: flex-start !important;
+                    flex-wrap: wrap !important;
+                    gap: 6px !important;
+                    margin-top: 4px !important;
+                    padding-top: 8px !important;
+                    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+                }
+                .sn-player-hud-tool-label {
+                    font-size: 10px !important;
+                    font-weight: 700 !important;
+                    color: rgba(255, 255, 255, 0.45) !important;
+                    letter-spacing: 0.8px !important;
+                    text-transform: uppercase !important;
+                    margin-right: 4px !important;
+                    user-select: none !important;
+                }
+                #ExternalPlayersBtns .sn-player-tool-btn {
+                    height: 28px !important;
+                    padding: 0 10px !important;
+                    font-size: 11px !important;
+                    font-weight: 600 !important;
+                    border-radius: 14px !important;
+                    background: rgba(255, 255, 255, 0.05) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+                    color: rgba(255, 255, 255, 0.75) !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 5px !important;
+                    box-shadow: none !important;
+                    cursor: pointer !important;
+                    transition: all 0.2s ease !important;
+                    font-family: inherit !important;
+                    user-select: none !important;
+                    -webkit-tap-highlight-color: transparent !important;
+                }
+                #ExternalPlayersBtns .sn-player-tool-btn:hover {
+                    background: rgba(255, 255, 255, 0.12) !important;
+                    color: #ffffff !important;
+                    border-color: rgba(6, 182, 212, 0.4) !important;
+                }
+                #ExternalPlayersBtns .sn-player-tool-btn.button-submit {
+                    background: rgba(6, 182, 212, 0.18) !important;
+                    border-color: rgba(6, 182, 212, 0.6) !important;
+                    color: #38bdf8 !important;
+                }
+
+                /* Mobile Responsive Layout (< 768px) */
+                @media (max-width: 768px) {
+                    #ExternalPlayersBtns {
+                        margin: 10px 0 8px 0 !important;
+                        padding: 12px 14px !important;
+                        border-radius: 14px !important;
+                        gap: 8px !important;
+                    }
+                    .sn-player-grid {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                        gap: 8px !important;
+                    }
+                    #ExternalPlayersBtns .detailButton {
+                        height: 40px !important;
+                        padding: 0 8px !important;
+                        font-size: 12px !important;
+                        border-radius: 10px !important;
+                        gap: 6px !important;
+                    }
+                    #ExternalPlayersBtns .detailButton-icon {
+                        width: 19px !important;
+                        height: 19px !important;
+                        min-width: 19px !important;
+                        min-height: 19px !important;
+                    }
+                    .sn-player-hud-header {
+                        gap: 6px !important;
+                    }
+                    .sn-player-hud-left {
+                        font-size: 11px !important;
+                        letter-spacing: 0.6px !important;
+                    }
+                    .sn-player-hud-tag {
+                        font-size: 9px !important;
+                        padding: 1.5px 6px !important;
+                    }
+                    .sn-player-hud-toolbar {
+                        gap: 5px !important;
+                        padding-top: 6px !important;
+                    }
+                    #ExternalPlayersBtns .sn-player-tool-btn {
+                        height: 26px !important;
+                        padding: 0 8px !important;
+                        font-size: 10.5px !important;
+                    }
+                }
+                @media (max-width: 380px) {
+                    #ExternalPlayersBtns {
+                        padding: 10px 10px !important;
+                    }
+                    .sn-player-grid {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                        gap: 6px !important;
+                    }
+                    #ExternalPlayersBtns .detailButton {
+                        font-size: 11px !important;
+                        height: 38px !important;
+                        padding: 0 6px !important;
+                    }
+                }
+                #ExternalPlayersBtns .sn-hidden,
+                #ExternalPlayersBtns .detailButton.sn-hidden,
+                #ExternalPlayersBtns .sn-player-tool-btn.sn-hidden {
+                    display: none !important;
+                }
+                #ExternalPlayersBtns.is-icon-only .sn-player-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)) !important;
+                }
+                #ExternalPlayersBtns.is-icon-only .detailButton {
+                    padding: 0 !important;
+                    width: 46px !important;
+                    height: 42px !important;
+                    justify-content: center !important;
+                }
+                #ExternalPlayersBtns.is-icon-only #embyCopyUrl {
+                    grid-column: auto !important;
+                    width: 46px !important;
                 }
             `;
             (document.head || document.body).appendChild(style);
@@ -303,8 +450,20 @@
                 </button>
             `;
         }
+        function generateToolButtonHTML({ id, title, desc }) {
+            return `
+                <button
+                    id="${id}"
+                    type="button"
+                    class="sn-player-tool-btn emby-button"
+                    title="${desc ? desc : title}"
+                >
+                    <span class="tool-text">${title}</span>
+                </button>
+            `;
+        }
         let buttonHtml = `
-            <div id="${playBtnsWrapperId}" class="detailButtons flex align-items-flex-start flex-wrap-wrap detail-lineItem">
+            <div id="${playBtnsWrapperId}" class="detailButtons detail-lineItem">
                 <div class="sn-player-hud-header">
                     <div class="sn-player-hud-left">
                         <span class="sn-player-hud-beacon"></span>
@@ -315,10 +474,24 @@
                         <span class="sn-player-hud-tag">100% BITRATE</span>
                     </div>
                 </div>
+                <div class="sn-player-grid">
         `;
         playBtns.forEach(btn => {
             buttonHtml += generateButtonHTML(btn);
         });
+        buttonHtml += `</div>`;
+
+        if (!iconConfig.removeCustomBtns) {
+            buttonHtml += `
+                <div class="sn-player-hud-toolbar">
+                    <span class="sn-player-hud-tool-label">PREFERENCES:</span>
+            `;
+            customBtns.forEach(btn => {
+                buttonHtml += generateToolButtonHTML(btn);
+            });
+            buttonHtml += `</div>`;
+        }
+
         buttonHtml += `</div>`;
 
         if (!isEmby) {
@@ -353,6 +526,14 @@
                 btnEle.onclick = btn.onClick;
             }
         });
+        if (!iconConfig.removeCustomBtns) {
+            customBtns.forEach(btn => {
+                const btnEle = document.querySelector(`#${btn.id}`);
+                if (btnEle) {
+                    btnEle.onclick = btn.onClick;
+                }
+            });
+        }
 
         const iconBaseUrl = iconConfig.baseUrl;
         const icons = [
@@ -788,8 +969,9 @@
         window.open(url, "_self");
     }
 
-    function lsCheckSetBoolean(event, lsKeyName) {
-        let flag = localStorage.getItem(lsKeyName) === "1";
+    function lsCheckSetBoolean(event, lsKeyName, defaultVal = false) {
+        let val = localStorage.getItem(lsKeyName);
+        let flag = val !== null ? val === "1" : defaultVal;
         if (event) {
             flag = !flag;
             localStorage.setItem(lsKeyName, flag ? "1" : "0");
@@ -802,16 +984,23 @@
         if (!btn) {
             return;
         }
-        const flag = lsCheckSetBoolean(event, lsKeys.hideByOS);
+        // Default to true: only show players compatible with the current OS
+        const flag = lsCheckSetBoolean(event, lsKeys.hideByOS, true);
         const playBtnsWrapper = document.getElementById(playBtnsWrapperId);
-        const buttonEleArr = playBtnsWrapper.querySelectorAll("button");
+        if (!playBtnsWrapper) return;
+        const buttonEleArr = playBtnsWrapper.querySelectorAll(".sn-player-grid button");
         buttonEleArr.forEach(btnEle => {
-            const btn = playBtns.find(btn => btn.id === btnEle.id);
-            const shouldHide = flag && btn.osCheck && !btn.osCheck.some(check => check());
-            console.log(`${btn.id} Should Hide: ${shouldHide}`);
-            btnEle.style.display = shouldHide ? 'none' : 'block';
+            const btnObj = playBtns.find(b => b.id === btnEle.id);
+            if (!btnObj) return;
+            // Always keep Copy Stream URL and universal players without osCheck visible
+            const shouldHide = Boolean(flag && btnObj.osCheck && !btnObj.osCheck.some(check => check()));
+            btnEle.classList.toggle("sn-hidden", shouldHide);
         });
         btn.classList.toggle("button-submit", flag);
+        const toolText = btn.querySelector(".tool-text");
+        if (toolText) {
+            toolText.innerText = flag ? "OS Filter: Active" : "All Players";
+        }
     }
 
     function iconOnlyHandler(event) {
@@ -819,13 +1008,15 @@
         if (!btn) {
             return;
         }
-        const flag = lsCheckSetBoolean(event, lsKeys.iconOnly);
+        const flag = lsCheckSetBoolean(event, lsKeys.iconOnly, false);
         const playBtnsWrapper = document.getElementById(playBtnsWrapperId);
-        const spans = playBtnsWrapper.querySelectorAll("span");
+        if (!playBtnsWrapper) return;
+        playBtnsWrapper.classList.toggle("is-icon-only", flag);
+        const spans = playBtnsWrapper.querySelectorAll(".sn-player-grid .button-text");
         spans.forEach(span => {
-            span.hidden = flag;
+            span.classList.toggle("sn-hidden", flag);
         });
-        const iArr = playBtnsWrapper.querySelectorAll("i");
+        const iArr = playBtnsWrapper.querySelectorAll(".sn-player-grid i");
         iArr.forEach(iEle => {
             iEle.classList.toggle("button-icon-left", !flag);
         });
@@ -837,7 +1028,12 @@
         if (!btn) {
             return;
         }
-        const flag = lsCheckSetBoolean(event, lsKeys.notCurrentPot);
+        // PotPlayer is Windows-only; hide completely on mobile/mac
+        if (!OS.isWindows()) {
+            btn.classList.add("sn-hidden");
+            return;
+        }
+        const flag = lsCheckSetBoolean(event, lsKeys.notCurrentPot, false);
         btn.classList.toggle("button-submit", flag);
     }
 
@@ -846,7 +1042,7 @@
         if (!btn) {
             return;
         }
-        const flag = lsCheckSetBoolean(event, lsKeys.strmDirect);
+        const flag = lsCheckSetBoolean(event, lsKeys.strmDirect, false);
         btn.classList.toggle("button-submit", flag);
     }
 

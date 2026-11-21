@@ -59,20 +59,6 @@ This component has been completely overhauled with a modern, high-end design lan
 
 ---
 
-## 📸 Previews
-
-<div align="center">
-
-### 🎬 External Player Dialog & Protocol Hook (Cyber-Glass HUD)
-![External Player Integration Preview](../../emby-player/Screenshot_39.png)  
-
-### 🎛️ Media Selection & Zero Transcode Direct Play
-![External Player Interface](../../emby-player/Screenshot_1.png)  
-
-</div>
-
----
-
 ## 🛠️ Deployment Methods
 
 ### Method 1: Clean Emby Web Integration (Active)

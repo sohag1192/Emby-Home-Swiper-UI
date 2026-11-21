@@ -34,7 +34,7 @@ class HomeSwiper {
 			Recursive: true, 
 			ImageTypeLimit: 1, 
 			Limit: 10, 
-			Fields: "Taglines,Overview,ParentId,DateCreated,PremiereDate,ProductionYear,CommunityRating,OfficialRating,Genres,RunTimeTicks", 
+			Fields: "Taglines,Overview,ParentId,DateCreated,PremiereDate,ProductionYear,CommunityRating,OfficialRating,Genres,RunTimeTicks,MediaSources,MediaStreams", 
 			SortOrder: "Descending", 
 			EnableUserData: true, 
 			EnableTotalRecordCount: false 
@@ -46,7 +46,7 @@ class HomeSwiper {
 		this.itemQuery.Limit = 10;
 		this.showItemNum = 10;
 		this.slideDelay = 6000;
-		this.cacheVersion = "v5-sn-modern-banner-fix";
+		this.cacheVersion = "v6-sn-ultra-banner";
 		this.loadFlag = false; 
 		this.flag_cssjs = true; 
 		this._isMounting = false;
@@ -1249,6 +1249,18 @@ div.mySwiper {
 	background: rgba(76, 5, 25, 0.7);
 }
 
+.banner-meta .meta-genre {
+	border-color: rgba(6, 182, 212, 0.45);
+	color: #67e8f9;
+	background: rgba(8, 51, 68, 0.72);
+	box-shadow: 0 0 12px rgba(6, 182, 212, 0.25);
+}
+
+.banner-meta .meta-genre:hover {
+	border-color: rgba(6, 182, 212, 0.85);
+	box-shadow: 0 0 16px rgba(6, 182, 212, 0.5);
+}
+
 .banner-meta .meta-icon {
 	width: 1.05em;
 	height: 1.05em;
@@ -1275,11 +1287,19 @@ div.mySwiper {
 	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
-.banner-top-badge {
+.banner-top-badge-wrap {
 	position: absolute;
 	top: clamp(4.2rem, 6.8vw, 7.2rem);
 	left: calc(3.4vw + min(0.72em, max(0.48em, 1.78vw)));
 	z-index: 5;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.banner-top-badge {
+	position: static !important;
 	color: #fff;
 	background: linear-gradient(135deg, rgba(225, 29, 72, 0.92) 0%, rgba(168, 85, 247, 0.92) 100%);
 	border: 1px solid rgba(255, 255, 255, 0.28);
@@ -1317,6 +1337,63 @@ div.mySwiper {
 .banner-top-badge.badge-tv {
 	background: linear-gradient(135deg, rgba(6, 182, 212, 0.92) 0%, rgba(59, 130, 246, 0.92) 100%);
 	box-shadow: 0 4px 20px rgba(6, 182, 212, 0.45);
+}
+
+.banner-quality-badge {
+	color: #fff;
+	border-radius: 7px;
+	padding: 0.38em 0.8em;
+	font-size: clamp(0.68rem, 0.32rem + 0.65vw, 0.82rem);
+	font-weight: 800;
+	letter-spacing: 0.8px;
+	line-height: 1;
+	text-transform: uppercase;
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+	display: inline-flex;
+	align-items: center;
+}
+
+.badge-quality-4k {
+	background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%);
+	border-color: rgba(251, 191, 36, 0.65);
+	box-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+	color: #ffffff;
+}
+
+.badge-quality-1080p {
+	background: rgba(30, 41, 59, 0.85);
+	border-color: rgba(148, 163, 184, 0.4);
+	color: #e2e8f0;
+}
+
+.badge-quality-dovi {
+	background: linear-gradient(135deg, rgba(168, 85, 247, 0.9) 0%, rgba(236, 72, 153, 0.9) 100%);
+	border-color: rgba(192, 132, 252, 0.65);
+	box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+	color: #ffffff;
+}
+
+.badge-quality-hdr {
+	background: linear-gradient(135deg, rgba(14, 165, 233, 0.9) 0%, rgba(37, 99, 235, 0.9) 100%);
+	border-color: rgba(56, 189, 248, 0.65);
+	box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+	color: #ffffff;
+}
+
+.badge-quality-atmos {
+	background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.9) 100%);
+	border-color: rgba(52, 211, 153, 0.65);
+	box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+	color: #ffffff;
+}
+
+.badge-quality-audio {
+	background: rgba(30, 41, 59, 0.85);
+	border-color: rgba(100, 116, 139, 0.4);
+	color: #94a3b8;
 }
 
 .custom .morebutton {
@@ -1372,6 +1449,76 @@ div.mySwiper {
 	background: rgba(255, 255, 255, 0.26);
 	border-color: rgba(255, 255, 255, 0.45);
 	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.custom .banner-item-fav {
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	color: #ffffff;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom .banner-item-fav:hover {
+	transform: translateY(-2px) scale(1.03);
+	background: rgba(239, 68, 68, 0.22);
+	border-color: rgba(239, 68, 68, 0.6);
+	box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+	color: #fca5a5;
+}
+
+.custom .banner-item-fav.is-active {
+	background: rgba(239, 68, 68, 0.28);
+	border-color: rgba(239, 68, 68, 0.75);
+	color: #fca5a5;
+	box-shadow: 0 4px 18px rgba(239, 68, 68, 0.45);
+}
+
+.custom .banner-item-fav .icon-heart {
+	transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.custom .banner-item-fav:hover .icon-heart {
+	transform: scale(1.22);
+}
+
+.custom .banner-item-fav:active {
+	transform: scale(0.96);
+}
+
+.banner-server-pill {
+	position: absolute;
+	bottom: 18px;
+	right: calc(2vw + 12px);
+	z-index: 4;
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 6px 14px;
+	border-radius: 20px;
+	background: rgba(15, 23, 42, 0.78);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	color: #38bdf8;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.8px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+	pointer-events: auto;
+	user-select: none;
+}
+
+.server-pill-beacon {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #38bdf8;
+	box-shadow: 0 0 10px #38bdf8;
+	display: inline-block;
+	animation: badge-beacon-pulse 1.8s infinite ease-in-out;
 }
 
 .custom button .btn-icon {
@@ -1442,10 +1589,21 @@ div.mySwiper {
 	}
 
 	.custom button {
-		height: 38px;
-		padding: 0 16px;
-		font-size: 13px;
+		height: 36px;
+		padding: 0 12px;
+		font-size: 12px;
+		gap: 6px;
 		border-radius: 8px !important;
+	}
+
+	.custom button .btn-icon {
+		width: 15px;
+		height: 15px;
+	}
+
+	.custom .morebutton {
+		gap: 8px !important;
+		margin-top: 0.8rem !important;
 	}
 
 	.swiper-button-next,
@@ -1454,21 +1612,25 @@ div.mySwiper {
 	}
 
 	.custom .title {
-		max-width: 78vw !important;
+		max-width: 82vw !important;
 	}
 
 	.custom .subtitle {
-		max-width: 78vw !important;
+		max-width: 82vw !important;
 	}
 
 	.custom p {
-		max-width: 78vw !important;
+		max-width: 82vw !important;
+		font-size: 0.82rem !important;
+		line-height: 1.35 !important;
 		-webkit-line-clamp: 2 !important;
 	}
 
 	img.banner-logo {
-		width: 30% !important;
-		height: 50px !important;
+		width: auto !important;
+		max-width: 45% !important;
+		max-height: 55px !important;
+		height: auto !important;
 	}
 
 	.banner-meta {
@@ -1477,9 +1639,24 @@ div.mySwiper {
 		font-size: 0.72rem;
 	}
 
+	.banner-top-badge-wrap {
+		top: 4.2rem !important;
+		gap: 5px !important;
+		max-width: 90vw !important;
+	}
+
 	.banner-top-badge {
-		top: 4.4rem;
-		font-size: 0.68rem;
+		font-size: 0.65rem !important;
+		padding: 0.35em 0.7em !important;
+	}
+
+	.banner-quality-badge {
+		font-size: 0.62rem !important;
+		padding: 0.3em 0.6em !important;
+	}
+
+	.banner-server-pill {
+		display: none !important;
 	}
 }
 
@@ -2005,6 +2182,67 @@ div.dialogContainer {
 		});
 	}
 
+	static favlistener() {
+		document.querySelectorAll(".view:not(.hide) .banner-item-fav").forEach(dom => {
+			dom.onclick = async (e) => {
+				e?.stopPropagation();
+				const id = dom.getAttribute("id");
+				if (!id || typeof ApiClient === "undefined") return;
+				const userId = ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
+				if (!userId) return;
+				const isActive = dom.classList.contains("is-active");
+				const newStatus = !isActive;
+
+				// Optimistic UI toggle
+				dom.classList.toggle("is-active", newStatus);
+				const heartSvg = dom.querySelector(".icon-heart");
+				const textSpan = dom.querySelector(".fav-text");
+				if (heartSvg) heartSvg.setAttribute("fill", newStatus ? "#ef4444" : "none");
+				if (textSpan) textSpan.innerText = newStatus ? "SAVED" : "FAVORITE";
+				dom.title = newStatus ? "Remove from Favorites" : "Add to Favorites";
+
+				try {
+					if (ApiClient.updateFavoriteStatus) {
+						await ApiClient.updateFavoriteStatus(userId, id, newStatus);
+					}
+				} catch (err) {
+					console.warn("[HomeSwiper] updateFavoriteStatus failed:", err);
+					dom.classList.toggle("is-active", isActive);
+					if (heartSvg) heartSvg.setAttribute("fill", isActive ? "#ef4444" : "none");
+					if (textSpan) textSpan.innerText = isActive ? "SAVED" : "FAVORITE";
+				}
+			};
+		});
+	}
+
+	static setupPerformanceObserver(element) {
+		if (!('IntersectionObserver' in window) || !element) return;
+		this._bannerObserver?.disconnect();
+		this._bannerObserver = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				const isVisible = entry.isIntersecting && entry.intersectionRatio > 0.15;
+				if (isVisible) {
+					if (this.swiper2?.autoplay && !this.swiper2.autoplay.running) {
+						this.swiper2.autoplay.start();
+					}
+					const activeChild = this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper;
+					if (activeChild?.autoplay && !activeChild.autoplay.running) {
+						activeChild.autoplay.start();
+					}
+				} else {
+					if (this.swiper2?.autoplay && this.swiper2.autoplay.running) {
+						this.swiper2.autoplay.stop();
+					}
+					const activeChild = this.swiper2?.slides?.[this.swiper2.activeIndex]?.querySelector(".swiper")?.swiper;
+					if (activeChild?.autoplay && activeChild.autoplay.running) {
+						activeChild.autoplay.stop();
+					}
+				}
+			});
+		}, { threshold: [0, 0.15] });
+		this._bannerObserver.observe(element);
+	}
+
 	static async getItems(query) {
 		try {
 			const userId = typeof ApiClient !== "undefined" && ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : "";
@@ -2137,9 +2375,10 @@ div.dialogContainer {
       <div class="swiper-wrapper" data-focusscroll="true">
       </div>
    </div>
-   <a class="hitcounter-link" href="https://hitscounter.dev/" target="_blank" rel="noopener noreferrer" aria-label="Visitor counter">
-      <img src="https://hitscounter.dev/api/hit?url=http%3A%2F%2F100.100.100.6%3A8096%2F&label=Visitors&icon=graph-up&color=%23ffc107&message=&style=flat&tz=Asia%2FDhaka" alt="Visitor Counter" loading="lazy" decoding="async">
-   </a>
+   <div class="banner-server-pill" title="Sarker Net Media • 100% BDIX Direct Stream">
+      <span class="server-pill-beacon"></span>
+      <span>10G BDIX • ULTRA HD</span>
+   </div>
 </div>
 `;
 		this.Alldata = await this.getLibItems(false);
@@ -2186,11 +2425,50 @@ div.dialogContainer {
 					}
 				}
 
+				// Quality Badges (4K UHD, HDR10, Dolby Vision, Dolby Atmos, Surround)
+				const mediaStreams = detail.MediaStreams || detail.MediaSources?.[0]?.MediaStreams || [];
+				const videoStream = mediaStreams.find(s => s.Type === "Video");
+				const audioStream = mediaStreams.find(s => s.Type === "Audio");
+
+				let qualityBadges = [];
+				if (videoStream) {
+					const width = videoStream.Width || 0;
+					const height = videoStream.Height || 0;
+					if (width >= 3800 || height >= 2000) {
+						qualityBadges.push({ text: "4K UHD", className: "badge-quality-4k" });
+					} else if (width >= 1900 || height >= 1000) {
+						qualityBadges.push({ text: "1080P FHD", className: "badge-quality-1080p" });
+					}
+
+					const videoRange = (videoStream.VideoRange || videoStream.VideoRangeType || "").toUpperCase();
+					const isDoVi = videoRange.includes("DOVI") || videoRange.includes("VISION") || (videoStream.ExtendedVideoSubType || "").includes("Dovi");
+					if (isDoVi) {
+						qualityBadges.push({ text: "DOLBY VISION", className: "badge-quality-dovi" });
+					} else if (videoRange.includes("HDR")) {
+						qualityBadges.push({ text: "HDR10", className: "badge-quality-hdr" });
+					}
+				}
+
+				if (audioStream) {
+					const audioCodec = (audioStream.Codec || "").toLowerCase();
+					const audioProfile = (audioStream.Profile || audioStream.Title || "").toLowerCase();
+					const channels = audioStream.Channels || 0;
+
+					if (audioProfile.includes("atmos") || audioCodec.includes("atmos")) {
+						qualityBadges.push({ text: "DOLBY ATMOS", className: "badge-quality-atmos" });
+					} else if (channels >= 8) {
+						qualityBadges.push({ text: "7.1 SURROUND", className: "badge-quality-audio" });
+					} else if (channels >= 6) {
+						qualityBadges.push({ text: "5.1 SURROUND", className: "badge-quality-audio" });
+					}
+				}
+
 				const metaIcons = {
 					star: `<svg class="meta-icon icon-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.4 7 .7-5.2 4.7 1.5 6.9L12 17.2l-6.2 3.5 1.5-6.9L2.1 9.1l7-.7L12 2Z"/></svg>`,
 					calendar: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
 					clock: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
-					cert: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/></svg>`
+					cert: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/></svg>`,
+					genre: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>`
 				};
 
 				const metaItems = [
@@ -2200,14 +2478,29 @@ div.dialogContainer {
 					officialRating && { icon: metaIcons.cert, value: officialRating, className: "meta-cert" }
 				].filter(Boolean);
 
+				// Add up to 2 genres
+				const genres = (detail.Genres || []).slice(0, 2);
+				genres.forEach(genre => {
+					metaItems.push({
+						icon: metaIcons.genre,
+						value: this.escapeHtml(genre),
+						className: "meta-genre"
+					});
+				});
+
 				const metaHtml = metaItems.map(m => `<span class="${m.className || ''}">${m.icon}<span>${m.value}</span></span>`).join("");
+				const isFavorite = !!detail.UserData?.IsFavorite;
+				const qualityBadgesHtml = qualityBadges.map(q => `<span class="banner-quality-badge ${q.className}">${q.text}</span>`).join("");
 
 				const backdropHtml = `
 <div class="swiper-slide" id="${detail.Id}">
    <img id="${detail.Id}" data-parentid="${datas.Id}" class="banner-cover ${hvclass}" draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" src="${ImageUrl}" alt="${title}" />
    ${logoUrl ? `<img draggable="false" loading="${j === 0 ? 'eager' : 'lazy'}" decoding="async" class="banner-logo padded-right" src="${logoUrl}" alt="${title} logo">` : ``}
    <div class="banner-mask"></div>
-   <div class="banner-top-badge ${badgeClass}">${badgeText}</div>
+   <div class="banner-top-badge-wrap">
+      <div class="banner-top-badge ${badgeClass}">${badgeText}</div>
+      ${qualityBadgesHtml}
+   </div>
    <div class="custom padded-left">
       <div class="title" data-swiper-parallax="-300">${title}</div>
       ${metaHtml ? `<div class="banner-meta" data-swiper-parallax="-240">${metaHtml}</div>` : ``}
@@ -2221,6 +2514,12 @@ div.dialogContainer {
          <button id="${detail.Id}" class="banner-item-more" tabindex="-1">
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             <span>MORE</span>
+         </button>
+         <button id="${detail.Id}" class="banner-item-fav ${isFavorite ? 'is-active' : ''}" title="${isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}" tabindex="-1">
+            <svg class="btn-icon icon-heart" viewBox="0 0 24 24" fill="${isFavorite ? '#ef4444' : 'none'}" stroke="currentColor" stroke-width="2">
+               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            <span class="fav-text">${isFavorite ? 'SAVED' : 'FAVORITE'}</span>
          </button>
 	  </div>
    </div>
@@ -2518,14 +2817,14 @@ div.dialogContainer {
 			},
 		});
 
-		this.initEvent();
+		this.initEvent(e);
 		if (this.cacheRefreshFlag) {
 			this.getLibItems(true);
 		}
 	}
 
 	/* Initial Events */
-	static async initEvent() {
+	static async initEvent(viewElement) {
 		var mouseoverflag = false;
 		const thumbsHidden = document.querySelector(".section00")?.classList.contains("hideThumbs");
 		if (this.swiper?.slides && this.swiper2?.pagination?.bullets) {
@@ -2563,6 +2862,8 @@ div.dialogContainer {
 
 		this.playlistener();
 		this.morelistener();
+		this.favlistener();
+		this.setupPerformanceObserver(viewElement || document.querySelector(".section00"));
 	}
 }
 

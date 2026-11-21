@@ -5,9 +5,10 @@
 [![Today / Total Hits](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Today%20/%20Total%20Hits&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)](https://hitscounter.dev/history?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI)
 [![Hits Today](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI.svg?view=today-total&style=flat-square&label=Hits%20Today&color=2ea44f)](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI/)
 ![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.2.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
+![UI / UX Overhaul](https://img.shields.io/badge/UI%2FUX%20Overhaul-v2.5%20Cyber--Glass-06b6d4?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-**A lightweight, responsive, and visually engaging banner carousel for Emby and Jellyfin home screens.**
+**A lightweight, responsive, and visually engaging banner carousel and player HUD for Emby and Jellyfin home screens.**
 
 </div>
 
@@ -18,6 +19,8 @@
 | Feature | Description |
 | :--- | :--- |
 | ⚡ **Lightweight** | Pure native JavaScript using internal `ApiClient` |
+| 💎 **Cyber-Glass HUD** | Modern frosted acrylic metadata chips & live pulsating beacons |
+| 🎬 **External Players** | 100% offline vector SVG icons (PotPlayer, VLC, MPV, IINA, MX Player) |
 | 🎞️ **Auto-Sliding** | Rotates featured media every 6–8 seconds |
 | 🎮 **Navigation Controls** | Interactive Previous / Next buttons & bullet dots |
 | 📱 **Responsive** | Works across Desktop, Tablet, and Mobile |
@@ -29,9 +32,20 @@
 
 ## 🛠️ Quick Installation
 
+### Method A: Modular Suite (`crx/`) — Recommended (v2.5)
+1. Copy the `crx/` folder directly into your server's `dashboard-ui/` directory.
+2. In `dashboard-ui/index.html`, add these tags after `apploader.js` (or before `</body>`):
+
+```html
+<script src="crx/home.js" defer></script>
+<script src="crx/emby-player/emby_launch_player.js" defer></script>
+```
+
+### Method B: Single Script
 1. **Download the script:**
-   - **Recommended (V2 with Ratings & Year):** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
-   - **Classic (V1 Lightweight):** [`home-sider-v1/home.js`](home-sider-v1/home.js)
+   - **Modern Cyber-Glass (v2.5 - Latest):** [`crx/home.js`](crx/home.js) or [`home-swiper-v2/home_new.js`](home-swiper-v2/home_new.js)
+   - **Classic (v2.0 with Ratings & Year):** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
+   - **Classic (v1.0 Lightweight):** [`home-sider-v1/home.js`](home-sider-v1/home.js)
 
 2. **Place in Emby environment:**  
    Copy the script into your server's `dashboard-ui/` directory as `home.js`.
@@ -52,6 +66,7 @@
 
 ![Banner Preview 1](home-swiper-v2/img/Screenshot_0.png)  
 ![Banner Preview 2](home-swiper-v2/img/Screenshot_1.png)  
+![Player Preview](emby-player/Screenshot_39.png)  
 
 ---
 

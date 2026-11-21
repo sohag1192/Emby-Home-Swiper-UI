@@ -1,3 +1,14 @@
+/**
+ * ============================================================================
+ * Emby Home Swiper UI & Cinematic Carousel
+ * Copyright (c) 2026 sohag1192 (https://github.com/sohag1192)
+ * All Rights Reserved.
+ *
+ * GitHub: https://github.com/sohag1192/Emby-Home-Swiper-UI
+ * Author & Developer: Md Sohag Rana
+ * ============================================================================
+ */
+
 class CommonUtils {
 	static loadExtastyle(content, id) {
 		let existing = document.getElementById(id);
@@ -823,14 +834,27 @@ button.swiper-pagination-bullet {
 
 // custom Css start //
 this.customCss = `div.swiper-pagination-bullet {
-	transition: all 0.25s ease-in-out;
+	transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+	background: rgba(255, 255, 255, 0.45) !important;
+	opacity: 0.65;
+	border-radius: 6px;
+}
+
+div.swiper-pagination-bullet-active {
+	height: 32px !important;
+	width: 8px !important;
+	border-radius: 6px !important;
+	opacity: 1 !important;
+	background: linear-gradient(180deg, #06b6d4 0%, #3b82f6 100%) !important;
+	box-shadow: 0 0 16px rgba(6, 182, 212, 0.85) !important;
 }
 
 div.swiper-button-next:hover,
 div.swiper-button-prev:hover {
-	background-color: rgba(6, 182, 212, 0.4);
-	transform: scale(1.08);
-	box-shadow: 0 0 24px rgba(6, 182, 212, 0.6);
+	background-color: rgba(6, 182, 212, 0.35) !important;
+	border-color: rgba(6, 182, 212, 0.8) !important;
+	transform: scale(1.1) !important;
+	box-shadow: 0 0 24px rgba(6, 182, 212, 0.6), 0 8px 24px rgba(0, 0, 0, 0.8) !important;
 }
 
 div.swiper-button-next,
@@ -840,12 +864,12 @@ div.swiper-button-prev {
 	height: calc(var(--swiper-navigation-size) + 2.5em);
 	margin-top: calc(0px - ((var(--swiper-navigation-size) + 2.5em) / 2));
 	box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.7);
-	-webkit-backdrop-filter: blur(12px) saturate(1.2);
-	backdrop-filter: blur(12px) saturate(1.2);
+	-webkit-backdrop-filter: blur(14px) saturate(1.3);
+	backdrop-filter: blur(14px) saturate(1.3);
 	background-color: rgba(15, 23, 42, 0.75);
-	border: 1px solid rgba(255, 255, 255, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.22);
 	color: #ffffff;
-	transition: all 0.25s ease;
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 div.swiper-button-next:after,
@@ -1170,10 +1194,10 @@ div.mySwiper {
 .banner-meta {
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 0.55rem;
 	flex-wrap: wrap;
-	margin-top: 0.6rem;
-	color: rgba(255, 255, 255, 0.94);
+	margin-top: 0.65rem;
+	color: rgba(255, 255, 255, 0.95);
 	font-size: clamp(0.82rem, 0.44rem + 0.82vw, 1.02rem);
 	font-weight: 700;
 	line-height: 1.1;
@@ -1183,21 +1207,46 @@ div.mySwiper {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 0.4em;
-	min-height: 1.85em;
-	padding: 0 0.75em;
-	border-radius: 7px;
-	background: rgba(14, 23, 42, 0.65);
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	-webkit-backdrop-filter: blur(10px);
-	backdrop-filter: blur(10px);
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+	gap: 0.45em;
+	min-height: 2em;
+	padding: 0 0.85em;
+	border-radius: 8px;
+	background: rgba(15, 23, 42, 0.72);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banner-meta span:hover {
+	transform: translateY(-1px);
+	border-color: rgba(255, 255, 255, 0.35);
 }
 
 .banner-meta .meta-rating {
-	border-color: rgba(250, 204, 21, 0.45);
+	border-color: rgba(250, 204, 21, 0.5);
 	color: #facc15;
-	background: rgba(30, 25, 10, 0.7);
+	background: rgba(40, 32, 10, 0.75);
+	box-shadow: 0 0 12px rgba(250, 204, 21, 0.25);
+}
+
+.banner-meta .meta-year {
+	border-color: rgba(99, 102, 241, 0.45);
+	color: #c7d2fe;
+	background: rgba(30, 27, 75, 0.7);
+}
+
+.banner-meta .meta-duration {
+	border-color: rgba(20, 184, 166, 0.45);
+	color: #99f6e4;
+	background: rgba(19, 78, 74, 0.7);
+}
+
+.banner-meta .meta-cert {
+	border-color: rgba(244, 63, 94, 0.45);
+	color: #fecdd3;
+	background: rgba(76, 5, 25, 0.7);
 }
 
 .banner-meta .meta-icon {
@@ -1232,23 +1281,42 @@ div.mySwiper {
 	left: calc(3.4vw + min(0.72em, max(0.48em, 1.78vw)));
 	z-index: 5;
 	color: #fff;
-	background: linear-gradient(135deg, rgba(225, 29, 72, 0.88) 0%, rgba(168, 85, 247, 0.88) 100%);
+	background: linear-gradient(135deg, rgba(225, 29, 72, 0.92) 0%, rgba(168, 85, 247, 0.92) 100%);
 	border: 1px solid rgba(255, 255, 255, 0.28);
-	border-radius: 7px;
-	padding: 0.36em 0.85em;
-	font-size: clamp(0.72rem, 0.36rem + 0.78vw, 0.95rem);
+	border-radius: 8px;
+	padding: 0.4em 0.95em;
+	font-size: clamp(0.72rem, 0.36rem + 0.78vw, 0.92rem);
 	font-weight: 800;
-	letter-spacing: 0.8px;
+	letter-spacing: 1px;
 	line-height: 1;
 	text-transform: uppercase;
-	box-shadow: 0 4px 18px rgba(225, 29, 72, 0.4);
-	-webkit-backdrop-filter: blur(10px);
-	backdrop-filter: blur(10px);
+	box-shadow: 0 4px 20px rgba(225, 29, 72, 0.45);
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+}
+
+.banner-top-badge::before {
+	content: "";
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #10b981;
+	box-shadow: 0 0 10px #10b981;
+	display: inline-block;
+	animation: badge-beacon-pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes badge-beacon-pulse {
+	0%, 100% { transform: scale(0.9); opacity: 0.7; }
+	50% { transform: scale(1.35); opacity: 1; }
 }
 
 .banner-top-badge.badge-tv {
-	background: linear-gradient(135deg, rgba(6, 182, 212, 0.88) 0%, rgba(59, 130, 246, 0.88) 100%);
-	box-shadow: 0 4px 18px rgba(6, 182, 212, 0.4);
+	background: linear-gradient(135deg, rgba(6, 182, 212, 0.92) 0%, rgba(59, 130, 246, 0.92) 100%);
+	box-shadow: 0 4px 20px rgba(6, 182, 212, 0.45);
 }
 
 .custom .morebutton {
@@ -1278,28 +1346,29 @@ div.mySwiper {
 }
 
 .custom .banner-item-play {
-	background: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%);
+	background: linear-gradient(135deg, #06b6d4 0%, #2563eb 50%, #4f46e5 100%);
 	color: #ffffff;
-	box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4), 0 2px 6px rgba(0, 0, 0, 0.4);
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	box-shadow: 0 8px 24px rgba(6, 182, 212, 0.45), 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .custom .banner-item-play:hover {
-	transform: translateY(-2px) scale(1.02);
-	box-shadow: 0 8px 28px rgba(6, 182, 212, 0.65), 0 4px 12px rgba(0, 0, 0, 0.5);
-	filter: brightness(1.1);
+	transform: translateY(-2px) scale(1.03);
+	box-shadow: 0 12px 32px rgba(6, 182, 212, 0.7), 0 4px 14px rgba(0, 0, 0, 0.5);
+	filter: brightness(1.12);
 }
 
 .custom .banner-item-more {
-	background: rgba(255, 255, 255, 0.16);
-	backdrop-filter: blur(14px);
-	-webkit-backdrop-filter: blur(14px);
-	border: 1px solid rgba(255, 255, 255, 0.28);
+	background: rgba(255, 255, 255, 0.14);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border: 1px solid rgba(255, 255, 255, 0.24);
 	color: #ffffff;
 	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .custom .banner-item-more:hover {
-	transform: translateY(-2px) scale(1.02);
+	transform: translateY(-2px) scale(1.03);
 	background: rgba(255, 255, 255, 0.26);
 	border-color: rgba(255, 255, 255, 0.45);
 	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
@@ -1317,8 +1386,9 @@ div.mySwiper {
 	height: 100%;
 	top: 0;
 	left: 0;
-	background: linear-gradient(90deg, rgba(8, 12, 22, 0.92) 0%, rgba(8, 12, 22, 0.72) 36%, rgba(8, 12, 22, 0.2) 70%, transparent 100%),
-	            linear-gradient(to top, rgba(8, 12, 22, 0.95) 0%, rgba(8, 12, 22, 0.4) 18%, transparent 42%);
+	background: linear-gradient(90deg, rgba(10, 15, 26, 0.96) 0%, rgba(10, 15, 26, 0.78) 36%, rgba(10, 15, 26, 0.25) 68%, transparent 100%),
+	            linear-gradient(to top, rgba(10, 15, 26, 0.98) 0%, rgba(10, 15, 26, 0.45) 18%, transparent 40%),
+	            linear-gradient(to bottom, rgba(10, 15, 26, 0.5) 0%, transparent 20%);
 	pointer-events: none;
 	z-index: 2;
 }

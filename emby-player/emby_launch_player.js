@@ -1,17 +1,25 @@
+/**
+ * ============================================================================
+ * Emby & Jellyfin External Player Integration (Cyber-Glass UI)
+ * Copyright (c) 2026 sohag1192 (https://github.com/sohag1192)
+ * All Rights Reserved.
+ *
+ * GitHub: https://github.com/sohag1192/Emby-Home-Swiper-UI
+ * Author & Developer: Md Sohag Rana
+ * Based on original open-source base by @bpking (https://github.com/bpking1/embyExternalUrl)
+ * ============================================================================
+ */
+
 // ==UserScript==
-// @name         embyLaunchPotplayer
-// @name:en      embyLaunchPotplayer
-// @name:zh      embyLaunchPotplayer
-// @name:zh-CN   embyLaunchPotplayer
-// @namespace    http://tampermonkey.net/
-// @version      1.2.1
-// @description  emby/jellfin launch external player
-// @description:zh-cn emby/jellfin call external player
-// @description:en  emby/jellfin to external player
+// @name         embyLaunchPlayer (Cyber-Glass UI)
+// @namespace    https://github.com/sohag1192/Emby-Home-Swiper-UI
+// @version      2.5.0
+// @description  Launch PotPlayer, MPV, VLC, MX Player directly from Emby & Jellyfin Web
+// @author       sohag1192 (https://github.com/sohag1192)
+// @copyright    2026, sohag1192 (https://github.com/sohag1192)
 // @license      MIT
-// @author       @bpking
-// @github       https://github.com/bpking1/embyExternalUrl
-// @match        *://*/web/index.html
+// @github       https://github.com/sohag1192/Emby-Home-Swiper-UI
+// @match        *://*/web/index.html*
 // @match        *://*/web/
 // ==/UserScript==
 
@@ -114,6 +122,164 @@
     };
 
     function init() {
+        if (!document.getElementById("sn-external-player-css")) {
+            const style = document.createElement("style");
+            style.id = "sn-external-player-css";
+            style.innerHTML = `
+                #ExternalPlayersBtns {
+                    width: 100% !important;
+                    margin: 16px 0 12px 0 !important;
+                    padding: 14px 18px !important;
+                    border-radius: 16px !important;
+                    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(20, 28, 48, 0.78) 100%) !important;
+                    backdrop-filter: blur(20px) !important;
+                    -webkit-backdrop-filter: blur(20px) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+                    border-left: 4px solid #06b6d4 !important;
+                    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(6, 182, 212, 0.15) !important;
+                    display: flex !important;
+                    flex-wrap: wrap !important;
+                    align-items: center !important;
+                    gap: 10px !important;
+                    box-sizing: border-box !important;
+                    position: relative !important;
+                }
+                .sn-player-hud-header {
+                    width: 100% !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                    margin-bottom: 8px !important;
+                    padding-bottom: 8px !important;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+                    flex-wrap: wrap !important;
+                    gap: 8px !important;
+                }
+                .sn-player-hud-left {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 8px !important;
+                    font-size: 12px !important;
+                    font-weight: 800 !important;
+                    letter-spacing: 1px !important;
+                    color: #ffffff !important;
+                    text-transform: uppercase !important;
+                }
+                .sn-player-hud-beacon {
+                    width: 9px !important;
+                    height: 9px !important;
+                    border-radius: 50% !important;
+                    background: #10b981 !important;
+                    box-shadow: 0 0 12px #10b981 !important;
+                    display: inline-block !important;
+                    animation: sn-hud-pulse 1.8s infinite ease-in-out !important;
+                }
+                @keyframes sn-hud-pulse {
+                    0%, 100% { transform: scale(0.9); opacity: 0.7; }
+                    50% { transform: scale(1.35); opacity: 1; }
+                }
+                .sn-player-hud-badges {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 6px !important;
+                }
+                .sn-player-hud-tag {
+                    font-size: 10px !important;
+                    font-weight: 700 !important;
+                    color: #06b6d4 !important;
+                    background: rgba(6, 182, 212, 0.15) !important;
+                    border: 1px solid rgba(6, 182, 212, 0.35) !important;
+                    border-radius: 6px !important;
+                    padding: 2px 8px !important;
+                    letter-spacing: 0.6px !important;
+                    text-transform: uppercase !important;
+                }
+                .sn-player-hud-tag-green {
+                    color: #10b981 !important;
+                    background: rgba(16, 185, 129, 0.15) !important;
+                    border-color: rgba(16, 185, 129, 0.35) !important;
+                }
+                #ExternalPlayersBtns .detailButton {
+                    background: rgba(255, 255, 255, 0.07) !important;
+                    backdrop-filter: blur(14px) !important;
+                    -webkit-backdrop-filter: blur(14px) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+                    border-radius: 11px !important;
+                    color: #ffffff !important;
+                    font-weight: 700 !important;
+                    font-size: 13.5px !important;
+                    height: 40px !important;
+                    padding: 0 16px !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    gap: 8px !important;
+                    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+                    cursor: pointer !important;
+                    font-family: inherit !important;
+                }
+                #ExternalPlayersBtns .detailButton:hover {
+                    transform: translateY(-3px) scale(1.03) !important;
+                    background: rgba(255, 255, 255, 0.18) !important;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+                    filter: brightness(1.1) !important;
+                }
+                #ExternalPlayersBtns .detailButton:active {
+                    transform: translateY(-1px) scale(0.98) !important;
+                }
+                #ExternalPlayersBtns #embyPot:hover {
+                    border-color: rgba(250, 204, 21, 0.85) !important;
+                    box-shadow: 0 8px 24px rgba(250, 204, 21, 0.35) !important;
+                }
+                #ExternalPlayersBtns #embyVlc:hover {
+                    border-color: rgba(249, 115, 22, 0.85) !important;
+                    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35) !important;
+                }
+                #ExternalPlayersBtns #embyMPV:hover {
+                    border-color: rgba(168, 85, 247, 0.85) !important;
+                    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.35) !important;
+                }
+                #ExternalPlayersBtns #embyIINA:hover {
+                    border-color: rgba(244, 63, 94, 0.85) !important;
+                    box-shadow: 0 8px 24px rgba(244, 63, 94, 0.35) !important;
+                }
+                #ExternalPlayersBtns #embyMX:hover,
+                #ExternalPlayersBtns #embyMXPro:hover {
+                    border-color: rgba(6, 182, 212, 0.85) !important;
+                    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35) !important;
+                }
+                #ExternalPlayersBtns #embyCopyUrl {
+                    background: rgba(16, 185, 129, 0.12) !important;
+                    border-color: rgba(16, 185, 129, 0.35) !important;
+                }
+                #ExternalPlayersBtns #embyCopyUrl:hover {
+                    background: rgba(16, 185, 129, 0.25) !important;
+                    border-color: rgba(16, 185, 129, 0.85) !important;
+                    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4) !important;
+                }
+                #ExternalPlayersBtns .detailButton-content {
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    gap: 8px !important;
+                }
+                #ExternalPlayersBtns .detailButton-icon {
+                    width: 22px !important;
+                    height: 22px !important;
+                    min-width: 22px !important;
+                    min-height: 22px !important;
+                    display: inline-block !important;
+                    vertical-align: middle !important;
+                    background-size: contain !important;
+                    background-position: center !important;
+                    background-repeat: no-repeat !important;
+                    border-radius: 6px !important;
+                }
+            `;
+            (document.head || document.body).appendChild(style);
+        }
+
         let playBtnsWrapper = document.getElementById(playBtnsWrapperId);
         if (playBtnsWrapper) {
             playBtnsWrapper.remove();
@@ -137,7 +303,19 @@
                 </button>
             `;
         }
-        let buttonHtml = `<div id="${playBtnsWrapperId}" class="detailButtons flex align-items-flex-start flex-wrap-wrap detail-lineItem">`;
+        let buttonHtml = `
+            <div id="${playBtnsWrapperId}" class="detailButtons flex align-items-flex-start flex-wrap-wrap detail-lineItem">
+                <div class="sn-player-hud-header">
+                    <div class="sn-player-hud-left">
+                        <span class="sn-player-hud-beacon"></span>
+                        <span>DIRECT STREAM PLAYERS</span>
+                    </div>
+                    <div class="sn-player-hud-badges">
+                        <span class="sn-player-hud-tag sn-player-hud-tag-green">ZERO TRANSCODE</span>
+                        <span class="sn-player-hud-tag">100% BITRATE</span>
+                    </div>
+                </div>
+        `;
         playBtns.forEach(btn => {
             buttonHtml += generateButtonHTML(btn);
         });
@@ -147,6 +325,11 @@
             // jellfin
             mainDetailButtons = document.querySelector(selectors.jellfinMainDetailButtons);
         }
+
+        if (!mainDetailButtons) {
+            mainDetailButtons = document.querySelector(".mainDetailButtons, .detailPagePrimaryContainer");
+        }
+        if (!mainDetailButtons) return;
 
         mainDetailButtons.insertAdjacentHTML("afterend", buttonHtml);
 
@@ -194,13 +377,18 @@
         icons.map((icon, index) => {
             const element = document.querySelector(`#${icon.id}`);
             if (element) {
-                // if url exists, use url property, if id diff icon name, use name property
-                icon.url = typeof iconsExt !== 'undefined' && iconsExt && iconsExt[index] ? iconsExt[index].url : undefined;
-                const url = icon.url || `${iconBaseUrl}/${icon.name || `${icon.id}.webp`}`;
+                const extUrl = (iconsExt && (iconsExt[icon.id] || (iconsExt[index] && iconsExt[index].url)));
+                const url = extUrl || (icon.url ? icon.url : `${iconBaseUrl}/${icon.name || `${icon.id}.webp`}`);
                 element.style.cssText += `
-                    background-image: url(${url});
+                    background-image: url('${url}');
                     background-repeat: no-repeat;
-                    background-size: 100% 100%;
+                    background-size: contain;
+                    background-position: center;
+                    width: 22px;
+                    height: 22px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    border-radius: 6px;
                     font-size: ${icon.fontSize};
                 `;
             }
@@ -213,11 +401,25 @@
         }
     }
 
-    // copy from ./iconsExt, if you change the following content, please sync modify ./iconsExt.js
+    // Modern offline vector SVG icons - crisp, instant, zero external network dependency
     function getIconsExt() {
-        // base64 data total size 72.5 KB from embyWebAddExternalUrl/icons/min, sync modify
-        const iconsExt = [];
-        return iconsExt;
+        return {
+            "icon-PotPlayer": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFDD00"/><stop offset="100%" stop-color="#E5A900"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#pg)"/><polygon points="26,18 48,32 26,46" fill="#1e1e1e"/><polygon points="25,20 45,32 25,44" fill="#ffffff"/></svg>'),
+            "icon-VLC": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#24292e"/><path d="M29 8h6l3 12H26z" fill="#FF8800"/><path d="M25 21h14l3 9H22z" fill="#FFFFFF"/><path d="M21 31h22l4 10H17z" fill="#FF6600"/><path d="M16 42h32l4 8H12z" fill="#FFFFFF"/><rect x="8" y="51" width="48" height="6" rx="3" fill="#FF5500"/></svg>'),
+            "icon-MPV": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8E44AD"/><stop offset="100%" stop-color="#5B2C6F"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#1b1c23"/><circle cx="32" cy="32" r="24" fill="url(#mg)"/><polygon points="27,22 43,32 27,42" fill="#ffffff"/></svg>'),
+            "icon-IINA": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="ig" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF3366"/><stop offset="100%" stop-color="#BA0034"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#1e1e24"/><circle cx="32" cy="32" r="22" fill="url(#ig)"/><polygon points="28,23 42,32 28,41" fill="#ffffff"/><circle cx="32" cy="32" r="8" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6"/></svg>'),
+            "icon-MXPlayer": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mxg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00C9FF"/><stop offset="100%" stop-color="#0072FF"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#mxg)"/><polygon points="26,20 46,32 26,44" fill="#ffffff"/></svg>'),
+            "icon-MXPlayerPro": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mxpg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0052D4"/><stop offset="100%" stop-color="#4364F7"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#mxpg)"/><polygon points="23,17 39,27 23,37" fill="#ffffff"/><rect x="18" y="42" width="28" height="13" rx="3" fill="#F59E0B"/><text x="32" y="52" fill="#000" font-family="Arial,sans-serif" font-size="9" font-weight="900" text-anchor="middle">PRO</text></svg>'),
+            "icon-NPlayer": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="npg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF416C"/><stop offset="100%" stop-color="#FF4B2B"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#npg)"/><path d="M21 44V20h7l12 16V20h6v24h-7L27 28v16z" fill="#ffffff"/></svg>'),
+            "icon-infuse": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="ing" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FF7A00"/><stop offset="100%" stop-color="#FF0055"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#18181b"/><path d="M23 16l14 16-14 16h8l14-16-14-16z" fill="url(#ing)"/><path d="M31 16l14 16-14 16h6l14-16-14-16z" fill="#FF9933" opacity="0.7"/></svg>'),
+            "icon-StellarPlayer": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="stg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4A00E0"/><stop offset="100%" stop-color="#8E2DE2"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#stg)"/><polygon points="32,15 36,28 49,32 36,36 32,49 28,36 15,32 28,28" fill="#FFFFFF"/><circle cx="32" cy="32" r="5" fill="#00ffff"/></svg>'),
+            "icon-DDPlay": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="ddg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00F2FE"/><stop offset="100%" stop-color="#4FACFE"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#ddg)"/><circle cx="32" cy="32" r="18" fill="#ffffff"/><circle cx="32" cy="32" r="14" fill="#FF5388"/><polygon points="28,24 40,32 28,40" fill="#ffffff"/></svg>'),
+            "icon-Fileball": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="fbg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#11998e"/><stop offset="100%" stop-color="#38ef7d"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="#1c2025"/><circle cx="32" cy="32" r="22" fill="url(#fbg)"/><path d="M22 25h20v14H22z" fill="#ffffff" opacity="0.9"/><polygon points="29,27 38,32 29,37" fill="#11998e"/></svg>'),
+            "icon-SenPlayer": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="seng" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#667EEA"/><stop offset="100%" stop-color="#764BA2"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#seng)"/><circle cx="32" cy="32" r="20" fill="none" stroke="#ffffff" stroke-width="3"/><polygon points="28,23 41,32 28,41" fill="#ffffff"/></svg>'),
+            "icon-OmniPlayer": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="omg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2193b0"/><stop offset="100%" stop-color="#6dd5ed"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#omg)"/><circle cx="32" cy="32" r="19" fill="#1a1c29"/><polygon points="27,23 43,32 27,41" fill="#6dd5ed"/></svg>'),
+            "icon-FigPlayer": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="figg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#047857"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#figg)"/><polygon points="26,20 46,32 26,44" fill="#ffffff"/><circle cx="43" cy="22" r="4" fill="#a7f3d0"/></svg>'),
+            "icon-Copy": "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="cpg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#cpg)"/><rect x="20" y="24" width="24" height="26" rx="4" fill="none" stroke="#ffffff" stroke-width="4"/><path d="M26 24V18a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6" fill="none" stroke="#ffffff" stroke-width="4"/><path d="M28 36l3 3 6-7" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+        };
     }
 
     function showFlag() {
@@ -227,7 +429,7 @@
             mediaInfoDiv = document.querySelector(selectors.jellfinMediaInfoDiv);
             btnManualRecording = document.querySelector(selectors.jellfinBtnCancelTimer);
         }
-        return !!mediaInfoDiv || !!btnManualRecording;
+        return !!mediaInfoDiv || !!btnManualRecording || !!document.querySelector(".mainDetailButtons");
     }
 
     async function getItemInfo() {
@@ -653,7 +855,16 @@
         const streamUrl = encodeURI(mediaInfo.streamUrl);
         if (await writeClipboard(streamUrl)) {
             console.log(`copyUrl = ${streamUrl}`);
-            this.innerText = 'Copy Success';
+            const textEle = this.querySelector(".button-text");
+            if (textEle) {
+                const oldText = textEle.innerText;
+                textEle.innerText = "✅ Copied!";
+                setTimeout(() => {
+                    textEle.innerText = oldText;
+                }, 2500);
+            } else {
+                this.innerText = "✅ Copied!";
+            }
         }
     }
 

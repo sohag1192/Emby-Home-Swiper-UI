@@ -1,6 +1,6 @@
 @echo off
-REM Change to your project directory
-cd /d "D:\My_Project\Emby-Home-Swiper-UI"
+REM Change to current script directory
+cd /d "%~dp0"
 
 REM Initialize Git if not already done
 IF NOT EXIST .git (
@@ -12,8 +12,8 @@ IF NOT EXIST .git (
 REM Add all files
 git add .
 
-REM Commit with a default message
-git commit -m "Automated commit via batch file"
+REM Commit with a message
+git commit -m "Release v2.5.0: Cyber-Glass UI overhaul, modular crx suite, offline SVG icons, and directory cleanup"
 
 REM Push to GitHub
 git push -u origin main

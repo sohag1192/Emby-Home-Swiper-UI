@@ -1,3 +1,55 @@
+# 🚀 Emby & Jellyfin Home Swiper UI — Release Notes
+
+---
+
+## 🌟 Release v2.5.0 — Cyber-Glass UI & Modular CRX Architecture
+
+**Release Date:** 19 November 2026  
+**Author & Developer:** Md Sohag Rana ([@sohag1192](https://github.com/sohag1192)) ❤️  
+**Compatibility:** Emby Web 4.9.1.80 – 4.10.2.0+ (Tested OK on 4.10.2.0, 4.10.1.0, 4.10.0.40) & Jellyfin Web 10.8.x – 10.11.x+
+
+---
+
+### ✨ What's New in v2.5.0
+
+#### 1. 📂 Modular CRX Extension Suite (`crx/`)
+- **Clean Architecture:** Standardized deployment structure under `dashboard-ui/crx/` with dedicated submodules:
+  ```text
+  crx/
+  ├── emby-player/
+  │   ├── emby_launch_player.js   # 🎬 v2.5 Cyber-Glass HUD launcher
+  │   └── README.md               # 📖 Player documentation & protocols
+  ├── home.js                     # 🌟 v2.5 Cinematic Swiper Carousel
+  ├── img/                        # 📸 Visual & manual login preview assets
+  └── README.md                   # 📋 Complete Bangla & English changelog
+  ```
+- **Safe Hooking (`index_integrated.html`):** Scripts are loaded via `defer` right after `apploader.js`, eliminating `ApiClient` initialization race conditions.
+
+#### 2. 🎬 External Player v2.5 Overhaul (`emby-player`)
+- **Cyber-Glass HUD Card:** Frosted dark acrylic card (`rgba(15, 23, 42, 0.85)` + 20px blur) featuring glowing cyan accents, an emerald pulsating beacon, and `ZERO TRANSCODE` • `100% BITRATE` chips.
+- **100% Offline Vector SVG Icons:** Eliminated external CDN dependencies (`7o7o.cc`). All player brand icons (PotPlayer, VLC, MPV, IINA, MX Player) are embedded directly as crisp vector SVGs with zero network latency and pixel-perfect 4K/Retina scaling.
+- **Brand Neon Glows:** Custom brand-matched hover effects (PotPlayer Amber `#facc15`, VLC Orange `#f97316`, MPV Purple `#a855f7`, IINA Rose `#f43f5e`, MX Cyan `#06b6d4`, Copy Emerald `#10b981`).
+- **Tactile Copy Feedback:** Clicking "Copy Stream URL" displays an interactive `✅ Copied!` animation for 2.5 seconds while preserving the original SVG icon.
+- **Synchronized Standalone Launcher:** Added `embyLaunchPotplayer.js` for standalone and userscript usage.
+
+#### 3. 🌟 Cinematic Swiper Carousel v2.5 Upgrades (`home.js`)
+- **Frosted Glass Metadata Chips:** Modern acrylic metadata pills for Community Rating ⭐, Production Year 📅, and Content Certification with smooth hover scale (`1.03x`).
+- **Pulsating Live Beacons:** Added animated glowing beacon indicators for highlighted media banners.
+- **Multi-Event Mounting Retry:** Intelligent lifecycle watcher hooks into `viewshow` and `pageshow` events with automated retry failsafes.
+- **Enhanced Triple-Gradient Layering:** Triple-direction dark gradient masking maintains pristine backdrop fanart visibility while boosting title readability.
+
+#### 4. ✍️ Typography & Dashboard UI Overhaul
+- **Bengali Typography Support:** Integrated Google Font 'Hind Siliguri' for crisp Bengali text rendering and compound characters.
+- **Centering & Emoji Wrap Fix:** Resolved single emoji orphan wrap (`🍿📺`) using `white-space: nowrap` and symmetrical flex centering.
+- **ISP Alert Notice & Login Polish:** Cleaned up redundant headers and disclaimer boxes for a distraction-free, premium login screen.
+
+#### 5. 🧹 Repository Optimization & Cleanup
+- ❌ **Removed:** Redundant temporary files (`home-swiper-v2/home._old.js`) and outdated testing scripts (`emby-player/emby_launch_player_testing.js`).
+- 📦 **Clean Packaging:** Archived update bundles into structured directories and added `.gitignore` to prevent archive pollution.
+- 🛠️ **Updated Auto-Installers:** Enhanced `download-homejs.bat`, `setup-swiper.sh`, and `script.sh` to install the latest v2.5 Cyber-Glass suite with 1 click.
+
+---
+
 # 🚀 Emby & Jellyfin Home Swiper UI — Release v2.0.0
 
 A major release bringing modern cinematic home banners, live community ratings, production year badges, external player integration, and the brand-new glassmorphic `text_sider` item detail notice suite.

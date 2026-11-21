@@ -33,7 +33,8 @@ Emby Home Swiper **V2** is a ground-up refinement of the classic banner module, 
 
 | Script File | Best For | Features & Description |
 | :--- | :--- | :--- |
-| **[`home_rating with year.js`](home_rating%20with%20year.js)** | 🌟 **Recommended** | Full-featured experience with Community Ratings ⭐, Production Year 📅 badges, certification pills, and auto-play controls. |
+| **[`home.js`](home.js)** / **[`home_new.js`](home_new.js)** | 🚀 **Latest v2.5 (Cyber-Glass)** | Brand-new v2.5 release with frosted glass metadata chips, live pulsating beacons, multi-event mounting retry, official rating pills, and community rating ⭐ + year 📅 badges. |
+| **[`home_rating with year.js`](home_rating%20with%20year.js)** | 🌟 **Popular Classic (v2.0)** | Full-featured experience with Community Ratings ⭐, Production Year 📅 badges, certification pills, and auto-play controls. |
 | **[`home-swiper.js`](home-swiper.js)** | 🎯 **Minimalist** | Clean, distraction-free swiper focusing purely on high-resolution backdrops, transparent logos, and synopsis. |
 
 ---

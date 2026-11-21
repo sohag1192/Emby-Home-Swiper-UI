@@ -1,0 +1,20 @@
+# Packages and Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Backup files
+*.bak
+*_backup_*
+*backup*
+
+# OS and Editor metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Temporary Extraction Staging
+_extracted_*/

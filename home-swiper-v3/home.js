@@ -46,7 +46,7 @@ class HomeSwiper {
 		this.itemQuery.Limit = 10;
 		this.showItemNum = 10;
 		this.slideDelay = 6000;
-		this.cacheVersion = "v9-sn-left-aligned";
+		this.cacheVersion = "v10-sn-topbadge-clean";
 		this.loadFlag = false; 
 		this.flag_cssjs = true; 
 		this._isMounting = false;
@@ -2466,44 +2466,6 @@ div.dialogContainer {
 					}
 				}
 
-				// Quality Badges (4K UHD, HDR10, Dolby Vision, Dolby Atmos, Surround)
-				const mediaStreams = detail.MediaStreams || detail.MediaSources?.[0]?.MediaStreams || [];
-				const videoStream = mediaStreams.find(s => s.Type === "Video");
-				const audioStream = mediaStreams.find(s => s.Type === "Audio");
-
-				let qualityBadges = [];
-				if (videoStream) {
-					const width = videoStream.Width || 0;
-					const height = videoStream.Height || 0;
-					if (width >= 3800 || height >= 2000) {
-						qualityBadges.push({ text: "4K UHD", className: "badge-quality-4k" });
-					} else if (width >= 1900 || height >= 1000) {
-						qualityBadges.push({ text: "1080P FHD", className: "badge-quality-1080p" });
-					}
-
-					const videoRange = (videoStream.VideoRange || videoStream.VideoRangeType || "").toUpperCase();
-					const isDoVi = videoRange.includes("DOVI") || videoRange.includes("VISION") || (videoStream.ExtendedVideoSubType || "").includes("Dovi");
-					if (isDoVi) {
-						qualityBadges.push({ text: "DOLBY VISION", className: "badge-quality-dovi" });
-					} else if (videoRange.includes("HDR")) {
-						qualityBadges.push({ text: "HDR10", className: "badge-quality-hdr" });
-					}
-				}
-
-				if (audioStream) {
-					const audioCodec = (audioStream.Codec || "").toLowerCase();
-					const audioProfile = (audioStream.Profile || audioStream.Title || "").toLowerCase();
-					const channels = audioStream.Channels || 0;
-
-					if (audioProfile.includes("atmos") || audioCodec.includes("atmos")) {
-						qualityBadges.push({ text: "DOLBY ATMOS", className: "badge-quality-atmos" });
-					} else if (channels >= 8) {
-						qualityBadges.push({ text: "7.1 SURROUND", className: "badge-quality-audio" });
-					} else if (channels >= 6) {
-						qualityBadges.push({ text: "5.1 SURROUND", className: "badge-quality-audio" });
-					}
-				}
-
 				const metaIcons = {
 					star: `<svg class="meta-icon icon-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.4 7 .7-5.2 4.7 1.5 6.9L12 17.2l-6.2 3.5 1.5-6.9L2.1 9.1l7-.7L12 2Z"/></svg>`,
 					calendar: `<svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
@@ -2529,7 +2491,6 @@ div.dialogContainer {
 				});
 
 				const metaHtml = metaItems.map(m => `<span class="banner-meta-pill ${m.className || ''}">${m.icon || ''}<span class="banner-meta-val">${m.value}</span></span>`).join("");
-				const qualityBadgesHtml = qualityBadges.map(q => `<span class="banner-quality-badge ${q.className}">${q.text}</span>`).join("");
 
 				const backdropHtml = `
 <div class="swiper-slide" id="${detail.Id}">
@@ -2537,7 +2498,6 @@ div.dialogContainer {
    <div class="banner-mask"></div>
    <div class="banner-top-badge-wrap">
       <div class="banner-top-badge ${badgeClass}">${badgeText}</div>
-      ${qualityBadgesHtml}
    </div>
    <div class="custom padded-left">
       ${logoUrl ? `

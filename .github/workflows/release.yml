@@ -1,0 +1,128 @@
+name: Auto Release & Packaging
+
+'on':
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+      - 'V.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release Version (e.g. V.6.0, v2.6.0, or leave empty for auto-increment)'
+        required: false
+        default: ''
+      prerelease:
+        description: 'Mark as pre-release?'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Publish Release
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip release]') && !contains(github.event.head_commit.message, '[skip ci]')"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Determine Next Version & Tag
+        id: get_version
+        run: |
+          python3 -c "
+          import os, re, subprocess
+
+          ref_type = os.environ.get('GITHUB_REF_TYPE', '')
+          ref_name = os.environ.get('GITHUB_REF_NAME', '')
+          input_version = os.environ.get('INPUT_VERSION', '').strip()
+          commit_msg = os.environ.get('COMMIT_MESSAGE', '')
+
+          # 1. Triggered directly by a tag push
+          if ref_type == 'tag' and ref_name:
+              version = ref_name
+              print(f'Triggered by tag: {version}')
+          # 2. Manual workflow_dispatch input
+          elif input_version:
+              version = input_version
+              if not version.startswith(('v', 'V')):
+                  version = 'v' + version
+              print(f'Using manual input version: {version}')
+          else:
+              # 3. Check commit message for explicit version tag e.g. [release V.6.0] or [v2.6.0]
+              match = re.search(r'\[?(?:release\s*:?\s*)?([vV]\.?\d+(?:\.\d+)*)\]?', commit_msg, re.IGNORECASE)
+              if match and not any(k in match.group(0).lower() for k in ['skip', 'ci']):
+                  version = match.group(1)
+                  print(f'Extracted version from commit message: {version}')
+              else:
+                  # 4. Auto-bump based on latest git tag
+                  try:
+                      subprocess.run(['git', 'fetch', '--tags', '--force'], check=False)
+                      tags_out = subprocess.check_output(['git', 'tag', '-l']).decode('utf-8').strip().split()
+                  except Exception:
+                      tags_out = []
+
+                  def parse_tag(t):
+                      m = re.match(r'^[vV]\.?(\d+)(?:\.(\d+))?(?:\.(\d+))?', t)
+                      if m:
+                          return [int(p) if p is not None else 0 for p in m.groups()]
+                      return [0, 0, 0]
+
+                  valid_tags = [t for t in tags_out if re.match(r'^[vV]\.?\d+', t)]
+                  if valid_tags:
+                      sorted_tags = sorted(valid_tags, key=parse_tag)
+                      latest = sorted_tags[-1]
+                      parts = parse_tag(latest)
+                      if latest.startswith('V.'):
+                          version = f'V.{parts[0] + 1}.0'
+                      elif latest.startswith('v'):
+                          version = f'v{parts[0]}.{parts[1] + 1}.0'
+                      else:
+                          version = f'V.{parts[0] + 1}.0'
+                  else:
+                      version = 'V.6.0'
+                  print(f'Auto-calculated next version: {version}')
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f'version={version}\n')
+          "
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+
+      - name: Package Release Distribution
+        env:
+          RELEASE_TAG: ${{ steps.get_version.outputs.version }}
+        run: |
+          mkdir -p dist
+          echo "Packaging Emby Home Swiper UI for release ${RELEASE_TAG}..."
+          zip -r dist/Emby-Home-Swiper-UI.zip . -x ".git/*" ".github/*" "dist/*"
+          cp dist/Emby-Home-Swiper-UI.zip dist/Emby-Home-Swiper-UI-${RELEASE_TAG}.zip
+          ls -lh dist/
+
+      - name: Publish GitHub Release & Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          name: "Emby Home Swiper UI ${{ steps.get_version.outputs.version }}"
+          draft: false
+          prerelease: ${{ inputs.prerelease || false }}
+          generate_release_notes: true
+          files: |
+            dist/Emby-Home-Swiper-UI.zip
+            dist/Emby-Home-Swiper-UI-${{ steps.get_version.outputs.version }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

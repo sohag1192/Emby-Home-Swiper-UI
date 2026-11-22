@@ -4,6 +4,8 @@
 
 [![Today / Total Hits](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI&label=Today%20/%20Total%20Hits&icon=github&color=%23198754&message=&style=flat-square&tz=UTC)](https://hitscounter.dev/history?url=https%3A%2F%2Fgithub.com%2Fsohag1192%2FEmby-Home-Swiper-UI)
 [![Hits Today](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI.svg?view=today-total&style=flat-square&label=Hits%20Today&color=2ea44f)](https://hits.sh/github.com/sohag1192/Emby-Home-Swiper-UI/)
+[![Latest Release](https://img.shields.io/github/v/release/sohag1192/Emby-Home-Swiper-UI?color=06b6d4&label=Latest%20Release&logo=github&style=flat-square)](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases/latest)
+[![Download Latest ZIP](https://img.shields.io/badge/Download-Release%20ZIP-10b981?style=flat-square&logo=archivebox&logoColor=white)](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases/latest/download/Emby-Home-Swiper-UI.zip)
 ![GitHub stars](https://img.shields.io/github/stars/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=gold)
 ![GitHub forks](https://img.shields.io/github/forks/sohag1192/Emby-Home-Swiper-UI?style=flat-square&color=blue)
 ![Emby Version](https://img.shields.io/badge/Emby%20Web-4.9.1.80%20--%204.10.2.0+-52B54B?style=flat-square&logo=emby&logoColor=white)
@@ -13,7 +15,7 @@
 
 **Transform your Emby and Jellyfin home screen into a breathtaking, cinematic media showcase with frosted Cyber-Glass banners, live ratings, direct external player routing, and kinetic announcement HUDs.**
 
-[✨ Highlights](#-key-features--highlights) • [📊 Feature Matrix](#-version-comparison--feature-matrix) • [📸 Preview](#-visual-preview) • [📂 Modules](#-repository-structure) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-configuration--customization) • [🇧🇩 বাংলা গাইড](#-বাংলা-সংক্ষিপ্ত-নির্দেশিকা-bangla-quick-guide) • [🧪 FAQ](#-troubleshooting--faq) • [💖 Support](#-support--sponsorship)
+[✨ Highlights](#-key-features--highlights) • [📥 Download ZIP](#-download--latest-release) • [📊 Feature Matrix](#-version-comparison--feature-matrix) • [📸 Preview](#-visual-preview) • [📂 Modules](#-repository-structure) • [🛠️ Installation](#%EF%B8%8F-installation-guide) • [⚙️ Configuration](#%EF%B8%8F-configuration--customization) • [🇧🇩 বাংলা গাইড](#-বাংলা-সংক্ষিপ্ত-নির্দেশিকা-bangla-quick-guide) • [🧪 FAQ](#-troubleshooting--faq) • [💖 Support](#-support--sponsorship)
 
 </div>
 
@@ -32,6 +34,27 @@ Engineered with **zero external dependencies** and pure native ES6 JavaScript, i
 - 📢 **Item Detail Announcement Suite (`text_sider`):** 6 responsive notification styles (Aurora VIP Cards, Cyber Neon Tickers, Multi-Slide Carousels, Maintenance Warning Boxes) for media detail pages (`#!/item?id=...`).
 - 🍇 **Dedicated Jellyfin Web Client Support:** Tailored CSS themes, JavaScript carousel engine, and automatic setup scripts for Jellyfin 10.8.x – 10.11.x+.
 - ✍️ **Bengali Typography Optimization:** Full integration for Google Font 'Hind Siliguri', fixing broken compound glyphs, symmetrical flex centering, and emoji wrap overflow.
+
+---
+
+## 📥 Download & Latest Release
+
+<div align="center">
+
+[![Download Latest ZIP](https://img.shields.io/badge/📥%20Download-Latest%20Release%20(.ZIP)-10b981?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases/latest/download/Emby-Home-Swiper-UI.zip)
+[![View All Releases](https://img.shields.io/badge/🏷️%20All%20Releases-Changelog%20&%20Tags-6366f1?style=for-the-badge&logo=git&logoColor=white)](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases)
+[![Direct Source ZIP](https://img.shields.io/badge/⚡%20Source%20Code-(main.zip)-0ea5e9?style=for-the-badge&logo=archivebox&logoColor=white)](https://github.com/sohag1192/Emby-Home-Swiper-UI/archive/refs/heads/main.zip)
+
+</div>
+
+| Package | Direct Download Link | Contents & Scope |
+| :--- | :--- | :--- |
+| 📦 **All-in-One Release Bundle** | [**`Emby-Home-Swiper-UI.zip`**](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases/latest/download/Emby-Home-Swiper-UI.zip) | Complete production package (Swiper V3, V2, V1, External Players, Jellyfin suite, scripts) |
+| 🏷️ **GitHub Releases & Tags** | [**View Release History & Notes**](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases) | Versioned tags (`V.6.0`, `v2.5.0`...), automated changelogs, and historical archives |
+| ⚡ **Live Main Snapshot** | [**`main.zip`**](https://github.com/sohag1192/Emby-Home-Swiper-UI/archive/refs/heads/main.zip) | Direct archive of the latest commits on the `main` branch |
+
+> [!TIP]
+> **Automated Release Pipeline:** When a new update or version is pushed, GitHub Actions automatically builds, tags, and uploads the fresh **`Emby-Home-Swiper-UI.zip`** to GitHub Releases. The download button above always points directly to the latest production release!
 
 ---
 
@@ -107,12 +130,14 @@ Emby-Home-Swiper-UI/
 │   ├── Text Multi-Slide Carousel.html# 3-slide interactive notice carousel
 │   ├── Text Warning Box.html    # Maintenance notice banner
 │   └── demo.html                # Interactive test sandbox with 1-click code copying
+├── .github/                      # 🤖 Automated CI/CD GitHub Actions workflows
+│   └── workflows/
+│       └── release.yml          # 🚀 Auto tag, package zip & publish release
 ├── screenshots/                 # 📸 Clean UI preview screenshot
 │   └── screenshot1.png
 ├── index_integrated.html        # 🌐 Reference Emby Web index.html with clean script hooks
 ├── download-homejs.bat          # 🪟 Windows PowerShell interactive setup script
 ├── setup-swiper.sh              # 🐧 Linux/Docker interactive setup script
-├── upload.bat                   # 🛠️ Git upload helper script
 ├── RELEASE_NOTES.md             # 📝 Detailed release history & changelog
 ├── LICENSE                      # 📄 MIT License
 └── README.md                    # 📖 Master documentation
@@ -123,6 +148,20 @@ Emby-Home-Swiper-UI/
 ## 🛠️ Installation Guide
 
 Select your target server platform and preferred installation approach:
+
+### 📦 Option 0: Download & Extract Release ZIP (Fastest)
+
+1. **Download the latest bundle:** Click [**`Emby-Home-Swiper-UI.zip`**](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases/latest/download/Emby-Home-Swiper-UI.zip).
+2. **Extract to Emby Web:** Unzip the files directly into your server's `dashboard-ui/` folder:
+   - For Cyber-Glass V3: Use `home-swiper-v3/home.js`
+   - For External Player HUD: Use `emby-player/v2/emby_launch_player.js`
+3. **Hook into `index.html`:** Open `dashboard-ui/index.html` and add:
+   ```html
+   <script src="home-swiper-v3/home.js" defer></script>
+   ```
+4. **Hard Refresh:** Reload your browser (`Ctrl + F5`) and navigate to `#!/home`.
+
+---
 
 ### 🌟 Option 1: Emby Server Manual Installation (Recommended)
 
@@ -319,9 +358,8 @@ this.showItemNum = 10;   // Number of banner slides in rotation
 - **আইটেম ডিটেইল নোটিশ বক্স (`text_sider`):** মুভি বা সিরিজের ডিটেইল পেজে প্লে বাটনের নিচে নোটিশ বা আপনার নিজস্ব ফাইল সার্ভার লিংক প্রদর্শিত হবে।
 
 ### ২. দ্রুত ইনস্টলেশন:
-1. আপনার Emby সার্ভারের `dashboard-ui/` ফোল্ডারে প্রবেশ করুন।
-2. [`home-swiper-v3/home.js`](home-swiper-v3/home.js) ফাইলটি ডাউনলোড করে `dashboard-ui/home.js` হিসেবে সেভ করুন।
-3. `dashboard-ui/index.html` ফাইলের একদম নিচে `</body>` ট্যাগের ঠিক আগে নিচের কোডটি যুক্ত করুন:
+1. **সরাসরি রিলিজ জিপ ডাউনলোড:** [**`Emby-Home-Swiper-UI.zip`**](https://github.com/sohag1192/Emby-Home-Swiper-UI/releases/latest/download/Emby-Home-Swiper-UI.zip) ফাইলটি ডাউনলোড করুন এবং আনজিপ করে আপনার Emby সার্ভারের `dashboard-ui/` ফোল্ডারে পেস্ট করুন (অথবা [`home-swiper-v3/home.js`](home-swiper-v3/home.js) ফাইলটি সেভ করুন)।
+2. `dashboard-ui/index.html` ফাইলের একদম নিচে `</body>` ট্যাগের ঠিক আগে নিচের কোডটি যুক্ত করুন:
    ```html
    <script src="home.js" defer></script>
    ```

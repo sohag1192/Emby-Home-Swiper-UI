@@ -151,3 +151,15 @@ This component has been completely overhauled with a modern, high-end design lan
 - **GitHub Repository:** [sohag1192/Emby-Home-Swiper-UI](https://github.com/sohag1192/Emby-Home-Swiper-UI)
 - **Author & Developer:** Md Sohag Rana ❤️
 - Distributed under the [MIT License](../../LICENSE). Feel free to use, modify, and distribute with attribution.
+
+---
+
+<div align="center">
+
+Made with ❤️ for the global Emby Community • যদি রিপোজিটরিটি আপনার কাজে লাগে তবে একটি স্টার (⭐) দিতে ভুলবেন না!
+
+<br/>
+
+<sub>Copyright © 2026 <b><a href="https://github.com/sohag1192">Md Sohag Rana</a></b>. All rights reserved.</sub>
+
+</div>

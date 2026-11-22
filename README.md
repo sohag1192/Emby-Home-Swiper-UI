@@ -491,6 +491,11 @@ If you find a bug or have an idea to improve the UI, feel free to open an [Issue
  </picture>
 </a>
 
+<br/>
+
+**Made with ❤️ for the global Emby Community**  
+*যদি রিপোজিটরিটি আপনার কাজে লাগে তবে একটি স্টার (⭐) দিতে ভুলবেন না!*
+
 </div>
 
 ---
@@ -506,3 +511,15 @@ If you find a bug or have an idea to improve the UI, feel free to open an [Issue
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE) — free to use, modify, and distribute with attribution.
+
+---
+
+<div align="center">
+
+Made with ❤️ for the global Emby Community • যদি রিপোজিটরিটি আপনার কাজে লাগে তবে একটি স্টার (⭐) দিতে ভুলবেন না!
+
+<br/>
+
+<sub>Copyright © 2026 <b><a href="https://github.com/sohag1192">Md Sohag Rana</a></b>. All rights reserved.</sub>
+
+</div>

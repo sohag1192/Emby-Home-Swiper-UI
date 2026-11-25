@@ -356,7 +356,7 @@ class HomeBanner {
 
     static initEvent() {
         const script = `
-		const serverId = ApiClient._serverInfo.Id,
+		const serverId = (typeof ApiClient !== "undefined" && (ApiClient.serverId ? ApiClient.serverId() : (ApiClient._serverInfo?.Id || ""))) || "",
 			librarys = document.querySelectorAll(".mainAnimatedPages:not(.hide) .section0 .card");
 		librarys.forEach(library => {
 			library.setAttribute("data-serverid", serverId);

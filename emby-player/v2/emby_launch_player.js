@@ -998,25 +998,41 @@
     }
 
     async function getItemInfo() {
-        let userId = ApiClient._serverInfo.UserId;
-        let itemId = /\?id=([A-Za-z0-9]+)/.exec(window.location.hash)[1];
+        const userId = typeof ApiClient !== "undefined" && (ApiClient.getCurrentUserId ? ApiClient.getCurrentUserId() : (ApiClient._serverInfo?.UserId || ""));
+        if (!userId) {
+            throw new Error("User ID not available from ApiClient");
+        }
+        let match = window.location.hash.match(/[?&]id=([a-zA-Z0-9_-]+)/i);
+        let itemId = match ? match[1] : (window.location.search.match(/[?&]id=([a-zA-Z0-9_-]+)/i)?.[1] || "");
+        if (!itemId) {
+            throw new Error("Item ID not found in URL");
+        }
+
         let response = await ApiClient.getItem(userId, itemId);
+        if (!response) {
+            throw new Error("Item not found");
+        }
 
         if (response.Type == "Series") {
-            let seriesNextUpItems = await ApiClient.getNextUpEpisodes({ SeriesId: itemId, UserId: userId });
-            if (seriesNextUpItems.Items.length > 0) {
+            let seriesNextUpItems = await ApiClient.getNextUpEpisodes({ SeriesId: itemId, UserId: userId }).catch(() => null);
+            if (seriesNextUpItems?.Items?.length > 0) {
                 return await ApiClient.getItem(userId, seriesNextUpItems.Items[0].Id);
             }
         }
         if (response.Type == "Season") {
-            let seasonItems = await ApiClient.getItems(userId, { parentId: itemId });
-            return await ApiClient.getItem(userId, seasonItems.Items[0].Id);
+            let seasonItems = await ApiClient.getItems(userId, { parentId: itemId }).catch(() => null);
+            if (seasonItems?.Items?.length > 0) {
+                return await ApiClient.getItem(userId, seasonItems.Items[0].Id);
+            }
         }
         if (response.MediaSources?.length > 0) {
             return response;
         }
-        let firstItems = await ApiClient.getItems(userId, { parentId: itemId, Recursive: true, IsFolder: false, Limit: 1 });
-        return await ApiClient.getItem(userId, firstItems.Items[0].Id);
+        let firstItems = await ApiClient.getItems(userId, { parentId: itemId, Recursive: true, IsFolder: false, Limit: 1 }).catch(() => null);
+        if (firstItems?.Items?.length > 0) {
+            return await ApiClient.getItem(userId, firstItems.Items[0].Id);
+        }
+        return response;
     }
 
     function getSeek(position) {
@@ -1060,37 +1076,45 @@
 
     async function getEmbyMediaInfo() {
         let itemInfo = await getItemInfo();
-        let mediaSourceId = itemInfo.MediaSources[0].Id;
+        if (!itemInfo) throw new Error("Could not load media details");
+        let mediaSources = itemInfo.MediaSources || [];
+        if (!mediaSources.length) throw new Error("No playable media sources found for this item");
+
+        let mediaSourceId = mediaSources[0]?.Id;
         let selectSource = document.querySelector(selectors.selectSource);
-        if (selectSource && selectSource.value.length > 0) {
+        if (selectSource && selectSource.value && selectSource.value.length > 0) {
             mediaSourceId = selectSource.value;
         }
 
-        const accessToken = ApiClient.accessToken();
-        let mediaSource = itemInfo.MediaSources.find(m => m.Id == mediaSourceId);
+        const accessToken = (typeof ApiClient !== "undefined" && ApiClient.accessToken) ? ApiClient.accessToken() : "";
+        let mediaSource = mediaSources.find(m => m.Id == mediaSourceId) || mediaSources[0];
+        if (!mediaSource) throw new Error("Media source not available");
+
         let uri = isEmby ? "/emby/videos" : "/Items";
-        let baseUrl = `${ApiClient._serverAddress}${uri}/${itemInfo.Id}`;
+        let serverAddr = (typeof ApiClient !== "undefined" && (ApiClient._serverAddress || (ApiClient.serverAddress ? ApiClient.serverAddress() : "") || window.location.origin)) || "";
+        let baseUrl = `${serverAddr}${uri}/${itemInfo.Id}`;
         let subPath = getSubPath(mediaSource);
-        let subUrl = subPath.length > 0 ? `${baseUrl}${subPath}?api_key=${accessToken}` : "";
+        let subUrl = (subPath && subPath.length > 0) ? `${baseUrl}${subPath}?api_key=${accessToken}` : "";
         let streamUrl = `${baseUrl}/`;
 
-        if (mediaSource.Path.startsWith("http") && localStorage.getItem(lsKeys.strmDirect) === "1") {
+        if (mediaSource.Path && mediaSource.Path.startsWith("http") && localStorage.getItem(lsKeys.strmDirect) === "1") {
             streamUrl = decodeURIComponent(mediaSource.Path);
         } else {
-            let fileName = mediaSource.IsInfiniteStream ? `master.m3u8` : decodeURIComponent(mediaSource.Path.replace(fileNameReg, ""));
+            let fileName = mediaSource.IsInfiniteStream ? `master.m3u8` : (mediaSource.Path ? decodeURIComponent(mediaSource.Path.replace(fileNameReg, "")) : `${itemInfo.Name || 'media'}.${mediaSource.Container || 'mp4'}`);
             if (isEmby) {
                 if (mediaSource.IsInfiniteStream) {
                     streamUrl += useRealFileName && mediaSource.Name ? `${mediaSource.Name}.m3u8` : fileName;
                 } else {
-                    streamUrl += useRealFileName ? `stream/${fileName}` : `stream.${mediaSource.Container}`;
+                    streamUrl += useRealFileName ? `stream/${fileName}` : `stream.${mediaSource.Container || 'mp4'}`;
                 }
             } else {
                 streamUrl += `Download`;
                 streamUrl += useRealFileName ? `/${fileName}` : "";
             }
-            streamUrl += `?api_key=${accessToken}&Static=true&MediaSourceId=${mediaSourceId}&DeviceId=${ApiClient._deviceId}`;
+            const deviceId = (typeof ApiClient !== "undefined" && (ApiClient._deviceId || (ApiClient.deviceId ? ApiClient.deviceId() : ""))) || "";
+            streamUrl += `?api_key=${accessToken}&Static=true&MediaSourceId=${mediaSourceId}&DeviceId=${deviceId}`;
         }
-        let position = parseInt(itemInfo.UserData?.PlaybackPositionTicks / 10000 || 0);
+        let position = parseInt((itemInfo.UserData?.PlaybackPositionTicks || 0) / 10000);
         let intent = await getIntent(mediaSource, position);
         return {
             streamUrl: streamUrl,
@@ -1411,30 +1435,52 @@
     /* Emby & Jellyfin Route Listener Lifecycle                                   */
     /* -------------------------------------------------------------------------- */
 
+    function checkAndMount() {
+        if (isEmby === "") {
+            isEmby = window.location.href.includes("/web/") || !!document.querySelector(".emby-button, .headerTop");
+        }
+        const isItemPage = window.location.hash.includes("item?id=") || window.location.hash.includes("/item/") || window.location.search.includes("id=");
+        if (isItemPage) {
+            if (showFlag()) {
+                init();
+            } else {
+                const mutation = new MutationObserver(function () {
+                    if (showFlag()) {
+                        init();
+                        mutation.disconnect();
+                    }
+                });
+                mutation.observe(document.body, {
+                    childList: true,
+                    characterData: true,
+                    subtree: true,
+                });
+                setTimeout(() => {
+                    if (showFlag()) init();
+                }, 500);
+            }
+        }
+    }
+
     document.addEventListener("viewbeforeshow", function (e) {
         if (isEmby === "") {
             isEmby = !!e.detail?.contextPath;
         }
-        let isItemDetailPage;
-        if (isEmby) {
-            isItemDetailPage = e.detail?.contextPath?.startsWith("/item?id=");
-        } else {
-            isItemDetailPage = e.detail?.params && e.detail.params.id;
-        }
-
-        if (isItemDetailPage) {
-            const mutation = new MutationObserver(function () {
-                if (showFlag()) {
-                    init();
-                    mutation.disconnect();
-                }
-            });
-            mutation.observe(document.body, {
-                childList: true,
-                characterData: true,
-                subtree: true,
-            });
-        }
+        checkAndMount();
     });
+
+    document.addEventListener("viewshow", function () {
+        checkAndMount();
+    });
+
+    window.addEventListener("hashchange", function () {
+        checkAndMount();
+    });
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", checkAndMount);
+    } else {
+        checkAndMount();
+    }
 
 })();

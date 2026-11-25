@@ -2216,41 +2216,52 @@ div.dialogContainer {
 		return false;
 	}
 
-	static async playlistener() {
+	static playlistener() {
 		try {
-			let playbackmanager = null;
+			const bindButtons = (playbackmanager) => {
+				document.querySelectorAll(".view:not(.hide) .banner-item-play, .section00 .banner-item-play").forEach((dom) => {
+					let id = dom.getAttribute("id");
+					let parentid = dom.getAttribute("data-parentid");
+					const detail = this.Alldata?.find(m => m.Id === parentid)?.data?.find(m => m.Id === id);
+					if (!detail) return;
+					dom.onclick = (e) => {
+						e?.preventDefault();
+						e?.stopPropagation();
+						if (playbackmanager && typeof playbackmanager.play === "function") {
+							let resume = {
+								startPositionTicks: detail.UserData?.PlaybackPositionTicks || 0,
+								ids: detail.Id,
+								serverId: detail.ServerId,
+								items: [detail]
+							};
+							playbackmanager.play(resume);
+						} else if (typeof Emby !== "undefined" && Emby.Page?.showItem) {
+							Emby.Page.showItem(detail.Id);
+						}
+					};
+				});
+			};
+
 			if (typeof require === "function") {
-				const res = await require(["playbackManager"]).catch(() => null);
-				if (res && res[0]) playbackmanager = res[0];
+				try {
+					require(["playbackManager"], (pm) => {
+						bindButtons(pm);
+					});
+				} catch (e) {
+					bindButtons(null);
+				}
+			} else {
+				bindButtons(null);
 			}
-			document.querySelectorAll(".view:not(.hide) .banner-item-play").forEach((dom) => {
-				let id = dom.getAttribute("id");
-				let parentid = dom.getAttribute("data-parentid");
-				const detail = this.Alldata?.find(m => m.Id === parentid)?.data?.find(m => m.Id === id);
-				if (!detail) return;
-				dom.onclick = (e) => {
-					e?.stopPropagation();
-					if (playbackmanager && playbackmanager.play) {
-						let resume = {
-							startPositionTicks: detail.UserData?.PlaybackPositionTicks || 0,
-							ids: detail.Id,
-							serverId: detail.ServerId,
-							items: [detail]
-						};
-						playbackmanager.play(resume);
-					} else if (typeof Emby !== "undefined" && Emby.Page?.showItem) {
-						Emby.Page.showItem(detail.Id);
-					}
-				};
-			});
 		} catch (err) {
 			console.warn("[HomeSwiper] playlistener error:", err);
 		}
 	}
 
 	static morelistener() {
-		document.querySelectorAll(".view:not(.hide) .banner-item-more").forEach(dom => {
+		document.querySelectorAll(".view:not(.hide) .banner-item-more, .section00 .banner-item-more").forEach(dom => {
 			dom.onclick = (e) => {
+				e?.preventDefault();
 				e?.stopPropagation();
 				const id = dom.getAttribute("id");
 				if (id && typeof Emby !== "undefined" && Emby.Page?.showItem) {

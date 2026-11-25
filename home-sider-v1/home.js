@@ -1615,18 +1615,58 @@ div.dialogContainer {
 		loading && (loading.innerText = serverName, loading.setAttribute("title", serverName), loading.classList.add("active"));
 
 	}
-	static async playlistener() {
-		const playbackmanager = (await require(["playbackManager"]))[0];
-		document.querySelectorAll(".view:not(.hide) .banner-item-play").forEach(async (dom, i) => {
-			let id = dom.getAttribute("id");
-			let parentid = dom.getAttribute("data-parentid");
-			const detail = this.Alldata.filter(m => m.Id === parentid)[0].data.filter(m => m.Id === id)[0];
-			dom.addEventListener("click", () => {
-				let resume = {
-					startPositionTicks: detail.UserData["PlaybackPositionTicks"], ids: detail.Id, serverId: detail.ServerId, items: [detail]
-				};
-				playbackmanager.play(resume);
-			});
+	static playlistener() {
+		try {
+			const bindButtons = (playbackmanager) => {
+				document.querySelectorAll(".view:not(.hide) .banner-item-play, .section00 .banner-item-play").forEach((dom) => {
+					let id = dom.getAttribute("id");
+					let parentid = dom.getAttribute("data-parentid");
+					const parentObj = this.Alldata?.find(m => m.Id === parentid);
+					const detail = parentObj?.data?.find(m => m.Id === id);
+					if (!detail) return;
+					dom.onclick = (e) => {
+						e?.preventDefault();
+						e?.stopPropagation();
+						if (playbackmanager && typeof playbackmanager.play === "function") {
+							let resume = {
+								startPositionTicks: detail.UserData?.PlaybackPositionTicks || 0,
+								ids: detail.Id,
+								serverId: detail.ServerId,
+								items: [detail]
+							};
+							playbackmanager.play(resume);
+						} else if (typeof Emby !== "undefined" && Emby.Page?.showItem) {
+							Emby.Page.showItem(detail.Id);
+						}
+					};
+				});
+			};
+
+			if (typeof require === "function") {
+				try {
+					require(["playbackManager"], (pm) => {
+						bindButtons(pm);
+					});
+				} catch (e) {
+					bindButtons(null);
+				}
+			} else {
+				bindButtons(null);
+			}
+		} catch (err) {
+			console.warn("[HomeSwiper] playlistener error:", err);
+		}
+	}
+	static morelistener() {
+		document.querySelectorAll(".view:not(.hide) .banner-item-more, .section00 .banner-item-more").forEach(dom => {
+			dom.onclick = (e) => {
+				e?.preventDefault();
+				e?.stopPropagation();
+				const id = dom.getAttribute("id");
+				if (id && typeof Emby !== "undefined" && Emby.Page?.showItem) {
+					Emby.Page.showItem(id);
+				}
+			};
 		});
 	}
 	static async getItems(query) {
@@ -2107,6 +2147,7 @@ const coverHtml = `
 		}
 
 		this.playlistener();
+		this.morelistener();
 	}
 }
 /** Swiper 11.1.14 JS**/

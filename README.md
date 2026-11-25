@@ -105,18 +105,13 @@ Engineered with **zero external dependencies** and pure native ES6 JavaScript, i
 ```text
 Emby-Home-Swiper-UI/
 ├── home-swiper-v3/              # 🚀 Latest Swiper v3 (Cyber-Glass, Ratings, Year, Beacons)
-│   ├── home.js                  # 🌟 Production Swiper v3 script
-│   └── README.md                # 📖 V3 documentation & setup
+│   └── home.js                  # 🌟 Production Swiper v3 script
 ├── home-swiper-v2/              # 🌟 Swiper v2 with Ratings, Year & UI upgrades
 │   ├── home-swiper.js           # 🌟 Enhanced Swiper v2 script (Frosted glass & Dual Actions)
-│   ├── home_rating with year.js # ⭐ Classic Swiper with Community Rating & Year
-│   ├── home-swiper-v1.js        # ⚡ Clean minimalist lightweight Swiper script
-│   └── README.md                # 📖 V2 documentation & setup
+│   └── home_rating with year.js # ⭐ Classic Swiper with Community Rating & Year
 ├── home-sider-v1/               # 📦 Classic lightweight home banner slider
 │   └── home.js                  # V1 base swiper logic
 ├── emby-player/                 # 🎬 External player launcher (PotPlayer, MPV, VLC)
-│   ├── v1/                      # v1 classic player scripts
-│   │   └── emby_launch_player.js
 │   └── v2/                      # v2 Cyber-Glass HUD launcher with offline vector SVGs
 │       └── emby_launch_player.js
 ├── Jellyfin/                    # 🍇 Dedicated Jellyfin Web integration
@@ -135,10 +130,8 @@ Emby-Home-Swiper-UI/
 │       └── release.yml          # 🚀 Auto tag, package zip & publish release
 ├── screenshots/                 # 📸 Clean UI preview screenshot
 │   └── screenshot1.png
-├── index_integrated.html        # 🌐 Reference Emby Web index.html with clean script hooks
 ├── download-homejs.bat          # 🪟 Windows PowerShell interactive setup script
 ├── setup-swiper.sh              # 🐧 Linux/Docker interactive setup script
-├── RELEASE_NOTES.md             # 📝 Detailed release history & changelog
 ├── LICENSE                      # 📄 MIT License
 └── README.md                    # 📖 Master documentation
 ```
@@ -182,8 +175,7 @@ Locate the web root folder for your operating system:
    - **Version 3 Cyber-Glass (Latest - Recommended):** [`home-swiper-v3/home.js`](home-swiper-v3/home.js)
    - **Version 2 Enhanced:** [`home-swiper-v2/home-swiper.js`](home-swiper-v2/home-swiper.js)
    - **Version 2 with Ratings & Year:** [`home-swiper-v2/home_rating with year.js`](home-swiper-v2/home_rating%20with%20year.js)
-   - **Version 2 Minimalist Swiper:** [`home-swiper-v2/home-swiper-v1.js`](home-swiper-v2/home-swiper-v1.js)
-   - **Version 1 Classic Slider:** [`home-sider-v1/home.js`](home-sider-v1/home.js)
+      - **Version 1 Classic Slider:** [`home-sider-v1/home.js`](home-sider-v1/home.js)
 2. Place the file into your `dashboard-ui/` folder as `home.js` (or in a subfolder like `dashboard-ui/crx/home.js`).
 
 #### Step 3: Inject the Script in `dashboard-ui/index.html`
@@ -196,7 +188,6 @@ Open `dashboard-ui/index.html` with your code editor and add the script tag righ
 *(If stored inside `crx/home.js`, use `<script src="crx/home.js" defer></script>`)*
 
 > [!TIP]
-> You can also reference [`index_integrated.html`](index_integrated.html) which includes pre-configured script hooks, Google Font 'Hind Siliguri', and optimized login styling.
 
 #### Step 4: Hard Refresh
 Restart your Emby server or perform a hard refresh in your browser (`Ctrl + F5` on Windows/Linux or `Cmd + Shift + R` on macOS). Open `#!/home` to enjoy!
@@ -393,7 +384,7 @@ this.showItemNum = 10;   // Number of banner slides in rotation
 <details>
 <summary><b>3. Changes reset after an official Emby Server update</b></summary>
 
-- Official server upgrades often overwrite `index.html`. Keep a backup of your script tags or use [`index_integrated.html`](index_integrated.html) to quickly restore your script hooks.
+- Official server upgrades often overwrite `index.html`. Keep a backup of your script tags to quickly restore your script hooks after updates.
 </details>
 
 ---
